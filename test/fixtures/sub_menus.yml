@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  menu: 
+  name: MyString
+  title: MyString
+  url: MyString
+  position: 1
+  separator: false
+  adm: false
+  situation: false
+
+two:
+  menu: 
+  name: MyString
+  title: MyString
+  url: MyString
+  position: 1
+  separator: false
+  adm: false
+  situation: false

@@ -1,0 +1,258 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Sistema Imobiliário</title>
+    <link href="stylesheet/stylesheet.css" rel="Stylesheet" type="text/css" media="all" />
+    <link href="stylesheet/reset.css" rel="Stylesheet" type="text/css" media="all" />
+    <link href="stylesheet/typography.css" rel="Stylesheet" type="text/css" media="all" />
+	<link href="stylesheet/prettyPhoto.css" rel="Stylesheet" type="text/css" media="all" />
+	<link href="stylesheet/ui-lightness/jquery-ui-1.8.2.custom.css" rel="stylesheet" type="text/css" />	
+    <link rel="shortcut icon" href="images/favicon.ico" />
+    <script src="javascript/jquery-1.3.2.js" type="text/javascript" charset="utf-8"></script>
+	<script src="javascript/tinymce/jscripts/tiny_mce/tiny_mce.js" type="text/javascript"></script>
+    <script src="javascript/jquery-ui-1.8.2.custom.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascript/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascript/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascript/tools.js" type="text/javascript" charset="utf-8"></script>
+	<script src="javascript/tools-form.js" type="text/javascript" charset="utf-8"></script>	
+	<script src="javascript/tools-photos.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascript/tools-results.js" type="text/javascript" charset="utf-8"></script>    
+    <script src="javascript/tools-dashboard.js" type="text/javascript" charset="utf-8"></script>  	    
+    <meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8" />
+    <meta http-equiv="content-language" content="pt-br" />
+    <meta name="author" content="" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="reply-to" content="" />
+</head>
+<body>
+<div id="top">
+	<h1><a href="#" title="">Sistema Imobiliário</a></h1>
+	<ul class="navBar">
+		<li><a href="javascript: void(0)" title="">Imobiliária</a>
+			<ul>
+				<li><a href="#" title="">Alterar Dados da Imobiliária</a></li>
+				<li><a href="#" title="">Listar funcionários</a></li>
+				<li class="separator"><a href="#" title="">Cadastrar Funcionários</a></li>
+			</ul>
+		</li>
+		<li><a href="#" title="">Imóveis</a>
+			<ul>
+				<li><a href="index.html" title="">Listar Dados</a></li>
+				<li><a href="form.html" title="">Alterar meus Dados</a></li>
+			</ul>
+		</li>
+		<li><a href="#" title="">Clientes</a></li>
+	</ul>
+</div>
+
+<div id="navTop">
+	<div id="tools">
+		<div class="logged">
+			<span><img src="images/user-img.gif" alt="Imagem do Usuário" /></span>
+			<div>
+				<h2>Alex Roveda</h2>
+				<h3>Imobiliária Ticaracatica</h3>
+			</div>
+			<ul>
+				<li><a href="#" title="">sair do sistema</a></li>
+				<li>.</li>
+				<li><a href="#" title="">meus dados</a></li>
+			</ul>
+			<ul class="toolbox">
+				<li><a href="#" title=""><img src="images/icon-theme.png" alt="" title=""/></a></li>
+				<li><a href="javascript: calc();" title=""><img src="images/icon-calc.png" alt="" title=""/></a></li>
+				<li><a href="javascript: void(0)" title="fontes do tamanho grande" class="fontBig">&nbsp;</a></li>
+				<li><a href="javascript: void(0)" title="fontes do tamanho méido" class="fontMedium">&nbsp;</a></li>
+				<li><a href="javascript: void(0)" title="fontes do tamanho pequeno" class="fontSmall">&nbsp;</a></li>
+			</ul>
+		</div>
+	</div>
+	<span class="clear">&nbsp;</span>
+</div>
+
+<div id="container">
+	<span class="container-top">&nbsp;</span>
+	<div id="sidebar">
+		<div class="box stats">
+			<h2>Estatísticas</h2>
+			<p>Dados encontrados até o presente momento no sistema.</p>
+			<ul>
+				<li><span>38</span>clientes</li>
+				<li><span>120</span>casas</li>
+			</ul>
+		</div>
+		<div class="box message">
+			<h2>Aviso importante</h2>
+			<p>Verifique a sua conta. Ela possui pendências.</p>
+			<a href="" title="">meu caixa</a>
+		</div>
+		<span class="clear">&nbsp;</span>
+	</div>
+	<div id="main">
+		<div class="localization">
+			<h2><em>Onde estou?</em>Cadastro de Cliente</h2>
+			<em class="right">ir para: <a href="#" title="">Área de trabalho</a></em>
+		</div>
+		<span class="separator">&nbsp;</span>
+
+		<div class="box search">
+			<form action="" method="">
+				<label for="txtSearch">Buscar por termo
+				<span><input type="text" name="txtSearch" /></span></label>
+				<input type="submit" name="btnSearch" class="btn" value="buscar" />
+				<a href="#" title="">novo registro</a>
+			</form>
+			<span class="filters">
+				<span><p><em>1000</em> registro(s) encontrado(s)</p></span>
+				<em>Filtros selecionados: </em>
+				<ul></ul>
+			</span>
+			<a href="javascript: void(0)" title="" class="triggerAction">mostrar ações</a>
+			<span class="separator">&nbsp;</span>
+		</div>
+		<div class="box tools">
+			<span>
+				<input type="checkbox" name="" value="" class="markAll"/><em>marcar todos</em>
+				<ul>
+					<li><a href="javascript: void(0);" title="">ações em massa</a>
+					<ul>
+						<li><a href="#" title="">item</a></li>
+						<li><a href="#" title="">item</a></li>
+					</ul>
+					</li>
+				</ul>
+			</span>
+			<span class="filter">
+				<em>FILTRAR: </em>
+				<ul>
+					<li><a href="javascript: void(0);" title="">disponibilidade</a>
+					<ul>
+						<li><input type="checkbox" value="aluguel" />aluguel</li>
+						<li><input type="checkbox" value="venda" />venda</li>
+					</ul>
+					</li>
+				</ul>
+				<ul>
+					<li><a href="javascript: void(0);" title="">tipo</a>
+					<ul>
+						<li><input type="checkbox" value="casa" />casa</li>
+						<li><input type="checkbox" value="apartamento" />apartamento</li>
+						<li><input type="checkbox" value="terreno" />terreno</li>
+					</ul>
+					</li>
+				</ul>
+			</span>
+			<span>
+				<ul>
+					<li><a href="javascript: void(0);" title="">ordernar dados</a>
+					<ul>
+						<li><a href="#" title="">item</a></li>
+						<li><a href="#" title="">item</a></li>
+					</ul>
+					</li>
+				</ul>
+				<ul class="show">
+					<li><a href="javascript: void(0);" title="">mostrar 15</a>
+					<ul>
+						<li><a href="#" title="">item</a></li>
+						<li><a href="#" title="">item</a></li>
+					</ul>
+					</li>
+				</ul>
+			</span>
+		</div>
+		<div class="box results">
+			<ul>
+				<li>
+					<input type="checkbox" name="" value="" />
+					<div class="info">
+						<span>R$ 100.000,00</span>
+						<h2>Casa de alvenaria</h2>
+						<em class="address">Av. Brasil, 4021. Bla bla bla</em>
+						<p>2 quartos, sala, cozinha, 2 BWC, garagem, churrasqueira ...</p>
+					</div>
+					<ul class="photos">
+						<li><a href="images/photos/01.jpg" title="" rel="prettyPhoto[gallery1]"><img src="images/photo-img.png" alt="" title="" /></a></li>
+						<li><a href="images/photos/01.jpg" title="" rel="prettyPhoto[gallery1]"><img src="images/photo-img.png" alt="" title="" /></a></li>
+						<li><a href="images/photos/01.jpg" title="" rel="prettyPhoto[gallery1]"><img src="images/photo-img.png" alt="" title="" /></a></li>
+					</ul>
+					<ul class="options">
+						<li><a href="#" title="">editar</a></li>
+						<li><a href="javascript:createSearchPopup('details.html', 740, 500)"  title="" >visualizar</a></li>
+						<li><a href="#" title="">excluir</a></li>
+						<li><a href="javascript: void(0)" title="" class="status">desativar</a></li>
+						<li><a href="#" title="" class="img-options">visualizar fotos</a></li>
+						<li><a href="#" title="">editar fotos</a></li>
+					</ul>
+				</li>
+				<li>
+					<input type="checkbox" name="" value="" />
+					<div class="info">
+						<span>R$ 100.000,00</span>
+						<h2>Casa de alvenaria</h2>
+						<em class="address">Av. Brasil, 4021. Bla bla bla</em>
+						<p>2 quartos, sala, cozinha, 2 BWC, garagem, churrasqueira ...</p>
+					</div>
+					<ul class="photos">
+						<li><a href="images/photos/01.jpg" title="" rel="prettyPhoto[gallery1]"><img src="images/photo-img.png" alt="" title="" /></a></li>
+						<li><a href="images/photos/01.jpg" title="" rel="prettyPhoto[gallery1]"><img src="images/photo-img.png" alt="" title="" /></a></li>
+						<li><a href="images/photos/01.jpg" title="" rel="prettyPhoto[gallery1]"><img src="images/photo-img.png" alt="" title="" /></a></li>
+					</ul>
+					<ul class="options">
+						<li><a href="#" title="">editar</a></li>
+						<li><a href="details.html?iframe=true&width=640&height=480" title="" rel="prettyPhoto[iframes]">visualizar</a></li>
+						<li><a href="#" title="">excluir</a></li>
+						<li><a href="javascript: void(0)" title="" class="status">desativar</a></li>
+						<li><a href="#" title="" class="img-options">visualizar fotos</a></li>
+						<li><a href="#" title="">editar fotos</a></li>
+					</ul>
+				</li>
+				<li>
+					<input type="checkbox" name="" value="" />
+					<div class="info">
+						<span>R$ 100.000,00</span>
+						<h2>Casa de alvenaria</h2>
+						<em class="address">Av. Brasil, 4021. Bla bla bla</em>
+						<p>2 quartos, sala, cozinha, 2 BWC, garagem, churrasqueira ...</p>
+					</div>
+					<ul class="photos">
+						<li><a href="images/photos/01.jpg" title="" rel="prettyPhoto[gallery1]"><img src="images/photo-img.png" alt="" title="" /></a></li>
+						<li><a href="images/photos/01.jpg" title="" rel="prettyPhoto[gallery1]"><img src="images/photo-img.png" alt="" title="" /></a></li>
+						<li><a href="images/photos/01.jpg" title="" rel="prettyPhoto[gallery1]"><img src="images/photo-img.png" alt="" title="" /></a></li>
+					</ul>
+					<ul class="options">
+						<li><a href="#" title="">editar</a></li>
+						<li><a href="details.html?iframe=true&width=640&height=480" title="" rel="prettyPhoto[iframes]">visualizar</a></li>
+						<li><a href="#" title="">excluir</a></li>
+						<li><a href="javascript: void(0)" title="" class="status">desativar</a></li>
+						<li><a href="#" title="" class="img-options">visualizar fotos</a></li>
+						<li><a href="#" title="">editar fotos</a></li>
+					</ul>
+				</li>
+			</ul>
+			<div class="pagination">
+				<span class="disabled prev_page">&laquo; Anterior</span>
+				<a href="#" title="clique aqui para ir visitar a página 1" rel="prev start">1</a>
+				<span class="current">2</span>
+				<a href="#" title="clique aqui para ir visitar a página 3" rel="next">3</a>
+				<a href="#" class="next_page" rel="next">Próximo &raquo;</a>
+			</div>
+		</div>
+
+	</div>
+	<span class="container-bottom">&nbsp;</span>
+</div>
+
+<div id="footer">
+	<p>copyright &copy; 2010. todos os direitos reservados para OMercadao.com.</p>
+	<span id="notice"><span>&nbsp;</span><h1>Login realizado com sucesso.</h1></span>
+	<script type="text/javascript">
+	//<![CDATA[
+	    setTimeout(function() { $("#notice").toggle(); }, 4000);
+	//]]>
+	</script>
+</div>
+
+</body>
+</html>

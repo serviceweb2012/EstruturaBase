@@ -1,0 +1,12 @@
+<%- if controller_name != 'sessions' %>
+  <%= link_to "Acessar o Sistema", new_session_path(resource_name) %><br />
+<% end -%>
+
+<%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+  <%= link_to "Esqueceu a senha?", new_password_path(resource_name) %><br />
+<% end -%>
+
+<%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+  <%= link_to "Não recebeu destravamento de senha?", new_unlock_path(resource_name) %><br />
+<% end -%>
+

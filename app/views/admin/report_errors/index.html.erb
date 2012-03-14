@@ -1,0 +1,27 @@
+<h1>Listing report_errors</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Name</th>
+    <th>Content</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @report_errors.each do |report_error| %>
+  <tr>
+    <td><%= report_error.user %></td>
+    <td><%= report_error.name %></td>
+    <td><%= report_error.content %></td>
+    <td><%= link_to 'Show', report_error %></td>
+    <td><%= link_to 'Edit', edit_report_error_path(report_error) %></td>
+    <td><%= link_to 'Destroy', report_error, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Report error', new_report_error_path %>

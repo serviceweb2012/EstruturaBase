@@ -1,0 +1,408 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Sistema Imobiliário</title>
+    <link href="stylesheet/stylesheet.css" rel="Stylesheet" type="text/css" media="all" />
+    <link href="stylesheet/reset.css" rel="Stylesheet" type="text/css" media="all" />
+    <link href="stylesheet/typography.css" rel="Stylesheet" type="text/css" media="all" />
+	<link href="stylesheet/prettyPhoto.css" rel="Stylesheet" type="text/css" media="all" />
+	<link href="stylesheet/ui-lightness/jquery-ui-1.8.2.custom.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="images/favicon.ico" />
+    <script src="javascript/jquery-1.3.2.js" type="text/javascript" charset="utf-8"></script>
+	<script src="javascript/tinymce/jscripts/tiny_mce/tiny_mce.js" type="text/javascript"></script>
+    <script src="javascript/jquery-ui-1.8.2.custom.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascript/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascript/jquery.maskedinput-1.2.2.js" type="text/javascript" charset="utf-8"></script>
+	<script src="javascript/passwordStrengthMeter.js" type="text/javascript" charset="utf-8"></script>
+	<script src="javascript/tools-form.js" type="text/javascript" charset="utf-8"></script>
+	<script src="javascript/tools-photos.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascript/tools-results.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascript/tools-dashboard.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascript/tools-validation.js" type="text/javascript" charset="utf-8"></script>
+	<script src="javascript/tools.js" type="text/javascript" charset="utf-8"></script>
+    <meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8" />
+    <meta http-equiv="content-language" content="pt-br" />
+    <meta name="author" content="" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="reply-to" content="" />
+</head>
+<body>
+<div id="top">
+	<h1><a href="#" title="Link para: página inicial do sistema - dashboard">O Corretor Imobiliário</a></h1>
+	<ul class="navBar">
+		<li><a href="javascript:void(0)" title="ao clique, abre-se o menu suspenso para imobiliária">Imobiliária</a>
+			<ul>
+				<li><a href="#" title="Link para: página com a função de alterar dados da imobiliária">Alterar Dados da Imobiliária</a></li>
+				<li><a href="#" title="Link para: página com a função de listar funcionários">Listar funcionários</a></li>
+				<li class="separator"><a href="#" title="Link para: página com a função de cadastrar funcionário">Cadastrar Funcionários</a></li>
+			</ul>
+		</li>
+		<li><a href="javascript:void(0)" title="ao clique, abre-se o menu suspenso para imóveis">Imóveis</a>
+			<ul>
+				<li><a href="index.html" title="Link para: página com a função de listar dados">Listar Dados</a></li>
+				<li><a href="form.html" title="Link para: página com a função de alterar meus dados">Alterar meus Dados</a></li>
+			</ul>
+		</li>
+		<li><a href="javascript:void(0)" title="Link para: página com a função de clientes">Clientes</a></li>
+	</ul>
+</div>
+
+<div id="navTop">
+	<div id="tools">
+		<div class="information">
+			<span id="notice"><span>&nbsp;</span><h1>Login realizado com sucesso.</h1></span>
+			<script type="text/javascript">
+			//<![CDATA[
+				setTimeout(function() { $('.information').fadeOut('slow'); }, 10000);
+			//]]>
+			</script>
+		</div>
+		<div class="logged">
+			<span><img src="images/user-img.gif" alt="Imagem de identificação do usuário: Nome do Usuário" title="Imagem de identificação do usuário: Nome do Usuário" /></span>
+			<div>
+				<h2>Alex Roveda</h2>
+				<h3>Imobiliária Ticaracatica</h3>
+			</div>
+			<ul>
+				<li><a href="javascript:void(0);" title="Link para: função de sair do sistema">sair do sistema</a></li>
+				<li>.</li>
+				<li><a href="javascript:void(0);" title="Link para: página com a função de alterar meus dados">meus dados</a></li>
+			</ul>
+		</div>
+	</div>
+	<span class="clear">&nbsp;</span>
+</div>
+
+<div id="container">
+	<span class="container-top">&nbsp;</span>
+	<div id="sidebar">
+		<div class="box menu">
+			<h2>Administrar</h2>
+			<p>Opções disponíveis para manutenção em dados de Clientes.</p>
+			<ul>
+				<li><a href="#" title="">Cadastrar cliente</a></li>
+				<li><a href="#" title="">Listar clientes</a></li>
+				<li class="separator"><a href="#" title="">Consultar cliente</a></li>
+			</ul>
+		</div>
+		<span class="clear">&nbsp;</span>
+	</div>
+	<div id="main">
+		<div class="localization">
+			<h2><em>Onde estou?</em>Cadastro de Cliente</h2>
+			<em class="right">ir para: <a href="#" title="">Área de trabalho</a></em>
+		</div>
+		<span class="separator">&nbsp;</span>
+		<div class="box fields">
+			<form method="" action="">
+				<h3>Dados Pessoais</h3>
+				<div class="field">
+					<span>
+						<label for="txtName">Nome
+							<a href="javascript: void(0)" title="" class="showHelp">[?]</a>
+							<input type="text" name="txtName" class="obg" />
+						</label>
+						<span class="help"><a href="javascript: void(0)" title="">x</a> Este campo é de preenchimento obrigatório</span>
+					</span>
+					<div class="clear">&nbsp;</div>
+				</div>
+				<div class="field">
+					<span>
+						<label for="txtCnpj">CNPJ
+							<a href="javascript: void(0)" title="" class="showHelp">[?]</a>
+							<input type="text" name="txtCnpj" class="cnpj" />
+						</label>
+						<span class="help"><a href="javascript: void(0)" title="">x</a> Este campo é de preenchimento obrigatório</span>
+						<span class="message">Informe um CsssNPJ válido</span>
+					</span>
+					<div class="clear">&nbsp;</div>
+				</div>
+				<div class="field triple">
+					<span>
+						<label for="txtPhone">Telefone
+							<input type="text" name="txtPhone" class="phone" />
+						</label>
+					</span>
+					<span>
+						<label for="txtEmail">Email
+							<input type="text" name="txtEmail" class="email" />
+						</label>
+						<span class="message">Informe um Email válido</span>
+					</span>
+					<span>
+						<label for="txtCPF">CPF
+							<input type="text" name="txtCPF" class="cpf" />
+						</label>
+						<span class="message">Informe um CPF válido</span>
+					</span>
+					<div class="clear">&nbsp;</div>
+				</div>
+				<div class="field">
+					<span>
+						<label for="txtName">Arquivo
+							<a href="javascript: void(0)" title="" class="showHelp">[?]</a>
+							<input type="file" name="txtName" size="75" />
+						</label>
+						<span class="help"><a href="javascript: void(0)" title="">x</a> Este campo é de preenchimento obrigatório</span>
+					</span>
+					<div class="clear">&nbsp;</div>
+				</div>
+				<div class="field triple">
+					<span>
+						<label for="txtPass">Senha
+							<a href="javascript: void(0)" title="" class="showHelp">[?]</a>
+							<input type="password" name="txtPass" />
+						</label>
+						<span class="help"><a href="javascript: void(0)" title="">x</a> A senha deve conter no mínimo 6 caracteres</span>
+						<span class="message">A senha deve conter no mínimo 6 caracteres</span>
+					</span>
+					<span>
+						<label for="txtConfirmPass">Confirmar Senha
+							<input type="password" name="txtConfirmPass" class="confirm" />
+						</label>
+						<span class="message">A senha de confirmação é diferente</span>
+					</span>
+					<span>
+						<label>Força da Senha
+							<span class="password-strength">Indefinido</span>
+						</label>
+					</span>
+					<div class="clear">&nbsp;</div>
+				</div>
+				<div class="field">
+					<span class="searchBtn">
+						<input type="hidden" name="txtId" id="txtId" />
+						<label for="txtNamee">Nome
+						<input type="text" name="txtNamee" id="txtNamee" disabled="disabled" />
+						<a href="javascript:createSearchPopup('list-table.html', 760, 540)" title="filtrar dados" class="filter">...</a></label>
+					</span>
+					<div class="clear">&nbsp;</div>
+				</div>
+				<div class="field double">
+					<span>
+						<label for="txtName">Nome
+							<a href="javascript: void(0)" title="" class="showHelp">[?]</a>
+							<input type="text" name="txtName" class="datepicker" />
+						</label>
+						<span class="help"><a href="javascript: void(0)" title="">x</a> Este campo é de preenchimento obrigatório</span>
+					</span>
+					<span class="searchBtn">
+						<label for="txtName">Nome
+						<input type="text" name="txtName" disabled="disabled" />
+						<a href="#" title="filtrar dados" class="filter">...</a></label>
+					</span>
+					<div class="clear">&nbsp;</div>
+				</div>
+				<div class="field double">
+					<span class="">
+						<label for="txtName">Nome
+							<a href="javascript: void(0)" title="" class="showHelp">[?]</a>
+							<input type="text" name="txtName" class="datepicker" />
+						</label>
+						<span class="help"><a href="javascript: void(0)" title="">x</a> Este campo é de preenchimento obrigatório</span>
+					</span>
+
+					<div class="clear">&nbsp;</div>
+				</div>
+				<span class="separator">&nbsp;</span>
+				<h3>Dados Pessoais</h3>
+				<p>Dadosd sdshadhui nuhiu hadsihaifd ihfdsiahfihadsfiu hdusihfiu ahudfis</p>
+				<div class="field triple">
+					<span class="searchBtn">
+						<label for="txtName">Data de Nascimento
+							<input type="text" name="txtName" disabled="disabled" />
+							<a href="#" title="filtrar dados" class="filter">...</a>
+						</label>
+						<span class="help">x Este campo é de preenchimento obrigatório</span>
+					</span>
+					<span>
+						<label for="txtName">Nome
+							<a href="javascript: void(0)" title="" class="showHelp">[?]</a>
+							<input type="text" name="txtName" />
+						</label>
+						<span class="help"><a href="javascript: void(0)" title="">x</a> Este campo é de preenchimento obrigatório</span>
+					</span>
+					<span>
+						<label for="txtName">Data de morte
+							<input type="text" name="txtName" class="datepicker date birth" />
+						</label>
+						<span class="message">Informe uma data válida</span>
+					</span>
+
+					<div class="clear">&nbsp;</div>
+				</div>
+				<span class="separator">&nbsp;</span>
+				<h3>Dados Pessoais</h3>
+				<p>Dadosd sdshadhui nuhiu hadsihaifd ihfdsiahfihadsfiu hdusihfiu ahudfis</p>
+				<div class="field four">
+					<span>
+						<label for="txtName">Nome
+							<input type="text" name="txtName" />
+						</label>
+					</span>
+					<span class="searchBtn">
+						<label for="txtName">Data de Nascimento
+							<input type="text" name="txtName" disabled="disabled" />
+							<a href="#" title="filtrar dados" class="filter">...</a>
+						</label>
+					</span>
+					<span>
+						<label for="txtName">Nome
+							<input type="text" name="txtName" />
+						</label>
+					</span>
+					<span>
+						<label for="txtName">Nome
+							<input type="text" name="txtName" class="datepicker" />
+						</label>
+					</span>
+					<div class="clear">&nbsp;</div>
+				</div>
+				<div class="field triple">
+					<span>
+						<label for="options">Selecione algo
+							<select>
+								<option value="item 1">item 1</option>
+								<option value="item 1">item 1</option>
+								<option value="item 1">item 1</option>
+							</select>
+						</label>
+					</span>
+					<span class="">
+						<label for="options">Selecione algo
+							<select>
+								<option value="item 1">item 1</option>
+								<option value="item 1">item 1</option>
+								<option value="item 1">item 1</option>
+							</select>
+						</label>
+					</span>
+					<span class="">
+						<label for="options">Selecione algo
+							<select>
+								<option value="item 1">item 1</option>
+								<option value="item 1">item 1</option>
+								<option value="item 1">item 1</option>
+							</select>
+						</label>
+					</span>
+					<div class="clear">&nbsp;</div>
+				</div>
+				<div class="field">
+					<span>
+						<fieldset>
+							<legend>Selecione algom de bom</legend>
+							<span class="item">
+								<input type="checkbox" name="opt" value="1" />item 1
+							</span>
+							<span class="item">
+								<input type="checkbox" name="opt" value="2" />item 2
+							</span>
+							<span class="item">
+								<input type="checkbox" name="opt" value="3" />item 3
+							</span>
+							<span class="item">
+								<input type="checkbox" name="opt" value="4" />item 4
+							</span>
+							<span class="item">
+								<input type="checkbox" name="opt" value="4" />item 4
+							</span>
+						</fieldset>
+					</span>
+				</div>
+				<div class="field">
+					<span class="">
+						<fieldset>
+							<legend>Selecione algom de bom</legend>
+							<span class="item">
+								<input type="checkbox" name="opt" value="1" />item 1
+							</span>
+							<span class="item">
+								<input type="checkbox" name="opt" value="2" />item 2
+							</span>
+							<span class="item">
+								<input type="checkbox" name="opt" value="3" />item 3
+							</span>
+							<span class="item">
+								<input type="checkbox" name="opt" value="4" />item 4
+							</span>
+							<span class="item">
+								<input type="checkbox" name="opt" value="4" />item 4
+							</span>
+						</fieldset>
+					</span>
+				</div>
+				<div class="field">
+					<span>
+						<fieldset>
+							<legend>Selecione algom de bom</legend>
+							<span class="item">
+								<input type="radio" name="opt" value="1" />item 1
+							</span>
+							<span class="item">
+								<input type="radio" name="opt" value="2" />item 2
+							</span>
+							<span class="item">
+								<input type="radio" name="opt" value="3" />item 3
+							</span>
+							<span class="item">
+								<input type="radio" name="opt" value="4" />item 4
+							</span>
+							<span class="item">
+								<input type="radio" name="opt" value="4" />item 4
+							</span>
+							<span class="item">
+								<input type="radio" name="opt" value="4" />item 4
+							</span>
+							<span class="item">
+								<input type="radio" name="opt" value="4" />item 4
+							</span>
+							<span class="item">
+								<input type="radio" name="opt" value="4" />item 4
+							</span>
+							<span class="item">
+								<input type="radio" name="opt" value="4" />item 4
+							</span>
+							<span class="item">
+								<input type="radio" name="opt" value="4" />item 4
+							</span>
+							<span class="item">
+								<input type="radio" name="opt" value="4" />item 4
+							</span>
+						</fieldset>
+					</span>
+				</div>
+
+				<div class="field">
+					<span>
+						<label for="txtDescription">Descrição
+							<textarea name="editor1" rows="7" cols="85"></textarea>
+						</label>
+					</span>
+				</div>
+				<div class="field">
+					<span class="">
+						<label for="txtDescription">Descrição
+							<textarea name="editor1" rows="7" cols="85"></textarea>
+						</label>
+					</span>
+				</div>
+				<div class="actions">
+					<input type="submit" value="cadastrar" />
+					<input type="reset" value="limpar" />
+				</div>
+			</form>
+		</div>
+
+	</div>
+	<span class="container-bottom">&nbsp;</span>
+</div>
+
+<div id="footer">
+	<p>copyright &copy; 2010. todos os direitos reservados para OMercadao.com.</p><a href="#top">topo</a>
+</div>
+
+</body>
+</html>
+

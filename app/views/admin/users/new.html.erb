@@ -1,0 +1,9 @@
+<% content_for :sidebar do %>
+  <%= error_message_for(@user) %>
+<% end %>
+
+<% content_for :main do  %>
+  <%= onde_estou "Cadastro de #{@user.class.to_s}",true %>
+  <%= render :partial => 'form' %>
+<% end %>
+

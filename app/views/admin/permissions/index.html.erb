@@ -1,0 +1,30 @@
+<h1>Listing permissions</h1>
+
+<table>
+  <tr>
+    <th>Role</th>
+    <th>Model name</th>
+    <th>Actions</th>
+    <th>Situation</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @permissions.each do |permission| %>
+  <tr>
+    <td><%= permission.role %></td>
+    <td><%= permission.model_name %></td>
+    <td><%= permission.actions %></td>
+    <td><%= permission.situation %></td>
+    <td><%= link_to 'Show', admin_permission_path(permission) %></td>
+    <td><%= link_to 'Edit', edit_admin_permission_path(permission) %></td>
+    <td><%= link_to 'Destroy', [:admin,permission], :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Permission', new_admin_permission_path %>
+

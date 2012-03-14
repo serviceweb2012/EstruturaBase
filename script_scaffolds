@@ -1,0 +1,14 @@
+rails g scaffold FourOhFour host:string path:string referer:string count:integer
+
+rails g scaffold Location street:string number:string district:string city:string state:string uf:string url_site:string cep:string phone:string email:string url_map:string image_file_name:string image_content_type:string image_file_size:integer
+
+rails g scaffold Menu name:string position:integer adm:boolean situation:boolean
+
+rails g scaffold SubMenu menu:references name:string title:string url:string position:integer separator:boolean adm:boolean situation:boolean
+
+rails g scaffold Role name:string value:integer situation:booelan
+
+rails g scaffold Permission role:references model_name:string actions:string situation:booelan
+
+rails g scaffold ReportError user:references name:string content:string
+

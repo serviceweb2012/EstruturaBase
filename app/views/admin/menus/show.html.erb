@@ -1,0 +1,38 @@
+<div class="info">
+<h2><%= @menu.name %></h2>
+<%= show_field(@menu,:name) %>
+<%= show_field(@menu,:adm) %>
+<%= show_field(@menu,:situation) %>
+
+
+
+<h2>Casa de alvenaria</h2>
+		<p><em>Data de Cadastro: </em>01/01/2010</p>
+		<p><em>Cliente: </em>Chundaloco</p>
+		<p><em>Endereço: </em>Av. Brasil, 4021. Bla bla bla</p>
+		<h3>Características</h3>
+		<ul class="skills">
+			<li>Área total: 120m²</li>
+			<li>Área útil: 120m²</li>
+			<li>Idade do Imóvel: 2 anos</li>
+			<li>Isento de IPTU: Não</li>
+			<li>Valor do IPTU: R$ 100,00</li>
+			<li>2 Dormitórios</li>
+			<li>2 BWC</li>
+			<li>Sala</li>
+			<li>Cozinha</li>
+			<li>Copa</li>
+			<li>Sala de Jantar</li>
+			<li>Ar condicionado</li>
+			<li>Escritório</li>
+			<li>Quintal</li>
+			<li>Churrasqueira</li>
+			<li>Jardim</li>
+			<li>Alarme</li>
+			<li>Piscina</li>
+		</ul>
+
+<%= link_to 'Edit', edit_admin_menu_path(@menu) %> |
+<%= link_to 'Back', admin_menus_path %>
+</div>
+

@@ -1,0 +1,19 @@
+<%= form_for [:admin,@role] do |f| %>
+  <%= error_message_for(@role) %>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :value %><br />
+    <%= f.text_field :value %>
+  </div>
+  <div class="field">
+    <%= f.label :situation %><br />
+    <%= f.check_box :situation %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+

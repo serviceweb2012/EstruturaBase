@@ -1,0 +1,30 @@
+<% content_for :sidebar do %>
+<div class="box stats">
+  <h2>Estatísticas</h2>
+  <p>Dados encontrados até o presente momento no sistema.</p>
+  <ul>
+			<li><span><%= @size %></span>menus</li>
+	</ul>
+</div>
+<div class="box message">
+		<h2>Aviso importante</h2>
+		<p>Aqui vão mensagens de aviso por exemplo:</p>
+		<p>Você possui N recados pendetes para aprovação</p>
+		<a href="javascript:void(0);" title="Link para: página de listagem de comentários">comentários</a>
+</div>
+<% end %>
+
+<% content_for :main do %>
+    <%= onde_estou "Dashboard",admin_root_path,'Area de trabalho/javascripts/sistema/' %>
+		<div class="box dashboard">
+			<ul>
+				<li>
+					<a href="options.html?iframe=true&width=740" title="ao clicar, abre-se menu de acesso rápido as funções, com possibilidade de relatórios e pesquisa" rel="prettyPhoto[iframe]">
+						<img src="/images/icons/customer.png" alt="" title="" />
+						<em>clientes</em>
+					</a>
+				</li>
+			</ul>
+		</div>
+<% end %>
+

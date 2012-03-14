@@ -1,0 +1,24 @@
+<%= form_for [:admin,@permission] do |f| %>
+  <%= error_message_for(@permission) %>
+
+  <div class="field">
+    <%= f.label :role %><br />
+    <%= f.text_field :role %>
+  </div>
+  <div class="field">
+    <%= f.label :model_name %><br />
+    <%= f.text_field :model_name %>
+  </div>
+  <div class="field">
+    <%= f.label :actions %><br />
+    <%= f.text_field :actions %>
+  </div>
+  <div class="field">
+    <%= f.label :situation %><br />
+    <%= f.text_field :situation %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+

@@ -1,0 +1,7 @@
+  <div class="box fields">
+  <%= form_for 'admin_usuarios_path' do |f| %>
+    <%= create_password_container(@user,:password,{},{:input_type => "password",:class => "password"}) %>
+    <%= f.submit 'Cadastrar' %>
+  <% end %>
+  </div>
+

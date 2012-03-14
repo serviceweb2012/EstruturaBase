@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  position: 1
+  adm: false
+  situation: false
+
+two:
+  name: MyString
+  position: 1
+  adm: false
+  situation: false

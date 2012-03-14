@@ -1,0 +1,9 @@
+<% content_for :sidebar do %>
+  <%= error_message_for(@sub_menu) %>
+<% end %>
+
+<% content_for :main do  %>
+  <%= onde_estou "Edição de #{@sub_menu.class.human_name}",admin_root_path,'Dashboard' %>
+  <%= render :partial => 'form',:locals => {:button_label => "Editar"} %>
+<% end %>
+

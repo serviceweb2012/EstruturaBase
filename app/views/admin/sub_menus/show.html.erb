@@ -1,0 +1,46 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Menu:</b>
+  <%= @sub_menu.menu %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @sub_menu.name %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @sub_menu.title %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%= @sub_menu.url %>
+</p>
+
+<p>
+  <b>Position:</b>
+  <%= @sub_menu.position %>
+</p>
+
+<p>
+  <b>Separator:</b>
+  <%= @sub_menu.separator %>
+</p>
+
+<p>
+  <b>Adm:</b>
+  <%= @sub_menu.adm %>
+</p>
+
+<p>
+  <b>Situation:</b>
+  <%= @sub_menu.situation %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_sub_menu_path(@sub_menu) %> |
+<%= link_to 'Back', admin_sub_menus_path %>
+

@@ -1,0 +1,24 @@
+<%= form_for [:admin,@four_oh_four] do |f| %>
+  <%= error_message_for(@four_oh_four) %>
+
+  <div class="field">
+    <%= f.label :host %><br />
+    <%= f.text_field :host %>
+  </div>
+  <div class="field">
+    <%= f.label :path %><br />
+    <%= f.text_field :path %>
+  </div>
+  <div class="field">
+    <%= f.label :referer %><br />
+    <%= f.text_field :referer %>
+  </div>
+  <div class="field">
+    <%= f.label :count %><br />
+    <%= f.text_field :count %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+

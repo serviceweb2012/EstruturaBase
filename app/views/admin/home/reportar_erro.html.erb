@@ -1,0 +1,7 @@
+<% form_for @erro, :url => enviar_erro_path do |f| -%>
+	<% table_form_model(@erro, :model_name => "do Erro", :style => "style='width:740px;'") do |e| %>
+		<%= field_for_form(f, e, :erro) %>
+		<%= field_for_form(f, e, :mensagem, { :field_type => :text }, { :rows => 10 }) %>
+		<%= submit_for_form(f, "Enviar erro") %>
+	<% end %>
+<% end -%>

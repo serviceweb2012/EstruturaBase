@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  host: MyString
+  path: MyString
+  referer: MyString
+  count: 1
+
+two:
+  host: MyString
+  path: MyString
+  referer: MyString
+  count: 1

@@ -1,0 +1,30 @@
+<h1>Listing four_oh_fours</h1>
+
+<table>
+  <tr>
+    <th>Host</th>
+    <th>Path</th>
+    <th>Referer</th>
+    <th>Count</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @four_oh_fours.each do |four_oh_four| %>
+  <tr>
+    <td><%= four_oh_four.host %></td>
+    <td><%= four_oh_four.path %></td>
+    <td><%= four_oh_four.referer %></td>
+    <td><%= four_oh_four.count %></td>
+    <td><%= link_to 'Show', admin_four_oh_four_path(four_oh_four) %></td>
+    <td><%= link_to 'Edit', edit_admin_four_oh_four_path(four_oh_four) %></td>
+    <td><%= link_to 'Destroy', [:admin,four_oh_four], :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Four oh four', new_admin_four_oh_four_path %>
+

@@ -1,0 +1,33 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  street: MyString
+  number: MyString
+  district: MyString
+  city: MyString
+  state: MyString
+  uf: MyString
+  url_site: MyString
+  cep: MyString
+  phone: MyString
+  email: MyString
+  url_map: MyString
+  image_file_name: MyString
+  image_content_type: MyString
+  image_file_size: 1
+
+two:
+  street: MyString
+  number: MyString
+  district: MyString
+  city: MyString
+  state: MyString
+  uf: MyString
+  url_site: MyString
+  cep: MyString
+  phone: MyString
+  email: MyString
+  url_map: MyString
+  image_file_name: MyString
+  image_content_type: MyString
+  image_file_size: 1

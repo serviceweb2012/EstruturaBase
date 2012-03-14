@@ -1,0 +1,88 @@
+body {font: normal 62.5% "Trebuchet Ms", Helvetica, Arial, Tahoma, Sans-serif;}
+
+.logged h2 {font-weight: normal;font-size: 2.0em;}
+.logged h3 {font-weight: normal;font-size: 1.3em;line-height: 1.8em;}
+
+.logged ul li {line-height: 2em;}
+.logged ul li a{font-size: 1.3em;}
+
+#top .navBar li a {line-height: 1.9em;font-size: 1.5em;font-weight: bold;text-transform: uppercase;}
+#top .navBar li ul li a,	
+.options ul li a {line-height: 2em;font-size: 1.3em;font-weight: normal;text-transform: none;}
+.options .info ul li {line-height: 1.6em;font-size: 1.3em;font-weight: normal;text-transform: none;}
+
+#sidebar .box h2,
+#main .localization h2 {font-weight: bold;font-size: 2.1em;}
+.options .localization h2,
+.options ul li h2,
+.options .info h2 {font-weight: bold;font-size: 1.6em;}
+#sidebar .box p {font-weight: normal;font-size: 1.3em;line-height: 1.15em;}
+#sidebar .box ul li {font-weight: normal;font-size: 1.5em;font-style: normal;}
+#main .localization h2 em {font-weight: normal;font-size: .6em;font-style: normal;}
+#main .localization em ,
+.options .localization em,
+.options table tbody tr td em {font-weight: normal;font-size: 1.1em;font-style: normal;}
+#sidebar .box.message a {font-weight: bold;font-size: 1.4em;line-height: 2.1em;text-align: center;}
+.options .info h3,
+.options .results li h3,
+.options table tbody tr td h3 {font-size: 1.3em;}
+.options .results li em {font-style: normal;}
+
+.options .localization a {font-size: 1.2em;font-style: normal;}
+#main .localization a {font-size: 1.1em;line-height: 2.2em;}
+.search form label {font-weight: normal;font-size: 1.2em;line-height: 3em;}
+.search form span input {font-size: 1.5em;}
+.search form input.btn {text-transform: uppercase;font-size: 1.2em;}
+.search form a {text-align: center;}
+#main .search .filters em,
+#main .tools em,
+.options .results li em,
+.search .triggerAction {font-size: 1.2em;font-style: normal;}
+#main .search .filters ul li a {font-size: 1.3em;font-style: normal;}
+#main .search .filters span em,
+#main .search .filters span p {font-size: 1.2em;font-weight: bold;font-style: normal;}
+
+.options .info p em {font-weight: bold;font-style: normal;}
+
+#main .search form a {text-transform: uppercase;font-weight: bold;font-size: 1.4em;line-height: 2.8em;}
+
+#main .results ul li .info h2 {font-size: 1.6em;font-weight: bold;}
+#main .results ul li .info em.address,
+#main .results ul li .info p {font-size: 1.2em;font-weight: normal;font-style: normal;}
+#main .results ul li .info p {line-height: 1em;}
+#main .results ul li .info p.owner em {font-weight: bold;font-style: normal;}
+#main .results ul li .info span {font-size: 1.9em;font-weight: bold;text-align: center;line-height: 2em;}
+#main .results ul li ul.options li a {font-size: 1.2em;}
+
+#main .tools ul li,
+#main .tools a,
+.options .show li a,
+span.help {font-size: 1.1em;font-style: normal;}
+
+#errorExplanation {font-size: 1.2em;}
+#errorExplanation h2 {font-size: 1.4em;}
+
+.field label,
+.field fieldset,
+#main form p,
+.options p {font-size: 1.2em;}
+.field label {text-indent: .5em;}
+.field input[type="text"],
+.field input[type="file"],
+.field input[type="password"],
+.field textarea,
+.field select {font-size: 1.3em;}
+.field select {font-size: 1.2em;}
+
+#main form h3,
+.options  h1 {font-size: 1.6em;}
+
+.field label em {font-style: normal;}
+#main form .actions input[type="reset"],
+#main form .actions input[type="submit"],
+.options table tbody tr td a {font-weight: bold;font-size: 1.4em;}
+
+#footer {font-size: 1.1em;line-height: 1.6em;}
+span#notice h1 {font-size: 1.5em;}
+
+.pagination {font-size: 1.2em;}

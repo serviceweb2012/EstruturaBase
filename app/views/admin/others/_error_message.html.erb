@@ -1,0 +1,12 @@
+﻿<% if target.errors.any? %>
+    <div id="errorExplanation" class="errorExplanation" style="margin-top :0px">
+      <h2><%= pluralize(target.errors.count, "erros") %> encontrados</h2>
+
+      <ul>
+      <% target.errors.full_messages.each do |msg| %>
+        <li><%= link_to msg,'#',:rel => "errors"%></li>
+      <% end %>
+      </ul>
+    </div>
+<% end %>
+
