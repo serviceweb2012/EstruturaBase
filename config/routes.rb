@@ -6,6 +6,9 @@ EstruturaBase::Application.routes.draw do
 
   #rotas publicas
 
+  #rotas fixas
+  match '/admin/home/:id/enabled_disabled' => "admin/home#enabled_disabled"
+
   #rotas devise
   devise_for :users,:controllers => { :sessions => "admin/sessions" }
 

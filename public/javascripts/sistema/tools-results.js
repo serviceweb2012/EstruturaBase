@@ -106,6 +106,8 @@ jQuery(document).ready(function(){
 		}
 	});
 
+
+
 });
 
 function closeSearchPopup(id_field, value, id){

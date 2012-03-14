@@ -665,9 +665,39 @@ module ApplicationHelper
           container << "</li>"
 
           if l.respond_to? :situation
-            container << "<li>"
-            container << link_to('desativar','javascript:void(0)',:class =>'status')
-            container << "</li>"
+            if l.situation == true
+              container << "<li>"
+              container << link_to('desativar',
+                            {
+                              :controller => "admin/home",
+                              :action => "enabled_disabled",
+                              :id => l.id,
+                              :name => modelo.to_s
+                            },
+                              :alt => "ação : desativar",
+                              :title => "ação desativar registro",
+                              :class => "status",
+                              #:rel => "status",
+                              :remote => true
+                            )
+              container << "</li>"
+            else
+              container << "<li>"
+              container << link_to('ativar',
+                            {
+                              :controller => "admin/home",
+                              :action => "enabled_disabled",
+                              :id => l.id,
+                              :name => modelo.to_s
+                            },
+                              :alt => "ação : ativar",
+                              :title => "ação ativar registro",
+                              :class => "status",
+                              #:rel => "status",
+                              :remote => true
+                            )
+              container << "</li>"
+            end
           end
 
           container << "</ul>"

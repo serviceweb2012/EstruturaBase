@@ -40,11 +40,12 @@ class Admin::HomeController < ApplicationController
         end
         object.save
       end
-      respond_to do |format|
-        format.js { render :update do |page|
-          page.reload
-        end }
-      end
+      #respond_to do |format|
+      #  format.js { render :update do |page|
+      #    page.reload
+      #  end }
+      #end
+      #respond_with object
    end
 
    def delete_all
