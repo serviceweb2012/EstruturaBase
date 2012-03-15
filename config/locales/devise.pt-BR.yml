@@ -1,0 +1,38 @@
+# Additional translations at https://github.com/plataformatec/devise/wiki/I18n
+
+ptbr:
+  errors:
+    messages:
+      expired: "has expired, please request a new one"
+      not_found: "not found"
+      already_confirmed: "was already confirmed, please try signing in"
+      not_locked: "was not locked"
+      not_saved:
+        one: "1 error prohibited this %{resource} from being saved:"
+        other: "%{count} errors prohibited this %{resource} from being saved:"
+
+  devise:
+    failure:
+      already_authenticated: 'Você já está logado.'
+      unauthenticated: 'Você precisa de autenticar antes de continuar.'
+      locked: 'Sua conta está bloqueada.'
+      invalid: 'Login ou Senha inválidos.'
+      invalid_token: 'Invalid authentication token.'
+    sessions:
+      signed_in: 'Login realizado com sucesso.'
+      signed_out: 'Logout realizado com sucesso.'
+    passwords:
+      send_instructions: 'Você irá receber em seu email instruções de reenvio de senha em alguns minutos'
+      updated: 'Sua senha foi atualizada com sucesso. E você está logado.'
+      updated_not_active: 'Sua senha foi atualizada com sucesso.'
+      send_paranoid_instructions: "Se o seu email existe na base de dados, você irá receber a recuperação de senha no seu email"
+   unlocks:
+      send_instructions: 'Você irá receber um email com instruções de destravamento de senha em poucos minutos.'
+      unlocked: 'Sua conta foi desbloqueada, agora você está logado.'
+      send_paranoid_instructions: 'Se sua conta existe, você irá receber um email com instruçõs de desbloqueio em poucos minutos.'
+    mailer:
+      reset_password_instructions:
+        subject: 'Instruções de atualização de senha'
+      unlock_instructions:
+        subject: 'Intruções de desbloqueio'
+

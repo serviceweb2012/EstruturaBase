@@ -459,6 +459,34 @@ module ApplicationHelper
   end
 
 
+  #metodo para exibir o search tools em telas de index
+  #argumento route_for_seach é a rota que vai ser chamada o clicar no botão 'buscar'
+  #argumento route_for_new é a rota para onde vai ao ser clicado o botão 'novo'
+  #argumento count é o total de registros encontrados
+  ###opções do hash 'options'
+  ### :show_new_button => true/false define se vai existir o botão para novo registro
+  def search_tools(route_for_new,count,options = {})
+    #options
+    show_new_button = options[:show_new_button].nil? ? true : options[:show_new_button]
+    container = %()
+    container << "<div class='box search'>"
+    container << "<form action='' method=''>"
+    container << "<label for='txtSearch'>Buscar por termo"
+    container << "<span><input type='text' name='search' /></span></label>"
+    container << "<input type='submit' class='btn' value='buscar' />"
+    container << link_to('novo registro',"#{route_for_new}",:title => "novo(a) registro") if show_new_button == true
+    container << "</form>"
+  	container << "<span class='filters'>"
+  	container << "<span><p><em>#{count}</em> registro(s) encontrado(s)</p></span>"
+    container << "<em>Filtros selecionados: </em>"
+    container << "<ul></ul>"
+    container << "</span>"
+		container << link_to('mostrar ações','javascript:void(0)',:class => "triggerAction",:title => "clique para abri as ações")
+		container << "<span class='separator'>&nbsp;</span></div>"
+		container.html_safe
+  end
+
+
   #metodo que cria um combo box para formulários
   #argumento 'objeto' é o objeto que será gravado, exemplo tela de Novo Cliente objeto é @client
   #argumento 'campo' é o campo que vai ser gravado geralmente é salvo o id, ex : passado campo 'menu' é concatenado 'menu_id' para gravar
@@ -666,7 +694,7 @@ module ApplicationHelper
 
           if l.respond_to? :situation
             if l.situation == true
-              container << "<li>"
+              container << "<li class='ativado'>"
               container << link_to('desativar',
                             {
                               :controller => "admin/home",
@@ -682,7 +710,7 @@ module ApplicationHelper
                             )
               container << "</li>"
             else
-              container << "<li>"
+              container << "<li class='desativado'>"
               container << link_to('ativar',
                             {
                               :controller => "admin/home",
@@ -726,32 +754,7 @@ module ApplicationHelper
     container.html_safe
   end
 
-  #metodo para exibir o search tools em telas de index
-  #argumento route_for_seach é a rota que vai ser chamada o clicar no botão 'buscar'
-  #argumento route_for_new é a rota para onde vai ao ser clicado o botão 'novo'
-  #argumento count é o total de registros encontrados
-  ###opções do hash 'options'
-  ### :show_new_button => true/false define se vai existir o botão para novo registro
-  def search_tools(route_for_new,count,options = {})
-    #options
-    show_new_button = options[:show_new_button].nil? ? true : options[:show_new_button]
-    container = %()
-    container << "<div class='box search'>"
-    container << "<form action='' method=''>"
-    container << "<label for='txtSearch'>Buscar por termo"
-    container << "<span><input type='text' name='search' /></span></label>"
-    container << "<input type='submit' name='search' class='btn' value='buscar' />"
-    container << link_to('novo registro',"#{route_for_new}",:title => "novo(a) registro") if show_new_button == true
-    container << "</form>"
-  	container << "<span class='filters'>"
-  	container << "<span><p><em>#{count}</em> registro(s) encontrado(s)</p></span>"
-    container << "<em>Filtros selecionados: </em>"
-    container << "<ul></ul>"
-    container << "</span>"
-		container << link_to('mostrar ações','javascript:void(0)',:class => "triggerAction",:title => "clique para abri as ações")
-		container << "<span class='separator'>&nbsp;</span></div>"
-		container.html_safe
-  end
+
 
   #metodo para exibir a barra de filtros na busca
   def filter_tools()

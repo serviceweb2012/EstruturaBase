@@ -98,10 +98,10 @@ jQuery(document).ready(function(){
 
 	$('.status').click(function() {
 		if ($(this).text() == "desativar") {
-			$(this).parent().parent().parent().css('background-position','bottom center');
+			//$(this).parent().parent().parent().css('background-position','bottom center');
 			$(this).text("ativar");
 		} else {
-			$(this).parent().parent().parent().css('background-position','top center');
+			//$(this).parent().parent().parent().css('background-position','top center');
 			$(this).text("desativar");
 		}
 	});

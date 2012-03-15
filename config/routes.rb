@@ -10,7 +10,7 @@ EstruturaBase::Application.routes.draw do
   match '/admin/home/:id/enabled_disabled' => "admin/home#enabled_disabled"
 
   #rotas devise
-  devise_for :users,:controllers => { :sessions => "admin/sessions" }
+  devise_for :users,:controllers => { :sessions => "admin/sessions", :unlocks => "admin/unlocks",:passwords => "admin/passwords" }
 
   #rotas admin
   namespace :admin do
