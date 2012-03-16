@@ -500,24 +500,47 @@ module ApplicationHelper
     container << link_to('mostrar ações','javascript:void(0)',:class => "triggerAction",:title => "clique para abri as ações")
     container << "</span>"
     container << "<div class='box tools'>"
-    container << "</span><input type='checkbox' name='' value='' class='markAll' /><em>marcar todos</em>"
+    container << "<span>"
+    container << "<input type='checkbox' name='' value='' class='markAll' /><em>marcar todos</em>"
+    container << select_acoes_massa
+    container << "</span>"
+    container << "<span>"
+    container << select_order_and_per_page
     container << "</span>"
     container << "</div>"
 		container << "<span class='separator'>&nbsp;</span></div>"
 		container.html_safe
   end
 
-  #			<span>
-	#		<input type="checkbox" name="" value="" class="markAll"/><em>marcar todos</em>
-	#			<ul>
-	#				<li><a href="javascript: void(0);" title="">ações em massa</a>
-	#				<ul>
-	#					<li><a href="#" title="">item</a></li>
-	#					<li><a href="#" title="">item</a></li>
-	#				</ul>
-		#			</li>
-		#		</ul>
-		#	</span>
+  def select_order_and_per_page
+    container = %()
+    container << "<ul><li>#{link_to 'ordenar dados','javascript:void(0)',:title => 'clique para escolher quantos itens por página deseja exibir'}"
+    container << "<ul>"
+    container << "<li>#{link_to 'coluna','#',:title => 'ordenar por coluna ...'}</li>"
+    container << "</ul></li></ul>"
+    container << "<ul class='show'>"
+    container << "<li>#{link_to 'mostrar 15','#',:title => 'exibir 15 itens'}"
+    container << "<ul>"
+    container << "<li>#{link_to 'mostrar 30','#',:title => 'exibir 30 itens'}</li>"
+    container << "<li>#{link_to 'mostrar 50','#',:title => 'exibir 50 itens'}</li>"
+    container << "<li>#{link_to 'mostrar 100','#',:title => 'exibir 100 itens'}</li>"
+    container << "</ul></li></ul>"
+    container.html_safe
+  end
+
+  def select_acoes_massa
+    container = %()
+    container << "<ul>"
+    container << "<li>"
+    container << link_to("selecione uma ação",'javascript:void(0);',:title => "selecione uma ação em massa")
+    container << "<ul>"
+    container << "<li>#{link_to 'desativar/ativar','#'}</li>"
+    container << "<li>#{link_to 'apagar todos','#'}</li>"
+    container << "</ul>"
+    container << "</li>"
+    container << "</ul>"
+    container.html_safe
+  end
 
 
   #metodo que cria um combo box para formulários

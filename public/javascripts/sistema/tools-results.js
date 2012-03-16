@@ -71,8 +71,16 @@ jQuery(document).ready(function(){
 		}
 	});
 
-	$('.box.tools li > ul').hide();
-	$('.box.tools ul > li').click( function() {
+
+    $('.box.tools ul li').click(function(){
+        if($('.box.tools ul li ul').css('display') == 'none'){
+            $(this).find('ul').show();
+        }else if($('.box.tools ul li ul').css('display') == 'block') {
+            $(this).find('ul').css('display','none')
+        }
+    })
+	/*$('.box.tools li ul').hide();
+	$('.box.tools ul li').click( function() {
 		if ( $(this).find('ul').css('display') == 'block') {
 			$(this).find('ul').hide();
 		} else {
@@ -81,15 +89,15 @@ jQuery(document).ready(function(){
 		}
 	});
 
-	$('.box.search li > ul').hide();
-	$('.box.search ul > li').click( function() {
+	$('.box.search li ul').hide();
+	$('.box.search ul li').click( function() {
 		if ( $(this).find('ul').css('display') == 'block') {
 			$(this).find('ul').hide();
 		} else {
 			$('.box.tools li ul').hide();
 			$(this).find('ul').show();
 		}
-	});
+	});*/
 
 	$('.box.tools').hide();
 	$('.triggerAction').click(function() {
