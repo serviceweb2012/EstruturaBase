@@ -30,11 +30,12 @@
 </div>
 
 <div id="login">
-  <% if flash %>
-    <% flash.each do |key,message| %>
-      <%= message %>
-    <% end %>
+  <% if flash[:notice] || flash[:alert] %>
+    <div class='information'>
+      <span id='notice'><span>&nbsp;</span><h2><%= flash[:notice] || flash[:alert]%></h2></span>
+    </div>
   <% end %>
+  <span class="clear">&nbsp;</span>
   <%= yield %>
 </div>
 

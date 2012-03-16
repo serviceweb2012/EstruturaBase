@@ -1,7 +1,8 @@
   <div class="box fields">
   <%= form_for [:admin,@sub_menu] do |f| %>
-      <%= input_text_for_form(@sub_menu,:name)%>
-      <%= input_text_with_search(@sub_menu,:menu) %>
+      <%#= input_text_for_form(@sub_menu,:name)%>
+      <%#= input_text_with_search(@sub_menu,:menu) %>
+      <%= radio_button_for_form(f,@sub_menu,:menu,@menus)%>
       <%= create_actions_buttons("Cadastrar") %>
   <% end %>
   </div>

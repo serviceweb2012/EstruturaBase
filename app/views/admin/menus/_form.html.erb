@@ -1,17 +1,3 @@
-  <div class="box fields">
-  <%= form_for [:admin,@menu] do |f| %>
-    <!-- input_text_for_form(objeto,atributo,{ hash para opções do container},{hash para opções do input}) -->
-    <!-- opçoẽs de container :class => 'classe'  -->
-    <!-- opções de input :class => 'classe' :information => 'meu texto' -->
-    <%= input_text_for_form(@menu,:name,{},{:class => "obg",:information => "campo obg",:error_message => "não valido"}) %>
-
-    <%#create_container('field four') do %>
-      <%#= input_text_for_block(@menu,:name,{},{:class => "datepicker",:information => "campo obg",:error_message => "não valido"}) %>
-      <%#= input_text_for_block(@menu,:name,{},{:class => "obg",:information => "campo obg",:error_message => "não valido"}) %>
-      <%#= input_text_for_block(@menu,:name,{},{:class => "obg",:information => "campo obg",:error_message => "não valido"}) %>
-      <%#= input_text_for_block(@menu,:name,{},{:class => "obg",:information => "campo obg",:error_message => "não valido"}) %>
-    <%# end %>
-    <%= create_actions_buttons(button_label) %>
-  <% end %>
-  </div>
+<%= input_text_for_form(f,@menu,:name) %>
+<%= create_actions_buttons(button_label) %>
 

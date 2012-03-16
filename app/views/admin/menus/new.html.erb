@@ -4,6 +4,10 @@
 
 <% content_for :main do  %>
   <%= onde_estou "Cadastro de #{@menu.class.human_name}",admin_root_path,'Dashboard' %>
-  <%= render :partial => 'form',:locals =>{:button_label => "Cadastrar"} %>
+  <div class="box fields">
+    <%= form_for [:admin,@menu] do |f| %>
+      <%= render :partial => 'form',:locals =>{:button_label => "Cadastrar",:f => f} %>
+    <% end %>
+  </div>
 <% end %>
 

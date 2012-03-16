@@ -14,7 +14,7 @@ ptbr:
   devise:
     failure:
       already_authenticated: 'Você já está logado.'
-      unauthenticated: 'Você precisa de autenticar antes de continuar.'
+      unauthenticated: 'Você precisa se autenticar antes de continuar.'
       locked: 'Sua conta está bloqueada.'
       invalid: 'Login ou Senha inválidos.'
       invalid_token: 'Invalid authentication token.'
@@ -25,7 +25,7 @@ ptbr:
       send_instructions: 'Você irá receber em seu email instruções de reenvio de senha em alguns minutos'
       updated: 'Sua senha foi atualizada com sucesso. E você está logado.'
       updated_not_active: 'Sua senha foi atualizada com sucesso.'
-      send_paranoid_instructions: "Se o seu email existe na base de dados, você irá receber a recuperação de senha no seu email"
+      send_paranoid_instructions: "Se o seu email existe na base de dados, você irá receber a recuperação de senha no seu email'
    unlocks:
       send_instructions: 'Você irá receber um email com instruções de destravamento de senha em poucos minutos.'
       unlocked: 'Sua conta foi desbloqueada, agora você está logado.'

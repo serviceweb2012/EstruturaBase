@@ -223,6 +223,7 @@ module ApplicationHelper
   #######################################
 
   #metodo que cria um input text no formulário
+  #argumento 'form' é o formulario que deve ser passado
   #argumento 'objeto' objeto para qual o form será criado
   #argumento 'campo' campo para qual o input será criado
   #argumento 'container_options = {}', hash que vai conter as opções do container onde está o input_text_for_form
@@ -237,34 +238,43 @@ module ApplicationHelper
   ### :input_name => define name do input
   ### :input_type => define tipo do input => text/password/file
   #ex : na chamada passar input_text_for_form(objeto,campo,{},{:chave => 'valor'}) pode ser recupeado no metodo com campo_options[:chave]
-  def input_text_for_form(objeto,campo,container_options = {},campo_options = {})
+  def input_text_for_form(form,objeto,campo,container_options = {},campo_options = {})
     #opções container
-    container_class = container_options[:class].nil? ? "field" : container_options[:class]
+    container_class     = container_options[:class].nil? ? "field" : container_options[:class]
     #opções input
-    input_class = campo_options[:class].nil? ? "" : campo_options[:class]
-    input_information = campo_options[:information] unless campo_options[:information].blank?
+    input_class         = campo_options[:class].nil? ? "" : campo_options[:class]
+    input_information   = campo_options[:information] unless campo_options[:information].blank?
     input_error_message = campo_options[:error_message] unless campo_options[:error_message].blank?
-    input_label_for = campo_options[:label_for].nil? ? "txt#{campo.to_s.camelize}" : campo_options[:label_for]
-    input_name = campo_options[:input_name].nil? ? "#{objeto.class.to_s.underscore.downcase}[#{campo}]" : campo_options[:input_name]
-    input_type = campo_options[:input_type].nil? ? "text" : campo_options[:input_type]
-
+    input_label_for     = campo_options[:label_for].nil? ? "txt#{campo.to_s.camelize}" : campo_options[:label_for]
+    input_name          = campo_options[:input_name].nil? ? "#{objeto.class.to_s.underscore.downcase}[#{campo}]" : campo_options[:input_name]
+    input_type          = campo_options[:input_type].nil? ? "text" : campo_options[:input_type]
 
     container = %(<div class="#{container_class}">)
     container << "<span>"
     container << "<label for=\"#{input_label_for}\">#{campo.to_s.camelize}"
     container << link_to("[?]",'javascript: void(0);',:class => "showHelp",:title => 'clique aqui para pedir ajudar sobre o campo') if input_information
-    container << "<input type='#{input_type}' name=\"#{input_name}\" class='#{input_class}' />"
+
+    case input_type
+      when 'text'
+        container << form.text_field(campo,:name => input_name,:class => input_class)
+      when 'file'
+        container << form.file_field(campo,:name => input_name,:class => input_class)
+      when 'password'
+        container << form.password_field(campo,:name => input_name,:class => input_class)
+    end
+
+
     container << "</label>"
     container << "<span class='help'>#{link_to('x','javascript: void(0)',:title => 'clique para fechar a ajuda')} #{input_information}</span>" if input_information
     container << "<span class='message'>#{input_error_message}</span>" if input_error_message
     container << "</span>"
     container << "<div class='clear'>&nbsp;</div>"
     container << "</div>"
-
     container.html_safe
   end
 
   #metodo que cria input para create_container
+  #argumento 'form' é o form que vai ser passado
   #argumento 'objeto' objeto para qual o form será criado
   #argumento 'campo' campo para qual o input será criado
   #argumento 'container_options = {}', hash que vai conter as opções do container onde está o input_text_for_form
@@ -279,7 +289,7 @@ module ApplicationHelper
   ### :input_name => define name do input
   ### :input_type => define tipo do input => text/password/file
   #ex : na chamada passar input_text_for_form(objeto,campo,{},{:chave => 'valor'}) pode ser recupeado no metodo com campo_options[:chave]
-  def input_text_for_block(objeto,campo,container_options = {},campo_options = {})
+  def input_text_for_block(form,objeto,campo,container_options = {},campo_options = {})
     #opções container
     container_class = container_options[:class].nil? ? "field" : container_options[:class]
     #opções input
@@ -294,7 +304,16 @@ module ApplicationHelper
     container << "<span>"
     container << "<label for=\"#{input_label_for}\">#{campo.to_s.camelize}"
     container << link_to("[?]",'javascript: void(0);',:class => "showHelp",:title => 'clique aqui para pedir ajudar sobre o campo') if input_information
-    container << "<input type='#{input_type}' name=\"#{input_name}\" class='#{input_class}'/>"
+
+    case input_type
+      when 'text'
+        container << form.text_field(campo,:name => input_name,:class => input_class)
+      when 'file'
+        container << form.file_field(campo,:name => input_name,:class => input_class)
+      when 'password'
+        container << form.password_field(campo,:name => input_name,:class => input_class)
+    end
+
     container << "</label>"
     container << "<span class='help'>#{link_to('x','javascript: void(0)',:title => 'clique para fechar a ajuda')} #{input_information}</span>" if input_information
     container << "<span class='message'>#{input_error_message}</span>" if input_error_message
@@ -478,13 +497,27 @@ module ApplicationHelper
     container << "</form>"
   	container << "<span class='filters'>"
   	container << "<span><p><em>#{count}</em> registro(s) encontrado(s)</p></span>"
-    container << "<em>Filtros selecionados: </em>"
-    container << "<ul></ul>"
+    container << link_to('mostrar ações','javascript:void(0)',:class => "triggerAction",:title => "clique para abri as ações")
     container << "</span>"
-		container << link_to('mostrar ações','javascript:void(0)',:class => "triggerAction",:title => "clique para abri as ações")
+    container << "<div class='box tools'>"
+    container << "</span><input type='checkbox' name='' value='' class='markAll' /><em>marcar todos</em>"
+    container << "</span>"
+    container << "</div>"
 		container << "<span class='separator'>&nbsp;</span></div>"
 		container.html_safe
   end
+
+  #			<span>
+	#		<input type="checkbox" name="" value="" class="markAll"/><em>marcar todos</em>
+	#			<ul>
+	#				<li><a href="javascript: void(0);" title="">ações em massa</a>
+	#				<ul>
+	#					<li><a href="#" title="">item</a></li>
+	#					<li><a href="#" title="">item</a></li>
+	#				</ul>
+		#			</li>
+		#		</ul>
+		#	</span>
 
 
   #metodo que cria um combo box para formulários
@@ -583,7 +616,7 @@ module ApplicationHelper
   #argumento 'lista' é a lista de objetos a ser percorrida e exibida
   #argumento 'campo' é o campo que será gravado : ex se irá gravar Menu só passar :menu
   #argumento 'objeto' é o objeto atual que será gravado ex : se vai cadastrar novo menu objeto é @menu
-  def radio_button_for_form(objeto,campo,lista,container_options = {},campo_options = {})
+  def radio_button_for_form(form,objeto,campo,lista,container_options = {},campo_options = {})
     #opções de container
     container_class = container_options[:class].nil? ? "field" : container_options[:class]
     legend          = container_options[:legend].nil? ? "Selecione uma opção" : container_options[:legend]
@@ -596,7 +629,8 @@ module ApplicationHelper
     container << %(<legend>#{legend}</legend>)
       lista.each do |l|
          container << %(<span class='#{input_class}'>)
-         container << %(<input type='radio' name='#{input_name}' value=#{l.id} />#{l.name})
+         container << form.radio_button("#{campo}_id",l.id)
+         container << l.name
          container << %(</span>)
       end
     container << %(</fieldset></span></div>)
@@ -609,7 +643,7 @@ module ApplicationHelper
   #opções de campo :
     ## rows -> define linhas
     ## cols -> define colunas
-  def textarea_for_form(objeto,campo,container_options = {},campo_options = {})
+  def textarea_for_form(form,objeto,campo,container_options = {},campo_options = {})
     #opções de container
     container_class = container_options[:class].nil? ? "field" : container_options[:class]
     description     = container_options[:description].nil? ? "Descrição" : container_options[:description]
@@ -622,7 +656,8 @@ module ApplicationHelper
     container = %()
     container << %(<div class='#{container_class}'><span>)
     container << %(<label for='txt'>#{description})
-    container << %(<textarea name='#{input_name}' rows='#{rows}' cols='#{cols}'></textarea>)
+    container << form.text_area(campo,{:rows => rows,:cols => cols})
+    #container << %(<textarea name='#{input_name}' rows='#{rows}' cols='#{cols}'></textarea>)
     container << %(</label></span></div>)
     container.html_safe
   end

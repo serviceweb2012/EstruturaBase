@@ -4,6 +4,10 @@
 
 <% content_for :main do  %>
   <%= onde_estou "Edição de #{@menu.class.to_s}",admin_root_path,"Dash" %>
-  <%= render :partial => 'form',:locals =>{:button_label => "Editar"}  %>
+  <div class="box fields">
+    <%= form_for(@menu,:url => admin_menu_path(@menu),:html => {:method => :put}) do |f| %>
+      <%= render :partial => 'form',:locals =>{:button_label => "Editar",:f => f} %>
+    <% end %>
+  </div>
 <% end %>
 

@@ -1,7 +1,9 @@
+<% content_for :main do %>
 <h1>Editing location</h1>
 
 <%= render 'form' %>
 
 <%= link_to 'Show', admin_location_path(@location) %> |
 <%= link_to 'Back', admin_locations_path %>
+<% end %>
 

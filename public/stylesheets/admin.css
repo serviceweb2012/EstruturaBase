@@ -41,6 +41,11 @@ input[type="reset"]:hover,
 #navTop span#notice,
 #navTop span#notice h1 {float: left;}
 
+#login .information {padding: 26px 10px;width: 300px;background-color: #F7F7F7;border: 1px dotted #A8A8A8;float: left;margin-bottom:50px}
+#login span#notice span {margin-right: 5px;width: 22px;height: 22px;background-color: #069;float: left;}
+#login span#notice {float: left;font-size:14px; width:300px}
+#login span#notice h1 {float: left;font-size:14px}
+
 .logged span {width: 50px;height: 50px;background: Transparent url(../images/user-img.gif) no-repeat center center;float: right;}
 .logged span img {width: 40px;margin: 5px 0 0 5px;}
 .logged div {margin-right: 10px;float: right;}
