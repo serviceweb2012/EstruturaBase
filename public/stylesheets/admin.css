@@ -150,6 +150,10 @@ input[type="reset"]:hover,
 #main .results ul li ul.options li a {color: #069;}
 #main .results ul li ul.options li a.img-options {margin-left: 315px;}
 
+
+#main .results ul li.desativado{border: 1px solid red}
+#main .results ul li.ativado{border: none}
+
 .results li a.select {margin: 10px;float: right;}
 
 #errorExplanation {margin: 10px;padding: 0 5px;background-color: #D8E7C9;border: 5px solid #C30;float: left;}
@@ -294,8 +298,4 @@ input[type="reset"]:hover,
 .options table[name='list'] tbody tr td em.address,
 .options table[name='list'] tbody tr td p {display: block;color: #333;}
 .options table[name='list'] tbody tr td a.select {width: 100px;height: 30px;margin: 10px 0;line-height: 2.2em;background: #CECECE url(../images/button-100x30.gif) no-repeat top center;border: none;text-align: center;float: right;}
-
-
-ul.options li.ativado{border:none;}
-ul.options li.desativado{border: 1px solid #FEF}
 

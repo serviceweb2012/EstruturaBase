@@ -62,23 +62,27 @@ class Admin::HomeController < ApplicationController
    end
 
    def disabled_all
-      ids = params[:ids].to_s.split(',')
-      model_name =  params[:name].to_s.camelize.constantize
-      url = params[:url].to_s.gsub("_", "/")
+      ids        = params[:ids].split(",")
+      model_name = params[:modelo].camelize.constantize
+
       ids.each do |id|
-        object = model_name.find(id)
-        if object.respond_to?(:situation)
-           if object.situation
-             object.situation = false
-           else
-             object.situation = true
-           end
-           object.save
+        objeto = model_name.find(id)
+        if objeto.respond_to? :situation
+          if objeto.situation == true
+            objeto.situation = false
+          else
+            objeto.situation = true
+          end
+          objeto.save
         end
-       end
-       respond_to do |format|
-         format.html { redirect_to url }
-       end
+      end
+
+      respond_to do |format|
+        format.js { render :update do |page|
+          page.reload
+        end }
+      end
+
     end
 
 

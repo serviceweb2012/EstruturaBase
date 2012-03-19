@@ -407,16 +407,6 @@ module ApplicationHelper
     container.html_safe
   end
 
-  #metodo que gera a listagem em tabela do popup search
-  #argumento 'lista' é a lista de objetos
-  #argumento 'table_options' é um hash que poderá conter um HASH de outras colunas para serem exibidas
-  #arguemtno 'modelo' é o modelo que vai ser buscado
-  #OBRIGATORIAMENTE SE FOR PASSAR NOVAS COLUNAS TEM QUE PASSAR A CLASSE
-  #SÓ PASSAR COLUNAS QUE EXITEM PARA O MODELO NO BANCO
-  #
-  #
-  #
-  #
   #NÃO TA PRONTO !!!!
   #metodo que gera a listagem em tabela do popup search
   #argumento 'lista' é a lista de objetos
@@ -478,69 +468,7 @@ module ApplicationHelper
   end
 
 
-  #metodo para exibir o search tools em telas de index
-  #argumento route_for_seach é a rota que vai ser chamada o clicar no botão 'buscar'
-  #argumento route_for_new é a rota para onde vai ao ser clicado o botão 'novo'
-  #argumento count é o total de registros encontrados
-  ###opções do hash 'options'
-  ### :show_new_button => true/false define se vai existir o botão para novo registro
-  def search_tools(route_for_new,count,options = {})
-    #options
-    show_new_button = options[:show_new_button].nil? ? true : options[:show_new_button]
-    container = %()
-    container << "<div class='box search'>"
-    container << "<form action='' method=''>"
-    container << "<label for='txtSearch'>Buscar por termo"
-    container << "<span><input type='text' name='search' /></span></label>"
-    container << "<input type='submit' class='btn' value='buscar' />"
-    container << link_to('novo registro',"#{route_for_new}",:title => "novo(a) registro") if show_new_button == true
-    container << "</form>"
-  	container << "<span class='filters'>"
-  	container << "<span><p><em>#{count}</em> registro(s) encontrado(s)</p></span>"
-    container << link_to('mostrar ações','javascript:void(0)',:class => "triggerAction",:title => "clique para abri as ações")
-    container << "</span>"
-    container << "<div class='box tools'>"
-    container << "<span>"
-    container << "<input type='checkbox' name='' value='' class='markAll' /><em>marcar todos</em>"
-    container << select_acoes_massa
-    container << "</span>"
-    container << "<span>"
-    container << select_order_and_per_page
-    container << "</span>"
-    container << "</div>"
-		container << "<span class='separator'>&nbsp;</span></div>"
-		container.html_safe
-  end
 
-  def select_order_and_per_page
-    container = %()
-    container << "<ul><li>#{link_to 'ordenar dados','javascript:void(0)',:title => 'clique para escolher quantos itens por página deseja exibir'}"
-    container << "<ul>"
-    container << "<li>#{link_to 'coluna','#',:title => 'ordenar por coluna ...'}</li>"
-    container << "</ul></li></ul>"
-    container << "<ul class='show'>"
-    container << "<li>#{link_to 'mostrar 15','#',:title => 'exibir 15 itens'}"
-    container << "<ul>"
-    container << "<li>#{link_to 'mostrar 30','#',:title => 'exibir 30 itens'}</li>"
-    container << "<li>#{link_to 'mostrar 50','#',:title => 'exibir 50 itens'}</li>"
-    container << "<li>#{link_to 'mostrar 100','#',:title => 'exibir 100 itens'}</li>"
-    container << "</ul></li></ul>"
-    container.html_safe
-  end
-
-  def select_acoes_massa
-    container = %()
-    container << "<ul>"
-    container << "<li>"
-    container << link_to("selecione uma ação",'javascript:void(0);',:title => "selecione uma ação em massa")
-    container << "<ul>"
-    container << "<li>#{link_to 'desativar/ativar','#'}</li>"
-    container << "<li>#{link_to 'apagar todos','#'}</li>"
-    container << "</ul>"
-    container << "</li>"
-    container << "</ul>"
-    container.html_safe
-  end
 
 
   #metodo que cria um combo box para formulários
@@ -710,26 +638,51 @@ module ApplicationHelper
   #######################################
 
   #metodo para exibir a lista na página index
+  #argumento 'modelo' é modelo que irá ser listado
   #argumento 'lista' é a lista de objetos a ser mostrada
   #argumento 'container_options' são HASH opções do container do elemento
   #argumento 'campo_options' são HASH opções do elemento
   ###opções do campo_options
-  ### show_actions => exibir links de ações para o item
+  ### show_actions => true/false -> exibir links de ações para o item
   def list_model(modelo,lista,container_options = {},campo_options = {})
     #campo_options
     show_actions = campo_options[:show_actions].nil? ? true : campo_options[:show_actions]
 
-    #rotas
-
+    #container options
+    show_em_massa           = container_options[:show_em_massa].nil? ? true : campo_options[:show_em_massa]
+    show_order              = container_options[:show_order].nil? ? true : campo_options[:show_order]
+    show_per_page           = container_options[:show_per_page].nil? ? true : campo_options[:show_per_page]
     #rotas editar/excluir/show
     route_for_model = modelo.to_s.underscore.downcase.pluralize
     base_route = "/admin/#{route_for_model}/"
 
     container = %()
+    container << "<div class='box tools'>"
+    container << "<span>"
+    container << "<input type='checkbox' name='' value='' class='markAll' /><em>marcar todos</em>"
+    container << select_acoes_massa if show_em_massa
+    container << "</span>"
+    container << "<span>"
+    container << select_order(modelo) if show_order
+    container << "</span>"
+    container << "<span>"
+    container << select_per_page if show_per_page
+    container << "</span>"
+    container << "</div>"
     container << "<div class='box results'>"
     container << "<ul>"
       lista.each do |l|
-        container << "<li>"
+        if l.respond_to? :situation
+          if l.situation == true
+            container << "<li class='ativado'>"
+          else
+            container << "<li class='desativado'>"
+          end
+        else
+          container << "<li>"
+        end
+        container << hidden_field_tag("itens[]",l.id)
+        container << hidden_field_tag("modelo",modelo,:id => "modelo")
         container << "<input type='checkbox' name='cb_#{l.id}' value='#{l.id}' />"
         container << "<div class='info'>"
         #container << "<span>###</span>"
@@ -752,7 +705,7 @@ module ApplicationHelper
 
           if l.respond_to? :situation
             if l.situation == true
-              container << "<li class='ativado'>"
+              container << "<li>"
               container << link_to('desativar',
                             {
                               :controller => "admin/home",
@@ -763,12 +716,11 @@ module ApplicationHelper
                               :alt => "ação : desativar",
                               :title => "ação desativar registro",
                               :class => "status",
-                              #:rel => "status",
                               :remote => true
                             )
               container << "</li>"
             else
-              container << "<li class='desativado'>"
+              container << "<li>"
               container << link_to('ativar',
                             {
                               :controller => "admin/home",
@@ -779,7 +731,6 @@ module ApplicationHelper
                               :alt => "ação : ativar",
                               :title => "ação ativar registro",
                               :class => "status",
-                              #:rel => "status",
                               :remote => true
                             )
               container << "</li>"
@@ -792,7 +743,8 @@ module ApplicationHelper
         container << "</li>"
       end
     container << "</ul>"
-    container << "</div>" #box results
+    container << "#{will_paginate(lista)}"
+    container << "</div>" #box resultsativado
     container.html_safe
   end
 
@@ -814,11 +766,80 @@ module ApplicationHelper
 
 
 
-  #metodo para exibir a barra de filtros na busca
-  def filter_tools()
+  #metodo para exibir o search tools em telas de index
+  #argumento route_for_new é a rota para onde vai ao ser clicado o botão 'novo'
+  #argumento count é o total de registros encontrados
+  ###opções do hash 'options'
+  ### :show_new_button => true/false define se vai existir o botão para novo registro
+  def search_tools(route_for_new,count,options = {})
+    #options
+    show_new_button = options[:show_new_button].nil? ? true : options[:show_new_button]
+    #
+    container = %()
+    container << "<div class='box search'>"
+    container << "<form action='' method=''>"
+    container << "<label for='txtSearch'>Buscar por termo"
+    container << "<span><input type='text' name='search' /></span></label>"
+    container << "<input type='submit' class='btn' value='buscar' />"
+    container << link_to('novo registro',"#{route_for_new}",:title => "novo(a) registro") if show_new_button == true
+    container << "</form>"
+  	container << "<span class='filters'>"
+  	container << "<span><p><em>#{count}</em> registro(s) encontrado(s)</p></span>"
+    container << link_to('mostrar ações','javascript:void(0)',:class => "triggerAction",:title => "clique para abri as ações")
+    container << "</span>"
+
+		container << "<span class='separator'>&nbsp;</span></div>"
+		container.html_safe
   end
 
 
+  #metodo que vai criar o select box para exibir escolha de ordem e itens por página
+  def select_order(modelo)
+    not_columns = ["id", "created_at", "updated_at", "status","position","adm","crypted_password","remember_token","salt","remember_toke"]
+    colunas = modelo.column_names - not_columns
+    modelo = modelo.to_s.underscore.downcase
+    container = %()
+    container << "<ul><li>#{link_to 'ordenar dados','javascript:void(0)',:title => 'clique para escolher quantos itens por página deseja exibir'}"
+    container << "<ul>"
+
+    colunas.each do |c|
+      container << %(<li>)
+      container << link_to(t("activerecord.attributes.#{modelo}.#{c}"),'#')
+      container << %(</li>)
+    end
+
+    container << "</ul></li></ul>"
+    container.html_safe
+  end
+
+  #metodo que cria o per_page
+  def select_per_page
+    container = %()
+    container << "<ul class='show'>"
+    container << "<li>#{link_to 'mostrar 15','#',:title => 'exibir 15 itens'}"
+    container << "<ul>"
+    container << "<li>#{link_to 'mostrar 30','#',:title => 'exibir 30 itens'}</li>"
+    container << "<li>#{link_to 'mostrar 50','#',:title => 'exibir 50 itens'}</li>"
+    container << "<li>#{link_to 'mostrar 100','#',:title => 'exibir 100 itens'}</li>"
+    container << "</ul></li></ul>"
+    container.html_safe
+  end
+
+
+  #metodo que cria o select box para exibir as ações em massa
+  def select_acoes_massa
+    container = %()
+    container << "<ul>"
+    container << "<li>"
+    container << link_to("ações em massa",'javascript:void(0);',:title => "selecione uma ação em massa")
+    container << "<ul>"
+    container << "<li>#{link_to 'desativar/ativar','#',:id => "enable_disable"}</li>"
+    container << "<li>#{link_to 'apagar todos','#',:id => "destroy_all"}</li>"
+    container << "</ul>"
+    container << "</li>"
+    container << "</ul>"
+    container.html_safe
+  end
 
   #######################################
 

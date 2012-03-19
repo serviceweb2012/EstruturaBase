@@ -1,8 +1,23 @@
 jQuery(document).ready(function(){
 
+    $("#enable_disable").click(function(){
+        var selecionados = "";
+        var modelo = $("#modelo").val();
+        $(".box.results input[type='checkbox']").each(function(i){
+            if($(this).is(":checked")){
+                if(selecionados == ""){
+                    selecionados = $(this).val();
+                }else{
+                    selecionados += ","+$(this).val();
+                }
+            }
+        })
+        $.get('/admin/home/disabled_all',{ids:selecionados,modelo:modelo})
+    });
+
     setTimeout(function() { $('.information').fadeOut('slow'); }, 10000);
 
-	$('a[href*=#]').click(function() {
+	/*$('a[href*=#]').click(function() {
 		if( $(this).attr('rel') == 'errors') {
 			if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
 				var $target = $(this.hash);
@@ -24,7 +39,7 @@ jQuery(document).ready(function(){
 			}
         }
 		}
-	});
+	});*/
 
 	$(document).mouseup(function(e) {
 		if($(e.target).parent(".navBar > li").length==0) {

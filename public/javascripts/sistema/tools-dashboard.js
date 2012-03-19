@@ -1,4 +1,5 @@
-jQuery(document).ready(function(){	
+jQuery(document).ready(function(){
 	$('.dashboard ul').sortable();
 	$('.dashboard ul').disableSelection();
 });
+
