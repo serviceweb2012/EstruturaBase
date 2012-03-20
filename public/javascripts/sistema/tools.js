@@ -1,8 +1,9 @@
 jQuery(document).ready(function(){
 
-    $("#enable_disable").click(function(){
+    $('#enable_disable').click(function(){
         var selecionados = "";
         var modelo = $("#modelo").val();
+        $('form#listagem').attr('action','/admin/home/disabled_all');
         $(".box.results input[type='checkbox']").each(function(i){
             if($(this).is(":checked")){
                 if(selecionados == ""){
@@ -12,10 +13,30 @@ jQuery(document).ready(function(){
                 }
             }
         })
-        $.get('/admin/home/disabled_all',{ids:selecionados,modelo:modelo})
+        $("#ids_").val(selecionados);
+        window.location.href = "/admin/home/disabled_all/" + modelo + "/"+ selecionados
     });
 
     setTimeout(function() { $('.information').fadeOut('slow'); }, 10000);
+
+    $("#acoes_em_massa").hide();
+    $(".box.results input[type='checkbox']").click(function(){
+        checados = $(".box.results input[type='checkbox']:checked");
+        if(checados.length > 1){
+            $("#acoes_em_massa").show();
+        }else{
+            $("#acoes_em_massa").hide();
+        }
+    })
+
+    $(".markAll").click(function(){
+        checados = $(".box.results input[type='checkbox']:checked");
+        if(checados.length > 1){
+            $("#acoes_em_massa").show();
+        }else{
+            $("#acoes_em_massa").hide();
+        }
+    })
 
 	/*$('a[href*=#]').click(function() {
 		if( $(this).attr('rel') == 'errors') {

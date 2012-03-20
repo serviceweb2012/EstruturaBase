@@ -40,12 +40,10 @@ class Admin::HomeController < ApplicationController
         end
         object.save
       end
-      #respond_to do |format|
-      #  format.js { render :update do |page|
-      #    page.reload
-      #  end }
-      #end
-      #respond_with object
+      respond_to do |format|
+        format.js
+      end
+
    end
 
    def delete_all
@@ -64,6 +62,7 @@ class Admin::HomeController < ApplicationController
    def disabled_all
       ids        = params[:ids].split(",")
       model_name = params[:modelo].camelize.constantize
+      url        = request.referer
 
       ids.each do |id|
         objeto = model_name.find(id)
@@ -78,12 +77,9 @@ class Admin::HomeController < ApplicationController
       end
 
       respond_to do |format|
-        format.js { render :update do |page|
-          page.reload
-        end }
-      end
-
-    end
+       format.html {redirect_to(url)}
+     end
+   end
 
 
 end

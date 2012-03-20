@@ -657,6 +657,8 @@ module ApplicationHelper
     base_route = "/admin/#{route_for_model}/"
 
     container = %()
+    container << "<form action='' id='listagem' method='post'>"
+    container << hidden_field_tag("ids[]")
     container << "<div class='box tools'>"
     container << "<span>"
     container << "<input type='checkbox' name='' value='' class='markAll' /><em>marcar todos</em>"
@@ -681,7 +683,6 @@ module ApplicationHelper
         else
           container << "<li>"
         end
-        container << hidden_field_tag("itens[]",l.id)
         container << hidden_field_tag("modelo",modelo,:id => "modelo")
         container << "<input type='checkbox' name='cb_#{l.id}' value='#{l.id}' />"
         container << "<div class='info'>"
@@ -745,6 +746,7 @@ module ApplicationHelper
     container << "</ul>"
     container << "#{will_paginate(lista)}"
     container << "</div>" #box resultsativado
+    container << "</form>"
     container.html_safe
   end
 
@@ -797,7 +799,7 @@ module ApplicationHelper
   def select_order(modelo)
     not_columns = ["id", "created_at", "updated_at", "status","position","adm","crypted_password","remember_token","salt","remember_toke"]
     colunas = modelo.column_names - not_columns
-    modelo = modelo.to_s.underscore.downcase
+    modelo  = modelo.to_s.underscore.downcase
     container = %()
     container << "<ul><li>#{link_to 'ordenar dados','javascript:void(0)',:title => 'clique para escolher quantos itens por página deseja exibir'}"
     container << "<ul>"
@@ -829,12 +831,12 @@ module ApplicationHelper
   #metodo que cria o select box para exibir as ações em massa
   def select_acoes_massa
     container = %()
-    container << "<ul>"
+    container << "<ul id='acoes_em_massa'>"
     container << "<li>"
     container << link_to("ações em massa",'javascript:void(0);',:title => "selecione uma ação em massa")
     container << "<ul>"
-    container << "<li>#{link_to 'desativar/ativar','#',:id => "enable_disable"}</li>"
-    container << "<li>#{link_to 'apagar todos','#',:id => "destroy_all"}</li>"
+    container << "<li>#{link_to 'desativar/ativar','javascript:void(0)',:id => "enable_disable"}</li>"
+    container << "<li>#{link_to 'apagar todos','javascript:void(0)',:id => "destroy_all"}</li>"
     container << "</ul>"
     container << "</li>"
     container << "</ul>"

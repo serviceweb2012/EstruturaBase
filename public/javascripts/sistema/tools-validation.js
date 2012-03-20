@@ -23,7 +23,7 @@ jQuery(document).ready(function(){
 	});
 
 
-	$("form").submit(function() {
+	$("form.validar").submit(function() {
 		validaCnpj($('.cnpj').val());
 		validaCpf($('.cpf').val());
 		validaEmail($('.email').val());
