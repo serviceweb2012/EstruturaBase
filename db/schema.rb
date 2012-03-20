@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(:version => 20120229170234) do
   end
 
   create_table "locations", :force => true do |t|
-    t.string   "street"
+    t.string   "name"
     t.string   "number"
     t.string   "district"
     t.string   "city"

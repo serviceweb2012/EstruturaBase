@@ -47,13 +47,14 @@ class Admin::HomeController < ApplicationController
    end
 
    def delete_all
-     ids = params[:ids].to_s.split(',')
-     model_name =  params[:name].to_s.camelize.constantize
-     url = params[:url].to_s.gsub("_", "/")
+     ids        = params[:ids].split(",")
+     model_name = params[:modelo].camelize.constantize
+     url        = request.referer
+
      ids.each do |id|
        object = model_name.find(id.to_i)
        object.destroy
-      end
+     end
       respond_to do |format|
         format.html { redirect_to url }
       end

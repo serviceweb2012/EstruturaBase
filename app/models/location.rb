@@ -10,7 +10,7 @@ class Location < ActiveRecord::Base
    validates_attachment_size :image, :less_than => 150.kilobytes, :message => "deve ser menor que 150 kb"
    validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png', 'image/gif'], :message => "deve estar no formato (JPG, PNG ou GIF)"
 
-   validates_presence_of :street,:number
+   validates_presence_of :name,:number
    validates_numericality_of :number
    validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 

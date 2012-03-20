@@ -9,6 +9,7 @@ EstruturaBase::Application.routes.draw do
   #rotas fixas
   match '/admin/home/:id/enabled_disabled' => "admin/home#enabled_disabled"
   match '/admin/home/disabled_all/:modelo/:ids' => "admin/home#disabled_all"
+  match '/admin/home/delete_all/:modelo/:ids' => "admin/home#delete_all"
 
   #rotas devise
   devise_for :users,:controllers => { :sessions => "admin/sessions", :unlocks => "admin/unlocks",:passwords => "admin/passwords" }

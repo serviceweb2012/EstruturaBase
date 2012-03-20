@@ -1,9 +1,8 @@
 jQuery(document).ready(function(){
-
+    //ativar/desativar
     $('#enable_disable').click(function(){
         var selecionados = "";
         var modelo = $("#modelo").val();
-        $('form#listagem').attr('action','/admin/home/disabled_all');
         $(".box.results input[type='checkbox']").each(function(i){
             if($(this).is(":checked")){
                 if(selecionados == ""){
@@ -15,6 +14,23 @@ jQuery(document).ready(function(){
         })
         $("#ids_").val(selecionados);
         window.location.href = "/admin/home/disabled_all/" + modelo + "/"+ selecionados
+    });
+
+    //deletar todos
+    $('#destroy_all').click(function(){
+        var selecionados = "";
+        var modelo = $("#modelo").val();
+        $(".box.results input[type='checkbox']").each(function(i){
+            if($(this).is(":checked")){
+                if(selecionados == ""){
+                    selecionados = $(this).val();
+                }else{
+                    selecionados += ","+$(this).val();
+                }
+            }
+        })
+        $("#ids_").val(selecionados);
+        window.location.href = "/admin/home/delete_all/" + modelo + "/"+ selecionados
     });
 
     setTimeout(function() { $('.information').fadeOut('slow'); }, 10000);

@@ -1,26 +1,10 @@
-<h1>Listing locations</h1>
-
-<table>
-  <tr>
-    <th>Street</th>
-    <th>City</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @locations.each do |l| %>
-  <tr>
-    <td><%= l.street %></td>
-    <td><%= l.city %></td>
-    <td><%= link_to 'Show', admin_location_path(l) %></td>
-    <td><%= link_to 'Edit', edit_admin_location_path(l) %></td>
-    <td><%= link_to 'Destroy', [:admin,l], :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<% content_for :sidebar do %>
+  Side Bar
 <% end %>
-</table>
 
-<br />
-
-<%= link_to 'New Menu', new_admin_location_path %>
+<% content_for :main do %>
+  <%= onde_estou "Listagem de #{@locations.first.class.to_s.underscore.humanize}",admin_root_path,"Dashboard"%>
+  <%= search_tools(new_admin_location_path,@count) %>
+  <%= list_model(Location,@locations) %>
+<% end %>
 

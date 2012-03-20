@@ -4,7 +4,7 @@ class Admin::LocationsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @locations = Location.where("street LIKE ?","%#{params[:search]}%")
+    @locations = Location.where("name LIKE ?","%#{params[:search]}%")
                   .order("#{$order} #{$ordem}")
                   .paginate(:per_page => session[:per_page],:page => params[:page])
     @count = @locations.size

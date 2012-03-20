@@ -1,7 +1,7 @@
 class CreateLocations < ActiveRecord::Migration
   def self.up
     create_table :locations do |t|
-      t.string :street
+      t.string :name
       t.string :number
       t.string :district
       t.string :city

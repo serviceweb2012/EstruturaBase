@@ -657,7 +657,7 @@ module ApplicationHelper
     base_route = "/admin/#{route_for_model}/"
 
     container = %()
-    container << "<form action='' id='listagem' method='post'>"
+
     container << hidden_field_tag("ids[]")
     container << "<div class='box tools'>"
     container << "<span>"
@@ -746,7 +746,7 @@ module ApplicationHelper
     container << "</ul>"
     container << "#{will_paginate(lista)}"
     container << "</div>" #box resultsativado
-    container << "</form>"
+
     container.html_safe
   end
 
