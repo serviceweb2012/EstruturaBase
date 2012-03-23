@@ -3,7 +3,6 @@ jQuery(document).ready(function(){
 	$('.results ul li .options').hide();
 	$('.results ul li input:not(:checked)').hide();
 
-
 	$('.results ul li').hover( function() {
 		$(this).find('.options').fadeIn('fast');
 		if($(this).find('input:checkbox').attr('checked') == false) {
@@ -16,6 +15,7 @@ jQuery(document).ready(function(){
 		}
 
 	});
+
 
 	$('input:checked').parent().css('background-position','bottom center');
 

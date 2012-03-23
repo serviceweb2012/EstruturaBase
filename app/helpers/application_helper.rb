@@ -114,7 +114,6 @@ module ApplicationHelper
     li.html_safe
   end
 
-
   def situation_is_true(obj,model)
     coluna = %()
     if obj.situation == true
@@ -212,9 +211,7 @@ module ApplicationHelper
     container.html_safe
   end
 
-
   # ===== ===== ===== helpers de formulários - inicio ===== ===== ===== #
-
 
   #######################################
 
@@ -262,7 +259,6 @@ module ApplicationHelper
       when 'password'
         container << form.password_field(campo,:name => input_name,:class => input_class)
     end
-
 
     container << "</label>"
     container << "<span class='help'>#{link_to('x','javascript: void(0)',:title => 'clique para fechar a ajuda')} #{input_information}</span>" if input_information
@@ -414,11 +410,6 @@ module ApplicationHelper
   #arguemtno 'modelo' é o modelo que vai ser buscado
   #OBRIGATORIAMENTE SE FOR PASSAR NOVAS COLUNAS TEM QUE PASSAR A CLASSE
   #SÓ PASSAR COLUNAS QUE EXITEM PARA O MODELO NO BANCO
-  #
-  #
-  #
-  #
-  #NÃO TA PRONTO !!!!
   def list_table_for_search(lista)
     container = %(<table name="list" summary="" cellpadding="0" cellspacing="0" width="740">)
         container << %(<thead><tr>)
@@ -440,7 +431,6 @@ module ApplicationHelper
         container << %(</table>)
     container.html_safe
   end
-
 
   #metodo que cria o cabeçalho de busca na tela de search
   #argumento 'modelo' é o nome do modelo que vai ser buscado
@@ -466,10 +456,6 @@ module ApplicationHelper
     container << "</div>"
     container.html_safe
   end
-
-
-
-
 
   #metodo que cria um combo box para formulários
   #argumento 'objeto' é o objeto que será gravado, exemplo tela de Novo Cliente objeto é @client
@@ -502,7 +488,6 @@ module ApplicationHelper
     container.html_safe
   end
 
-
   #metodo que cria um combo box para formulários
   #argumento 'objeto' é o objeto que será gravado, exemplo tela de Novo Cliente objeto é @client
   #argumento 'campo' é o campo que vai ser gravado geralmente é salvo o id, ex : passado campo 'menu' é concatenado 'menu_id' para gravar
@@ -532,7 +517,6 @@ module ApplicationHelper
     container << "</select></label></span><div class=\"clear\">&nbsp;</div>"
     container.html_safe
   end
-
 
   #metodo que gera area com checkbox
   #argumento 'lista' é a lista de objetos que vai ser exibido para seleção
@@ -589,7 +573,6 @@ module ApplicationHelper
     # =>
   end
 
-
   #metodo que cria um text area
   #opções de campo :
     ## rows -> define linhas
@@ -628,9 +611,6 @@ module ApplicationHelper
 
   #######################################
 
-
-
-
   #######################################
 
   # => METODOS DE LISTAGEM  - INICIO
@@ -657,8 +637,6 @@ module ApplicationHelper
     base_route = "/admin/#{route_for_model}/"
 
     container = %()
-
-    container << hidden_field_tag("ids[]")
     container << "<div class='box tools'>"
     container << "<span>"
     container << "<input type='checkbox' name='' value='' class='markAll' /><em>marcar todos</em>"
@@ -667,11 +645,18 @@ module ApplicationHelper
     container << "<span>"
     container << select_order(modelo) if show_order
     container << "</span>"
+    container << "<span class='ordem'>"
+    container << select_ordem if show_order
+    container << "</span>"
     container << "<span>"
     container << select_per_page if show_per_page
     container << "</span>"
     container << "</div>"
-    container << "<div class='box results'>"
+    container << hidden_field_tag("orderby",nil,:id => 'orderby')
+    container << hidden_field_tag("ordem",nil,:id => 'ordem')
+    container << hidden_field_tag("modelo",modelo,:id => "modelo")
+    container << hidden_field_tag("ids[]")
+    container << "<div class='box results' id='listagem'>"
     container << "<ul>"
       lista.each do |l|
         if l.respond_to? :situation
@@ -683,7 +668,8 @@ module ApplicationHelper
         else
           container << "<li>"
         end
-        container << hidden_field_tag("modelo",modelo,:id => "modelo")
+
+
         container << "<input type='checkbox' name='cb_#{l.id}' value='#{l.id}' />"
         container << "<div class='info'>"
         #container << "<span>###</span>"
@@ -746,7 +732,6 @@ module ApplicationHelper
     container << "</ul>"
     container << "#{will_paginate(lista)}"
     container << "</div>" #box resultsativado
-
     container.html_safe
   end
 
@@ -765,8 +750,6 @@ module ApplicationHelper
     container << "<p><em>#{field_name}: </em>#{content}</p>"
     container.html_safe
   end
-
-
 
   #metodo para exibir o search tools em telas de index
   #argumento route_for_new é a rota para onde vai ao ser clicado o botão 'novo'
@@ -789,24 +772,22 @@ module ApplicationHelper
   	container << "<span><p><em>#{count}</em> registro(s) encontrado(s)</p></span>"
     container << link_to('mostrar ações','javascript:void(0)',:class => "triggerAction",:title => "clique para abri as ações")
     container << "</span>"
-
 		container << "<span class='separator'>&nbsp;</span></div>"
 		container.html_safe
   end
 
-
   #metodo que vai criar o select box para exibir escolha de ordem e itens por página
   def select_order(modelo)
-    not_columns = ["id", "created_at", "updated_at", "status","position","adm","crypted_password","remember_token","salt","remember_toke"]
+    not_columns = ["id", "created_at", "updated_at", "status","position","adm","crypted_password","remember_token","salt","remember_toke","image_file_size","image_content_type","image_file_name"]
     colunas = modelo.column_names - not_columns
     modelo  = modelo.to_s.underscore.downcase
     container = %()
-    container << "<ul><li>#{link_to 'ordenar dados','javascript:void(0)',:title => 'clique para escolher quantos itens por página deseja exibir'}"
+    container << "<ul id='ordenar'><li>#{link_to 'ordenar dados','javascript:void(0)',:class => 'ordem',:title => 'clique para escolher quantos itens por página deseja exibir'}"
     container << "<ul>"
 
     colunas.each do |c|
-      container << %(<li>)
-      container << link_to(t("activerecord.attributes.#{modelo}.#{c}"),'#')
+      container << %(<li rel="#{c}">)
+      container << link_to(t("activerecord.attributes.#{modelo}.#{c}"),'javascript:void(0)')
       container << %(</li>)
     end
 
@@ -817,16 +798,27 @@ module ApplicationHelper
   #metodo que cria o per_page
   def select_per_page
     container = %()
-    container << "<ul class='show'>"
-    container << "<li>#{link_to 'mostrar 15','#',:title => 'exibir 15 itens'}"
+    container << "<ul class='perpage'>"
+    container << "<li>#{link_to 'itens por página','javascript:void(0)',:title => 'selecione a quantidade de itens por página'}"
     container << "<ul>"
-    container << "<li>#{link_to 'mostrar 30','#',:title => 'exibir 30 itens'}</li>"
-    container << "<li>#{link_to 'mostrar 50','#',:title => 'exibir 50 itens'}</li>"
-    container << "<li>#{link_to 'mostrar 100','#',:title => 'exibir 100 itens'}</li>"
+    container << "<li>#{link_to 'exibir 15 itens','#',:title => 'exibir 15 itens',:rel => 15}</li>"
+    container << "<li>#{link_to 'exibir 30 itens','#',:title => 'exibir 30 itens',:rel => 30}</li>"
+    container << "<li>#{link_to 'exibir 50 itens','#',:title => 'exibir 50 itens',:rel => 50}</li>"
+    container << "<li>#{link_to 'exibir 100 itens','#',:title => 'exibir 100 itens',:rel => 100}</li>"
     container << "</ul></li></ul>"
     container.html_safe
   end
 
+  #metodo que cria a ordenção ascendente ou descendente
+  def select_ordem
+    container = %()
+    container << "<ul class='show'><li>#{link_to('ordenar','javascript:void(0)')}"
+    container << "<ul>"
+    container << "<li>#{link_to('A..Z','javascript:void(0)',:rel => 'ASC')}</li>"
+    container << "<li>#{link_to('Z..A','javascript:void(0)',:rel => 'DESC')}</li>"
+    container << "</ul></li></ul>"
+    container.html_safe
+  end
 
   #metodo que cria o select box para exibir as ações em massa
   def select_acoes_massa
@@ -849,11 +841,6 @@ module ApplicationHelper
 
   #######################################
 
-
-
-
-
   # ===== ===== ===== helpers de formulários - fim  ===== ===== ===== #
-
 end
 
