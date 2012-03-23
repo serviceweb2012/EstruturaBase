@@ -6,7 +6,7 @@ class Admin::LocationsController < ApplicationController
   def index
     @locations = Location.where("name LIKE ?","%#{params[:search]}%")
                   .order("#{$order} #{$ordem}")
-                  .paginate(:per_page => session[:per_page],:page => params[:page])
+                  .paginate(:per_page => params[:per_page],:page => params[:page])
     @count = @locations.size
     respond_with @locations,:location => admin_locations_path
   end

@@ -6,7 +6,7 @@ class Admin::UsersController < ApplicationController
   def index
     @users = User.order("name ASC")#find_all_with_permission(params[:search],current_user)
     @count = @users.size
-    @users = @users.paginate(:per_page => session[:per_page],:page => params[:page])
+    @users = @users.paginate(:per_page => params[:per_page],:page => params[:page])
     respond_with @users,:location => admin_usuarios_path
   end
 

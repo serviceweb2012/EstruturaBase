@@ -6,7 +6,7 @@ class Admin::MenusController < ApplicationController
   def index
     @menus = Menu.where("name LIKE ?","%#{params[:search]}%")
                   .order("#{$order} #{$ordem}")
-                  .paginate(:per_page => session[:per_page],:page => params[:page])
+                  .paginate(:per_page => params[:per_page],:page => params[:page])
     @count = @menus.size
     respond_with @menus,:location => admin_menus_path
   end

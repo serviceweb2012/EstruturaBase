@@ -6,7 +6,7 @@ class Admin::SubMenusController < ApplicationController
   def index
     @sub_menus = SubMenu.where("name LIKE ?","%#{params[:search]}%")
                   .order("#{$order} #{$ordem}")
-                  .paginate(:per_page => session[:per_page],:page => params[:page])
+                  .paginate(:per_page => params[:per_page],:page => params[:page])
     @count = @sub_menus.size
     respond_with @sub_menus,:location => admin_sub_menus_path
   end
@@ -50,7 +50,7 @@ class Admin::SubMenusController < ApplicationController
     if params[:search]
       @menus = Menu.where("name LIKE ?",params[:search]).order(:position => :asc).paginate(:per_page => session[:per_page],:page => params[:page])
     else
-      @menus = Menu.order(:position => :asc).paginate(:per_page => session[:per_page],:page => params[:page])
+      @menus = Menu.order(:position => :asc).paginate(:per_page => params[:per_page],:page => params[:page])
     end
     @search_model_name = Menu.human_name.camelize
     logger.info("TO AQUI !!! #{@menus.size}")

@@ -6,7 +6,7 @@ class Admin::ReportErrorsController < ApplicationController
   def index
     @report_errors = ReportError.where("name LIKE ?","%#{params[:search]}%")
                   .order("#{$order} #{$ordem}")
-                  .paginate(:per_page => session[:per_page],:page => params[:page])
+                  .paginate(:per_page => params[:per_page],:page => params[:page])
     @count = @report_errors.size
     respond_with @report_errors,:location => admin_report_errors_path
   end

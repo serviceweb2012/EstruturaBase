@@ -6,7 +6,7 @@ class Admin::PermissionsController < ApplicationController
   def index
     @permissions = Permission.where("model_name LIKE ?","%#{params[:search]}%")
                   .order("#{$order} #{$ordem}")
-                  .paginate(:per_page => session[:per_page],:page => params[:page])
+                  .paginate(:per_page => params[:per_page],:page => params[:page])
     @count = @permissions.size
     respond_with @permissions,:location => admin_permissions_path
   end

@@ -6,7 +6,7 @@ class Admin::RolesController < ApplicationController
   def index
     @roles = Role.where("name LIKE ?","%#{params[:search]}%")
                   .order("#{$order} #{$ordem}")
-                  .paginate(:per_page => session[:per_page],:page => params[:page])
+                  .paginate(:per_page => params[:per_page],:page => params[:page])
     @count = @roles.size
     respond_with @roles,:location => admin_roles_path
   end

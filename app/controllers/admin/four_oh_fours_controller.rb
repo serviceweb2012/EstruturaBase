@@ -4,7 +4,7 @@ class Admin::FourOhFoursController < ApplicationController
 
   def index
     @four_oh_fours = FourOhFour.order("#{$order} #{$ordem}")
-                  .paginate(:per_page => session[:per_page],:page => params[:page])
+                  .paginate(:per_page => params[:per_page],:page => params[:page])
     @count = @four_oh_fours.size
     respond_with @four_oh_fours,:location => admin_four_oh_fours_path
   end

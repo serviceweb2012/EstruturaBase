@@ -444,13 +444,7 @@ module ApplicationHelper
     container << %(</label>)
     container << %(<input type='submit' name='btnSearch' class='btn' value='buscar' />)
     container << %(</form>)
-    container << %(<ul class='show'>)
-    container << %(<li>#{link_to 'mostrar 15','javascript:void(0)',:title => 'selecione a quantidade de registros por busca'})
-    container << %(<ul>)
-    container << %(<li>#{link_to 'item','#',:title => 'blabla'}</li>)
-    container << %(</ul>)
-    container << %(</li>)
-    container << %(</ul>)
+    container << select_per_page
     container << "<p><em>#{total_registros}</em> registro(s) encontrados"
     container << "<span class=\"clear\">&nbsp;</span>"
     container << "</div>"
@@ -801,10 +795,10 @@ module ApplicationHelper
     container << "<ul class='perpage'>"
     container << "<li>#{link_to 'itens por página','javascript:void(0)',:title => 'selecione a quantidade de itens por página'}"
     container << "<ul>"
-    container << "<li>#{link_to 'exibir 15 itens','#',:title => 'exibir 15 itens',:rel => 15}</li>"
-    container << "<li>#{link_to 'exibir 30 itens','#',:title => 'exibir 30 itens',:rel => 30}</li>"
-    container << "<li>#{link_to 'exibir 50 itens','#',:title => 'exibir 50 itens',:rel => 50}</li>"
-    container << "<li>#{link_to 'exibir 100 itens','#',:title => 'exibir 100 itens',:rel => 100}</li>"
+    container << "<li>#{link_to 'exibir 15 itens','javascript:void(0)',:title => 'exibir 15 itens',:rel => 15}</li>"
+    container << "<li>#{link_to 'exibir 30 itens','javascript:void(0)',:title => 'exibir 30 itens',:rel => 30}</li>"
+    container << "<li>#{link_to 'exibir 50 itens','javascript:void(0)',:title => 'exibir 50 itens',:rel => 50}</li>"
+    container << "<li>#{link_to 'exibir 100 itens','javascript:void(0)',:title => 'exibir 100 itens',:rel => 100}</li>"
     container << "</ul></li></ul>"
     container.html_safe
   end

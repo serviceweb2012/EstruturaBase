@@ -8,26 +8,6 @@ class Admin::HomeController < ApplicationController
     flash[:notice] = 'Ola bem vindo ao sistema'
   end
 
-  def set_session
-     if params[:per_page]
-       session[:per_page] = params[:per_page]
-     elsif session[:per_page].nil?
-       session[:per_page] = 15
-     else
-       session[:per_page] ||= session[:per_page]
-     end
-
-     search = params[:search].blank? ? "" : "?search=#{params[:search]}"
-     url = "#{params[:url]}#{search}"
-     respond_to do |format|
-       format.html { render :redirect_to =>  url }
-       format.js { render :update do |page|
-        page.redirect_to(url)
-       end
-       }
-     end
-   end
-
    def enabled_disabled
      id = params[:id]
      model_name =  params[:name].to_s.camelize.constantize
