@@ -682,6 +682,7 @@ module ApplicationHelper
           container << "</li>"
           container << "<li>"
           container << link_to('excluir',"#{base_route}#{l.id}",:method => :delete,:confirm => "Uma vez excluido o registro não poderá ser recupeado!Tem certeza que deseja excluir o registro : #{l.name}")
+          #container << link_to('excluir','javascript:void(0)',:rel => l.id,:class => 'deletar')
           container << "</li>"
 
           if l.respond_to? :situation
@@ -834,6 +835,23 @@ module ApplicationHelper
   # => METODOS DE LISTAGEM  - FIM
 
   #######################################
+
+
+  #metodos que lista itens para ordenação com arrastar e soltar
+  def reorder_itens(lista)
+     container = %()
+     container << "<ul id='order_menus_list'>"
+       lista.each_with_index do |l,index|
+          container << "<li id='#{l.id}' rel='#{index}'>"
+          container << "<span class='handle'>[arraste]</span>&nbsp;&nbsp;&nbsp;&nbsp;"
+          container << l.name
+          container << "</li>"
+      end
+     container << "</ul>"
+     #container << sortable_element('order_menus_list',:url => { :action => 'sort' })
+     container.html_safe
+  end
+
 
   # ===== ===== ===== helpers de formulários - fim  ===== ===== ===== #
 end

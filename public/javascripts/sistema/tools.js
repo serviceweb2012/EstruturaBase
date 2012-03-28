@@ -227,6 +227,75 @@ jQuery(document).ready(function(){
         }//else
     })//funciont
 
+
+    //deletar
+    $('a.deletar').click(function(){
+        var id = $(this).attr('rel');
+        var urlAtual = window.location.href;
+
+        if(confirm("Deseja realmente excluir o registro?")){
+            $.destroy(urlAtual+"/{id}",
+            {id:id},
+                function(dados){
+                      nova_lista = $(dados).find("div#listagem").html();
+                      //nova_lista retorna tudo / buscar dentro a lista ul li e jogar na nova...l
+                      $("div#listagem").html("");
+                      $("div#listagem").html(nova_lista)
+                      total_ativados = $("div#listagem ul li.ativado");
+                      total_desativados = $("div#listagem ul li.desativado");
+                      total = total_desativados.length + total_ativados.length;
+                      $('span.filters span p em').text(total)
+                      $("div#listagem").find('ul li:nth-child(even), .options .results li:nth-child(even)').css('background-color','#F3F3F3');
+	                  $("div#listagem").find('ul li .options').hide();
+	                  $("div#listagem").find('ul li input:not(:checked)').hide();
+
+	                  $('div#listagem ul li').hover( function() {
+		                    $(this).find('ul.options').fadeIn('fast');
+		                    if($(this).find('input:checkbox').attr('checked') == false) {
+			                    $(this).find('input:checkbox').fadeIn('fast');
+		                    }
+	                    }, function() {
+		                    $(this).find('ul.options').fadeOut('fast');
+		                    if($(this).find('input:checkbox').attr('checked') == false) {
+			                    $(this).find('input:checkbox').fadeOut('fast');
+		                    }
+
+	                  });
+
+	                  $('.status').click(function() {
+		                    if ($(this).text() == "desativar") {
+			                    $(this).parent().parent().parent().removeClass('ativado').addClass('desativado');
+			                    $(this).text("ativar");
+		                    } else {
+			                    $(this).parent().parent().parent().removeClass('desativado').addClass('ativado');
+			                    $(this).text("desativar");
+		                    }
+	                    });
+                }//function
+
+            )//destroy
+        }//if
+
+    });//function
+
+
+    //arrastar - soltar
+    /* $('#order_menus_list').sortable({
+        update:function(){
+            var id = $(this).attr('id');
+            var position = $(this).index();
+            alert(id + "  " + position)
+            // var token = $("meta[name='csrf-token']").attr('content');
+
+            //$.post(
+            //    "/admin/menus/sort",
+            //   {id:id,position:position,authenticity_token:token}
+            // )
+        }
+    }); */
+
+    $('#order_menus_list').disableSelection();
+
     $("#acoes_em_massa").hide();
     $(".box.results input[type='checkbox']").click(function(){
         checados = $(".box.results input[type='checkbox']:checked");
