@@ -72,23 +72,22 @@ class Admin::SubMenusController < ApplicationController
      @sub_menus = SubMenu.all(:order => 'position')
    end
 
-   def sort
-     unless params[:order_sub_menus_list].nil?
-       params[:order_sub_menus_list].each_with_index do |id, index|
+  def sort
+     unless params[:sub_menu].nil?
+       params[:sub_menu].each_with_index do |id, index|
          SubMenu.update_all(['position=?', index], ['id=?', id])
        end
      end
 
      respond_to do |format|
-       format.html { redirect_to "/admin/sub_menus/ordenar_sub_menus" }
        format.js { render :nothing => true }
      end
-   end
+  end
 
 
   protected
   def load_resources
-    @menus = Menu.order(:name => "asc")
+    @menus = Menu.order("name ASC")
   end
 end
 

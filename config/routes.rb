@@ -42,7 +42,7 @@ EstruturaBase::Application.routes.draw do
     resources :sub_menus do
       collection do
         get 'ordenar_sub_menus'
-        post 'sort'
+        get 'sort'
         post 'find_sub_menus_by_menu'
         get 'search'
       end

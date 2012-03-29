@@ -279,7 +279,7 @@ jQuery(document).ready(function(){
     });//function
 
 
-    //arrastar - soltar
+    //ordenar menus
      $('#order_menus_list').sortable({
         axis:'y',
         dropOnEmpty: false,
@@ -294,6 +294,25 @@ jQuery(document).ready(function(){
     });
 
     $('#order_menus_list').disableSelection();
+
+     //ordenar sub menus
+     $('#order_sub_menus_list').sortable({
+        axis:'y',
+        dropOnEmpty: false,
+        handle: '.handle',
+        items: 'li',
+        update:function(){
+            $.get(
+               '/admin/menus/sort',
+               $(this).sortable('serialize')
+            )
+        }
+    });
+
+    $('#order_menus_list').disableSelection();
+
+
+
 
     $("#acoes_em_massa").hide();
     $(".box.results input[type='checkbox']").click(function(){

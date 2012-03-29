@@ -52,10 +52,6 @@ class Admin::MenusController < ApplicationController
 
 
   def sort
-    params[:order_menus_list].nil? ? logger.info("order => nil") : logger.info("order => #{params[:order_menu_list]}")
-    params[:menu].nil? ? logger.info("order => nil") : logger.info("order => #{params[:menu]}")
-
-
      unless params[:menu].nil?
        params[:menu].each_with_index do |id, index|
          Menu.update_all(['position=?', index], ['id=?', id])
@@ -63,7 +59,6 @@ class Admin::MenusController < ApplicationController
      end
 
      respond_to do |format|
-       #format.html { redirect_to "/admin/menus/ordenar_menus" }
        format.js { render :nothing => true }
      end
   end

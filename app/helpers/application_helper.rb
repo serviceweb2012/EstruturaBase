@@ -841,17 +841,22 @@ module ApplicationHelper
 
 
   #metodos que lista itens para ordenação com arrastar e soltar
-  def reorder_itens(lista)
+  def reorder_itens(lista,modelo)
+     if modelo.to_s.eql?('menu')
+      id_to_list = 'order_menus_list'
+     elsif modelo.to_s.eql?('sub_menu')
+      id_to_list = 'order_sub_menus_list'
+     end
+
      container = %()
-     container << "<ul id='order_menus_list'>"
+     container << "<ul id='#{id_to_list}'>"
        lista.each_with_index do |l|
-          container << "<li id='menu_#{l.id}'>"
+          container << "<li id='#{modelo.to_s.underscore.downcase}_#{l.id}'>"
           container << "<span class='handle'>[arraste]</span>&nbsp;&nbsp;&nbsp;&nbsp;"
           container << l.name
           container << "</li>"
       end
      container << "</ul>"
-     #container << sortable_element('order_menus_list',:url => { :action => 'sort' })
      container.html_safe
   end
 

@@ -301,9 +301,9 @@ input[type="reset"]:hover,
 
 /* */
 
-#order_menus_list{font-size:1.2em;padding:15px 0 15px 50px;}
-#order_menus_list li {padding:5px}
-#order_menus_list li span.handle{
+#order_menus_list,#order_sub_menus_list{font-size:1.2em;padding:15px 0 15px 50px;}
+#order_menus_list li,#order_sub_menus_list li {padding:5px}
+#order_menus_list li span.handle,#order_sub_menus_list li span.handle{
 	font-size: 11px;
 	cursor: move;
 	color: #777;
