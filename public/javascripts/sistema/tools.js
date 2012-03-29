@@ -370,7 +370,7 @@ jQuery(document).ready(function(){
 		}
 	});
 
-	var COOKIE_NAME = 'fonte_cookie';
+	/*var COOKIE_NAME = 'fonte_cookie';
 	var options = { path: '/', expires: 10 };
 
 	if ($.cookie(COOKIE_NAME) != 'null' ) {
@@ -389,7 +389,7 @@ jQuery(document).ready(function(){
 		$.cookie(COOKIE_NAME, '96.5%', options);
 		$('#container').css('font-size',$.cookie(COOKIE_NAME));
 	});
-
+    */
 });
 
 function calc() {
