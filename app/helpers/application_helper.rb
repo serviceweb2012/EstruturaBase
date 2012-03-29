@@ -30,7 +30,7 @@ module ApplicationHelper
   def create_menu
     user = User.find(current_user.id)
     if user.role.value == 5
-      menu = Menu.order(:position => "asc")
+      menu = Menu.order("position ASC")
     else
       menu = Menu.actived?.where("menu_permissions.role_id = ?",user.role.id).order("menu.position ASC").joins(:menu_permissions)
     end
@@ -248,7 +248,8 @@ module ApplicationHelper
 
     container = %(<div class="#{container_class}">)
     container << "<span>"
-    container << "<label for=\"#{input_label_for}\">#{campo.to_s.camelize}"
+    container << "<label for=\"#{input_label_for}\">"
+    container << t("activerecord.attributes.#{objeto.class.to_s.underscore.downcase}.#{campo.to_s}")
     container << link_to("[?]",'javascript: void(0);',:class => "showHelp",:title => 'clique aqui para pedir ajudar sobre o campo') if input_information
 
     case input_type
@@ -298,7 +299,8 @@ module ApplicationHelper
 
     container = %()
     container << "<span>"
-    container << "<label for=\"#{input_label_for}\">#{campo.to_s.camelize}"
+    container << "<label for=\"#{input_label_for}\">"
+    container << t("activerecord.attributes.#{objeto.class.to_s.underscore.downcase}.#{campo.to_s}")
     container << link_to("[?]",'javascript: void(0);',:class => "showHelp",:title => 'clique aqui para pedir ajudar sobre o campo') if input_information
 
     case input_type
@@ -394,7 +396,8 @@ module ApplicationHelper
     container << "<div class='#{container_class}'>"
     container << "<span class='searchBtn'>"
     container << "<input type='hidden' name='#{input_hidden_name}' id='txtId'/>"
-    container << "<label for='txtName'>"
+    container << "<label for='#{input_label_for}'>"
+    container << t("activerecord.attributes.#{objeto.class.to_s.underscore.downcase}.#{campo.to_s}")
     container << "<input type='text' name='#{input_name}' id='txtName' disabled='disabled' />"
     container << link_to("...","javascript:createSearchPopup(\"/admin/#{route_for_seach}/search\", 760, 540)",:class => "filter",:title => "clique para abrir o campo de busca")
     container << "</label>"
@@ -841,8 +844,8 @@ module ApplicationHelper
   def reorder_itens(lista)
      container = %()
      container << "<ul id='order_menus_list'>"
-       lista.each_with_index do |l,index|
-          container << "<li id='#{l.id}' rel='#{index}'>"
+       lista.each_with_index do |l|
+          container << "<li id='menu_#{l.id}'>"
           container << "<span class='handle'>[arraste]</span>&nbsp;&nbsp;&nbsp;&nbsp;"
           container << l.name
           container << "</li>"

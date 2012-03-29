@@ -28,7 +28,7 @@ EstruturaBase::Application.routes.draw do
     resources :menus do
       collection do
         get 'ordenar_menus'
-        post 'sort'
+        get 'sort'
       end
     end
 

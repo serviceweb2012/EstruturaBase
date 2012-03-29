@@ -47,29 +47,25 @@ class Admin::MenusController < ApplicationController
   end
 
   def ordenar_menus
-     @menus = Menu.order("position DESC")
+     @menus = Menu.order("position ASC")
   end
 
 
   def sort
-    unless params[:id].nil? && params[:position].nil?
-      menu = Menu.find(params[:id])
-      menu.update_attributes(:position => params[:position].to_i)
-      menu.save
-    end
+    params[:order_menus_list].nil? ? logger.info("order => nil") : logger.info("order => #{params[:order_menu_list]}")
+    params[:menu].nil? ? logger.info("order => nil") : logger.info("order => #{params[:menu]}")
 
-    redirect_to '/admin/menus/ordenar_menus'
 
-    # unless params[:order_menus_list].nil?
-    #   params[:order_menus_list].each_with_index do |id, index|
-    #     Menu.update_all(['position=?', index], ['id=?', id])
-    #   end
-    # end
+     unless params[:menu].nil?
+       params[:menu].each_with_index do |id, index|
+         Menu.update_all(['position=?', index], ['id=?', id])
+       end
+     end
 
-    # respond_to do |format|
-    #   format.html { redirect_to "/admin/menus/ordenar_menus" }
-    #   format.js { render :nothing => true }
-    # end
+     respond_to do |format|
+       #format.html { redirect_to "/admin/menus/ordenar_menus" }
+       format.js { render :nothing => true }
+     end
   end
 end
 

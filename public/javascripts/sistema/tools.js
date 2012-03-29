@@ -280,19 +280,18 @@ jQuery(document).ready(function(){
 
 
     //arrastar - soltar
-    /* $('#order_menus_list').sortable({
+     $('#order_menus_list').sortable({
+        axis:'y',
+        dropOnEmpty: false,
+        handle: '.handle',
+        items: 'li',
         update:function(){
-            var id = $(this).attr('id');
-            var position = $(this).index();
-            alert(id + "  " + position)
-            // var token = $("meta[name='csrf-token']").attr('content');
-
-            //$.post(
-            //    "/admin/menus/sort",
-            //   {id:id,position:position,authenticity_token:token}
-            // )
+            $.get(
+               '/admin/menus/sort',
+               $(this).sortable('serialize')
+            )
         }
-    }); */
+    });
 
     $('#order_menus_list').disableSelection();
 
