@@ -8,7 +8,7 @@ class CreateSubMenus < ActiveRecord::Migration
       t.integer :position
       t.boolean :separator
       t.boolean :adm
-      t.boolean :situation
+      t.boolean :situation,:default => true
 
       t.timestamps
     end
@@ -18,3 +18,4 @@ class CreateSubMenus < ActiveRecord::Migration
     drop_table :sub_menus
   end
 end
+

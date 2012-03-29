@@ -3,8 +3,6 @@ class Admin::HomeController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    #codigo exemplo
-    @size = Menu.count
     flash[:notice] = 'Ola bem vindo ao sistema'
   end
 

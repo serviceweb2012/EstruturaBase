@@ -259,6 +259,8 @@ module ApplicationHelper
         container << form.file_field(campo,:name => input_name,:class => input_class)
       when 'password'
         container << form.password_field(campo,:name => input_name,:class => input_class)
+      when 'checkbox'
+        container << form.check_box(campo,{:name => input_name,:class => input_class})
     end
 
     container << "</label>"
@@ -514,6 +516,12 @@ module ApplicationHelper
     container << "</select></label></span><div class=\"clear\">&nbsp;</div>"
     container.html_safe
   end
+
+  #metodo que gera um checkbox simples
+  def simple_check_box_for_form(form,objeto,campo,container_options = {},campo_options = {})
+
+  end
+
 
   #metodo que gera area com checkbox
   #argumento 'lista' é a lista de objetos que vai ser exibido para seleção

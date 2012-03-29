@@ -3,7 +3,11 @@
 <% end %>
 
 <% content_for :main do  %>
-  <%= onde_estou "Edição de #{@sub_menu.class.human_name}",admin_root_path,'Dashboard' %>
-  <%= render :partial => 'form',:locals => {:button_label => "Editar"} %>
+  <%= onde_estou "Edição de #{@sub_menu.class.to_s}",admin_root_path,"Dashboard" %>
+  <div class="box fields">
+    <%= form_for(@sub_menu,:url => admin_sub_menu_path(@sub_menu),:html => {:method => :put}) do |f| %>
+      <%= render :partial => 'form',:locals =>{:button_label => "Editar",:f => f} %>
+    <% end %>
+  </div>
 <% end %>
 

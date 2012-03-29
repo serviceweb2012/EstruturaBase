@@ -2,9 +2,9 @@
 <div class="box stats">
   <h2>Estatísticas</h2>
   <p>Dados encontrados até o presente momento no sistema.</p>
-  <ul>
-			<li><span><%= @size %></span>menus</li>
-	</ul>
+  <!--<ul>
+			<li><span></span>menus</li>
+	</ul>-->
 </div>
 <div class="box message">
 		<h2>Aviso importante</h2>
@@ -15,7 +15,7 @@
 <% end %>
 
 <% content_for :main do %>
-    <%= onde_estou "Dashboard",admin_root_path,'Area de trabalho/javascripts/sistema/' %>
+    <%= onde_estou "Dashboard",admin_root_path,'Dashboard' %>
 		<div class="box dashboard">
 			<ul>
 				<li>

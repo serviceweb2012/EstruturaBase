@@ -1,38 +1,10 @@
-<h1>Listing sub_menus</h1>
-
-<table>
-  <tr>
-    <th>Menu</th>
-    <th>Name</th>
-    <th>Title</th>
-    <th>Url</th>
-    <th>Position</th>
-    <th>Separator</th>
-    <th>Adm</th>
-    <th>Situation</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @sub_menus.each do |sub_menu| %>
-  <tr>
-    <td><%= sub_menu.menu %></td>
-    <td><%= sub_menu.name %></td>
-    <td><%= sub_menu.title %></td>
-    <td><%= sub_menu.url %></td>
-    <td><%= sub_menu.position %></td>
-    <td><%= sub_menu.separator %></td>
-    <td><%= sub_menu.adm %></td>
-    <td><%= sub_menu.situation %></td>
-    <td><%= link_to 'Show', admin_sub_menu_path(sub_menu) %></td>
-    <td><%= link_to 'Edit', edit_admin_sub_menu_path(sub_menu) %></td>
-    <td><%= link_to 'Destroy', [:admin,sub_menu], :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<% content_for :sidebar do %>
+  Side Bar
 <% end %>
-</table>
 
-<br />
-
-<%= link_to 'New Sub menu', new_admin_sub_menu_path %>
+<% content_for :main do %>
+  <%= onde_estou "Listagem de #{@sub_menus.first.class.to_s.underscore.humanize}",admin_root_path,"Dashboard"%>
+  <%= search_tools(new_admin_sub_menu_path,@count) %>
+  <%= list_model(SubMenu,@sub_menus) %>
+<% end %>
 

@@ -1,3 +1,6 @@
 <%= input_text_for_form(f,@menu,:name) %>
+<%= input_text_for_form(f,@menu,:position) %>
+<%= input_text_for_form(f,@menu,:adm,{},{:input_type => 'checkbox'}) %>
+<%= input_text_for_form(f,@menu,:situation,{},{:input_type => 'checkbox'}) %>
 <%= create_actions_buttons(button_label) %>
 
