@@ -1,0 +1,6 @@
+$(document).ready(function(){
+  $('#sub_menus_for_menu').html(
+    "<%= escape_javascript(render 'sub_menus',:collection => @sub_menus) %> "
+  );
+})
+

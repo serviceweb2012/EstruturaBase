@@ -1,4 +1,4 @@
-jQuery(document).ready(function(){
+$(document).ready(function(){
 	$('form .field span em').hide();
 	$('form .field span.error').find('em').show();
 
@@ -32,17 +32,6 @@ jQuery(document).ready(function(){
 		$('#main form .field fieldset').css('width','715px');
 		$('.searchBtn a.filter').css('height','16px');
 	}
-
-	$('#login.recovery').hide();
-	$('#recovery').click(function() {
-		$('#login').hide();
-		$('#login.recovery').show();
-	});
-
-	$('#login.recovery a').click(function() {
-		$('#login.recovery').hide();
-		$('#login').show();
-	});
 
 
 });

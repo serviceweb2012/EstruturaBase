@@ -1,0 +1,19 @@
+<%= reorder_itens(@sub_menus,:sub_menu)%>
+<script type='text/javascript'>
+$(document).ready(function(){
+  $('#order_sub_menus_list').sortable({
+        axis:'y',
+        dropOnEmpty: false,
+        handle: '.handle',
+        items: 'li',
+        update:function(){
+            $.get(
+               '/admin/sub_menus/sort',
+               $(this).sortable('serialize')
+            )
+        }
+      });
+  $('#order_sub_menus_list').disableSelection();
+})
+</script>
+

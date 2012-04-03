@@ -17,6 +17,7 @@ EstruturaBase::Application.routes.draw do
   #rotas admin
   namespace :admin do
     root :to => "home#index"
+    resources :users
     resources :home do
       post 'set_session',:on => :collection
       post 'enabled_disabled',:on => :member
@@ -43,14 +44,11 @@ EstruturaBase::Application.routes.draw do
       collection do
         get 'ordenar_sub_menus'
         get 'sort'
-        post 'find_sub_menus_by_menu'
-        get 'search'
+        get 'find_sub_menus_by_menu'
+        #get 'search'
       end
     end
 
-    #resources :sessions
-
-    resources :users,:as => "usuarios"
   end
 
   # The priority is based upon order of creation:

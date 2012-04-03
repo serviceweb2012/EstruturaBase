@@ -1,25 +1,6 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Username:</b>
-  <%= @user.username %>
-</p>
-
-<p>
-  <b>Email:</b>
-  <%= @user.username %>
-</p>
-<p>
-  <b>Role:</b>
-  <%= @user.email %>
-</p>
-
-<p>
-  <b>Role:</b>
-  <%= @user.role.name %>
-</p>
-
-
-<%= link_to 'Edit', edit_admin_usuario_path(@user) %> |
-<%= link_to 'Back', admin_usuarios_path %>
+<div class="info">
+<h2><%= @user.name %></h2>
+<%= show_field(@user,:username) %>
+<%= show_field(@user,:email) %>
+</div>
 

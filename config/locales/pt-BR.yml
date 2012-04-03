@@ -158,7 +158,7 @@ ptbr:
             value: "Valor"
             situation: "Ativa?"
         user:
-            login: "Login"
+            username: "Login"
             name: "Nome"
             email: "E-mail"
             password: "Senha"

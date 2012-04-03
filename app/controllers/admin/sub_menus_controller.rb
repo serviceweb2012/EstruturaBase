@@ -13,7 +13,9 @@ class Admin::SubMenusController < ApplicationController
 
   def show
     @sub_menu = SubMenu.find(params[:id])
-    respond_with @sub_menu,:location => admin_sub_menu_path
+    respond_with(@sub_menu,:location => admin_sub_menu_path) do |format|
+      format.html { render :layout => "show" }
+    end
   end
 
   def new
@@ -57,20 +59,19 @@ class Admin::SubMenusController < ApplicationController
     render :layout => "search"
   end
 
-
   def find_sub_menus_by_menu
-     @sub_menus = SubMenu.all(:conditions => ["menu_id = ?", params[:menu]], :order => "position")
-     respond_to do |format|
-       format.html { redirect_to :action => 'index' }
-       format.js { render :update do |page|
-        page.replace_html "order_sub_menus_list", :partial => "all_sub_menus", :object => @sub_menus
-       end }
-     end
-   end
+    @sub_menus = SubMenu.where(:menu_id => params[:menu_id]).order('position ASC') if params[:menu_id]
+    logger.info("size => #{@sub_menus.size}")
+    respond_to do |format|
+      #format.html # index.html.erb
+      format.js
+    end
+  end
 
-   def ordenar_sub_menus
-     @sub_menus = SubMenu.all(:order => 'position')
-   end
+  def ordenar_sub_menus
+     @menus = Menu.order('name ASC')
+     respond_with @menus,:location => ordenar_sub_menus_admin_sub_menus_path
+  end
 
   def sort
      unless params[:sub_menu].nil?
@@ -83,7 +84,6 @@ class Admin::SubMenusController < ApplicationController
        format.js { render :nothing => true }
      end
   end
-
 
   protected
   def load_resources

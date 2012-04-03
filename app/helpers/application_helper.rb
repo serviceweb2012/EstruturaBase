@@ -2,7 +2,7 @@
 module ApplicationHelper
 
   def imprime_data()
-    Time.current.to_s(:mostrativo)
+    Time.current.to_s
   end
 
   #metodo para mostrar o 'onde estou? na area admin'
@@ -65,27 +65,27 @@ module ApplicationHelper
   def show_user
     if user_signed_in?
       container = %()
-      container << "<div id=\"navTop\">\n"
-      container << "<div id=\"tools\">\n"
+      container << "<div id='navTop'>"
+      container << "<div id='tools'>"
       if flash[:notice]
-        container << "<div class=\"information\">\n"
-        container << "<span id=\'notice\'><span>&nbsp;</span><h1>#{flash[:notice]}</h1></span>\n"
-        container << "</div>\n"
+        container << "<div class='information'>"
+        container << "<span id='notice'><span>&nbsp;</span><h1>#{flash[:notice]}</h1></span>"
+        container << "</div>"
       end
-      container << "<div class='logged'>\n"
-      container << "<span>#{image_tag avatar_url(current_user)}</span>\n"
-      container << "<div>\n"
-      container << "<h2>#{current_user.name}</h2>\n"
-      container << "</div>\n"
-      container << "<ul>\n"
-      container << "<li>#{link_to('sair do sistema',destroy_user_session_path,:method => :delete,:title => 'efetuar logout')}</li>\n"
-      container << "<li>.</li>\n"
-      container << "<li>#{link_to('meus dados',admin_usuario_path(current_user.id),:title => 'ver meus dados')}</li>\n"
-      container << "</ul>\n"
-      container << "</div>\n"
-      container << "</div>\n" #tools
-      container << "<span class=\"clear\">&nbsp;</span>\n"
-      container << "</div>\n" #navTop
+      container << "<div class='logged'>"
+      container << "<span>#{image_tag avatar_url(current_user)}</span>"
+      container << "<div>"
+      container << "<h2>#{current_user.name}</h2>"
+      container << "</div>"
+      container << "<ul>"
+      container << "<li>#{link_to('sair do sistema',destroy_user_session_path,:method => :delete,:title => 'efetuar logout')}</li>"
+      container << "<li>.</li>"
+      container << "<li>#{link_to('meus dados',admin_user_path(current_user.id),:title => 'ver meus dados')}</li>"
+      container << "</ul>"
+      container << "</div>"
+      container << "</div>" #tools
+      container << "<span class='clear'>&nbsp;</span>"
+      container << "</div>" #navTop
     end
     container.html_safe
   end
@@ -360,10 +360,10 @@ module ApplicationHelper
   ### :input_name => define name do input
   ### :input_type => define tipo do input => text/password/file
   #ex : na chamada passar create_password_container(objeto,campo,{},{:chave => 'valor'}) pode ser recupeado no metodo com campo_options[:chave]
-  def create_password_container(objeto,campo,container_options = {},campo_options = {})
+  def create_password_container(form,objeto,campo,container_options = {},campo_options = {})
     container = %()
     container << "<div class='field triple'>"
-      container << input_text_for_block(objeto,campo,container_options,campo_options)
+      container << input_text_for_block(form,objeto,campo,container_options,campo_options)
       container << "<span>"
       container << "<label for=\"txtConfirmPass\">Confirmar Senha"
       container << "<input type=\"password\" name=\"txtConfirmPass\" class=\"confirm\" />"
@@ -689,7 +689,7 @@ module ApplicationHelper
           container << link_to('editar',"#{base_route}#{l.id}/edit")
           container << "</li>"
           container << "<li>"
-          container << link_to('visualizar',"javascript:createSearchPopup('#{base_route}#{l.id}',740,500)",:title => "cliquei para ver todos os dados do item")
+          container << link_to('visualizar',"javascript:createSearchPopup('#{base_route}#{l.id}',740,500);",:title => "cliquei para ver todos os dados do item")
           container << "</li>"
           container << "<li>"
           container << link_to('excluir',"#{base_route}#{l.id}",:method => :delete,:confirm => "Uma vez excluido o registro não poderá ser recupeado!Tem certeza que deseja excluir o registro : #{l.name}")
@@ -741,6 +741,66 @@ module ApplicationHelper
     container.html_safe
   end
 
+   #metodo que vai criar o select box para exibir escolha de ordem e itens por página
+  def select_order(modelo)
+    not_columns = ["id", "created_at", "updated_at", "status","position","adm","crypted_password","remember_token","salt","remember_toke","image_file_size","image_content_type","image_file_name"]
+    colunas = modelo.column_names - not_columns
+    modelo  = modelo.to_s.underscore.downcase
+    container = %()
+    container << "<ul id='ordenar'><li>"
+    container << link_to('ordenar dados','javascript:void(0);',:class => 'ordem',:title => 'clique para escolher quantos itens por página deseja exibir')
+    container << "<ul>"
+
+    colunas.each do |c|
+      container << %(<li rel="#{c}">)
+      container << link_to(t("activerecord.attributes.#{modelo}.#{c}"),'javascript:void(0);')
+      container << %(</li>)
+    end
+
+    container << "</ul></li></ul>"
+    container.html_safe
+  end
+
+  #metodo que cria o per_page
+  def select_per_page
+    container = %()
+    container << "<ul class='perpage'>"
+    container << "<li>#{link_to 'itens por página','javascript:void(0);',:title => 'selecione a quantidade de itens por página'}"
+    container << "<ul>"
+    container << "<li>#{link_to 'exibir 15 itens','javascript:void(0);',:title => 'exibir 15 itens',:rel => 15}</li>"
+    container << "<li>#{link_to 'exibir 30 itens','javascript:void(0);',:title => 'exibir 30 itens',:rel => 30}</li>"
+    container << "<li>#{link_to 'exibir 50 itens','javascript:void(0);',:title => 'exibir 50 itens',:rel => 50}</li>"
+    container << "<li>#{link_to 'exibir 100 itens','javascript:void(0);',:title => 'exibir 100 itens',:rel => 100}</li>"
+    container << "</ul></li></ul>"
+    container.html_safe
+  end
+
+  #metodo que cria a ordenção ascendente ou descendente
+  def select_ordem
+    container = %()
+    container << "<ul class='show'><li>#{link_to('ordenar','javascript:void(0);')}"
+    container << "<ul>"
+    container << "<li>#{link_to('A..Z','javascript:void(0);',:rel => 'ASC')}</li>"
+    container << "<li>#{link_to('Z..A','javascript:void(0);',:rel => 'DESC')}</li>"
+    container << "</ul></li></ul>"
+    container.html_safe
+  end
+
+  #metodo que cria o select box para exibir as ações em massa
+  def select_acoes_massa
+    container = %()
+    container << "<ul id='acoes_em_massa'>"
+    container << "<li>"
+    container << link_to("ações em massa",'javascript:void(0);',:title => "selecione uma ação em massa")
+    container << "<ul>"
+    container << "<li>#{link_to 'desativar/ativar','javascript:void(0);',:id => "enable_disable"}</li>"
+    container << "<li>#{link_to 'apagar todos','javascript:void(0);',:id => "destroy_all"}</li>"
+    container << "</ul>"
+    container << "</li>"
+    container << "</ul>"
+    container.html_safe
+  end
+
   #metodo que exibe os dados no show
   #argumento objeto é o objeto que irá ser exibido
   #argumento 'campo' é o campo do objeto a ser exibidos
@@ -750,9 +810,12 @@ module ApplicationHelper
     content = objeto.send(campo)
     #content = campo_options[:content].nil? ?
     container = %()
-    if content.is_a?(TrueClass) || content.is_a?(FalseClass)
-      content =  content ? "Ativo no sistema" : "Desativado no sistema"
+    if content.is_a?(TrueClass)
+      content = "Ativo no sistema"
+    elsif content.is_a?(FalseClass) || content.is_a?(NilClass)
+      content = "Desativado no sistema"
     end
+    content = campo_options[:content] unless campo_options[:content].nil?
     container << "<p><em>#{field_name}: </em>#{content}</p>"
     container.html_safe
   end
@@ -782,64 +845,7 @@ module ApplicationHelper
 		container.html_safe
   end
 
-  #metodo que vai criar o select box para exibir escolha de ordem e itens por página
-  def select_order(modelo)
-    not_columns = ["id", "created_at", "updated_at", "status","position","adm","crypted_password","remember_token","salt","remember_toke","image_file_size","image_content_type","image_file_name"]
-    colunas = modelo.column_names - not_columns
-    modelo  = modelo.to_s.underscore.downcase
-    container = %()
-    container << "<ul id='ordenar'><li>#{link_to 'ordenar dados','javascript:void(0)',:class => 'ordem',:title => 'clique para escolher quantos itens por página deseja exibir'}"
-    container << "<ul>"
 
-    colunas.each do |c|
-      container << %(<li rel="#{c}">)
-      container << link_to(t("activerecord.attributes.#{modelo}.#{c}"),'javascript:void(0)')
-      container << %(</li>)
-    end
-
-    container << "</ul></li></ul>"
-    container.html_safe
-  end
-
-  #metodo que cria o per_page
-  def select_per_page
-    container = %()
-    container << "<ul class='perpage'>"
-    container << "<li>#{link_to 'itens por página','javascript:void(0)',:title => 'selecione a quantidade de itens por página'}"
-    container << "<ul>"
-    container << "<li>#{link_to 'exibir 15 itens','javascript:void(0)',:title => 'exibir 15 itens',:rel => 15}</li>"
-    container << "<li>#{link_to 'exibir 30 itens','javascript:void(0)',:title => 'exibir 30 itens',:rel => 30}</li>"
-    container << "<li>#{link_to 'exibir 50 itens','javascript:void(0)',:title => 'exibir 50 itens',:rel => 50}</li>"
-    container << "<li>#{link_to 'exibir 100 itens','javascript:void(0)',:title => 'exibir 100 itens',:rel => 100}</li>"
-    container << "</ul></li></ul>"
-    container.html_safe
-  end
-
-  #metodo que cria a ordenção ascendente ou descendente
-  def select_ordem
-    container = %()
-    container << "<ul class='show'><li>#{link_to('ordenar','javascript:void(0)')}"
-    container << "<ul>"
-    container << "<li>#{link_to('A..Z','javascript:void(0)',:rel => 'ASC')}</li>"
-    container << "<li>#{link_to('Z..A','javascript:void(0)',:rel => 'DESC')}</li>"
-    container << "</ul></li></ul>"
-    container.html_safe
-  end
-
-  #metodo que cria o select box para exibir as ações em massa
-  def select_acoes_massa
-    container = %()
-    container << "<ul id='acoes_em_massa'>"
-    container << "<li>"
-    container << link_to("ações em massa",'javascript:void(0);',:title => "selecione uma ação em massa")
-    container << "<ul>"
-    container << "<li>#{link_to 'desativar/ativar','javascript:void(0)',:id => "enable_disable"}</li>"
-    container << "<li>#{link_to 'apagar todos','javascript:void(0)',:id => "destroy_all"}</li>"
-    container << "</ul>"
-    container << "</li>"
-    container << "</ul>"
-    container.html_safe
-  end
 
   #######################################
 

@@ -86,11 +86,11 @@ class GerarMenusAdmin < ActiveRecord::Migration
     #create user
     m = Menu.create!(:name => "Usuários", :position => 3, :adm => true)
     Menu.transaction do
-      m.sub_menus.create!(:menu_id => m.id, :name => "Cadastrar Usuário", :url => "/admin/usuarios/new",
+      m.sub_menus.create!(:menu_id => m.id, :name => "Cadastrar Usuário", :url => "/admin/users/new",
           :title =>  "Clique aqui para cadastrar um novo usuário", :position => 0) rescue nil
-      m.sub_menus.create!(:menu_id => m.id, :name => "Listar Usuários", :url => "/admin/usuarios",
+      m.sub_menus.create!(:menu_id => m.id, :name => "Listar Usuários", :url => "/admin/users",
           :title => "Clique aqui para listar os usuários", :position => 1) rescue nil
-      m.sub_menus.create!(:menu_id => m.id, :name => "Alterar Meus Dados", :url => "/admin/usuarios/alterar_meus_dados",
+      m.sub_menus.create!(:menu_id => m.id, :name => "Alterar Meus Dados", :url => "/admin/users/alterar_meus_dados",
           :title => "Clique aqui para alterar seus dados", :position => 2) rescue nil
     end
 

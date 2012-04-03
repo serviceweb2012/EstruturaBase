@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(:version => 20120229170234) do
     t.integer  "position"
     t.boolean  "separator"
     t.boolean  "adm"
-    t.boolean  "situation"
+    t.boolean  "situation",  :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end

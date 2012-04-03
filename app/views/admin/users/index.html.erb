@@ -1,26 +1,10 @@
-<h1>Listing locations</h1>
-
-<table>
-  <tr>
-    <th>Username</th>
-    <th>Role</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @users.each do |user| %>
-  <tr>
-    <td><%= user.username %></td>
-    <td><%= user.role.name %></td>
-    <td><%= link_to 'Show', admin_usuario_path(user) %></td>
-    <td><%= link_to 'Edit', edit_admin_usuario_path(user) %></td>
-    <td><%= link_to 'Destroy', admin_usuarios_path(user), :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<% content_for :sidebar do %>
+  Side Bar
 <% end %>
-</table>
 
-<br />
-
-<%= link_to 'New User', new_admin_usuario_path %>
+<% content_for :main do %>
+  <%#= onde_estou "Listagem de #{@users.first.class.to_s.underscore.humanize}",admin_root_path,"Dashboard"%>
+  <%#= search_tools(new_admin_user_path,@count) %>
+  <%#= list_model(User,@users) %>
+<% end %>
 

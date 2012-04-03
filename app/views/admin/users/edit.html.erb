@@ -1,7 +1,13 @@
-<h1>Editing User</h1>
+<% content_for :sidebar do %>
+  <%= error_message_for(@user) %>
+<% end %>
 
-<%= render 'form' %>
-
-<%= link_to 'Show', admin_usuario_path(@user) %> |
-<%= link_to 'Back', admin_usuarios_path %>
+<% content_for :main do  %>
+  <%= onde_estou "Edição de #{@user.class.to_s}",admin_root_path,"Dashboard" %>
+  <div class="box fields">
+    <%= form_for(@user,:url => admin_user_path(@user),:html => {:method => :put}) do |f| %>
+      <%= render :partial => 'form',:locals =>{:button_label => "Editar",:f => f} %>
+    <% end %>
+  </div>
+<% end %>
 

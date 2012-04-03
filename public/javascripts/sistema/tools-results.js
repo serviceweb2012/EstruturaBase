@@ -1,37 +1,28 @@
-jQuery(document).ready(function(){
+$(document).ready(function(){
 	$('.results ul li:nth-child(even), .options .results li:nth-child(even)').css('background-color','#F3F3F3');
 	$('.results ul li .options').hide();
-	$('.results ul li input:not(:checked)').hide();
+    $("#acoes_em_massa").hide();
 
 	$('.results ul li').hover( function() {
 		$(this).find('.options').fadeIn('fast');
-		if($(this).find('input:checkbox').attr('checked') == false) {
-			$(this).find('input:checkbox').fadeIn('fast');
-		}
 	}, function() {
 		$(this).find('.options').fadeOut('fast');
-		if($(this).find('input:checkbox').attr('checked') == false) {
-			$(this).find('input:checkbox').fadeOut('fast');
-		}
-
 	});
-
 
 	$('input:checked').parent().css('background-position','bottom center');
 
-	$('.tools input.markAll:checkbox').click( function() {
-		if($(this).attr('checked') == true) {
-			$(".results ul li input:checkbox").attr('checked', true);
-			$('input:checked').show();
+	$('.markAll').click( function() {
+		if($(this).attr('checked') == 'checked') {
+			$(".results ul li input:checkbox").attr('checked', 'checked');
 		} else {
-			$(".results ul li input:checkbox").attr('checked', false);
-			$('.results ul li input:not(:checked)').fadeOut('fast');
+			$(".results ul li input:checkbox").removeAttr('checked');
 		}
+
 		$('input:checked').parent().css('background-position','center center');
 		$('input:not(:checked)').parent().css('background-position','top center');
 	});
 
-	$('.tools .filter input:checkbox').click( function() {
+	/*$('.tools .filter input:checkbox').click( function() {
 		if($(this).attr('checked') == true) {
 			$('.filters ul').append("<li><a href='javascript: void(0);' title=''>" + $(this).val() + "</a></li>");
 			$('.filters ul li a').hover( function(){
@@ -60,7 +51,7 @@ jQuery(document).ready(function(){
 				}
 			})
 		}
-	});
+	});*/
 
 
 	$('.results ul li input:checkbox').click( function() {
