@@ -17,7 +17,7 @@ class Permission < ActiveRecord::Base
   protected
   def self.list_models
     arqs = []
-    dir_model = "#{RAILS_ROOT}/app/models"
+    dir_model = "#{Rails.root.to_s}/app/models"
     Dir.foreach(dir_model) {|f| arqs << f }
     arqs.reject! { |f| (f == "." || f == "..") }
     models = []
@@ -25,7 +25,7 @@ class Permission < ActiveRecord::Base
       next if a =~ /mailer/
       next if a =~ /observer/
       model_name = a.gsub!(/(.rb\b)/, "")
-      path = "#{RAILS_ROOT}/app/controllers/admin/#{model_name.pluralize}_controller.rb"
+      path = "#{Rails.root.to_s}/app/controllers/admin/#{model_name.pluralize}_controller.rb"
       inc_model = File.exist?(path)
       model_name = a.camelize
       models << model_name if inc_model
@@ -38,7 +38,7 @@ class Permission < ActiveRecord::Base
     actions = []
     if !model.nil? && !model.blank?
       controller_name = model.underscore.pluralize
-      path = "#{RAILS_ROOT}/app/controllers/admin/#{controller_name}_controller.rb"
+      path = "#{Rails.root.to_s}/app/controllers/admin/#{controller_name}_controller.rb"
 
       env = /(def .*$)/
       File.open(path) do |f|

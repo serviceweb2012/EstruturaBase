@@ -4,15 +4,18 @@ class Admin::UsersController < ApplicationController
   before_filter :authenticate_user!,:load_resources
 
   def index
-    @users = User.order("name ASC")#find_all_with_permission(params[:search],current_user)
+    @users = User.where("name LIKE ?","%#{params[:search]}%")
+                  .order("#{$order} #{$ordem}")
+                  .paginate(:per_page => params[:per_page],:page => params[:page])#find_all_with_permission(params[:search],current_user)
     @count = @users.size
-    @users = @users.paginate(:per_page => params[:per_page],:page => params[:page])
-    respond_with @users,:location => admin_user_path
+    respond_with @users,:location => admin_users_path
   end
 
   def show
     @user = User.find(params[:id])
-    respond_with @user,:location => admin_user_path
+    respond_with @user,:location => admin_user_path do |format|
+      format.html { render :layout => "show" }
+    end
   end
 
   def new

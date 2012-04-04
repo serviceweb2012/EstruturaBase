@@ -12,11 +12,15 @@ EstruturaBase::Application.routes.draw do
   match '/admin/home/delete_all/:modelo/:ids' => "admin/home#delete_all"
 
   #rotas devise
-  devise_for :users,:controllers => { :sessions => "admin/sessions", :unlocks => "admin/unlocks",:passwords => "admin/passwords" }
-
+  devise_for :users,:controllers => {
+                        :sessions => "admin/sessions",
+                        :unlocks => "admin/unlocks",
+                        :passwords => "admin/passwords"
+                      }
   #rotas admin
   namespace :admin do
     root :to => "home#index"
+
     resources :users
     resources :home do
       post 'set_session',:on => :collection
@@ -33,12 +37,12 @@ EstruturaBase::Application.routes.draw do
       end
     end
 
-    resources :permissions, :as => "permissoes" do
-      post 'find_actions_by_model',:on => :collection
+    resources :permissions do
+      get 'find_actions_by_model',:on => :collection
     end
 
     resources :report_erros, :as => "erros"
-    resources :roles, :as => "tipos_acesso"
+    resources :roles
 
     resources :sub_menus do
       collection do

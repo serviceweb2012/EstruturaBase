@@ -16,7 +16,7 @@ module ApplicationHelper
       container << "<h2><em>Onde estou?</em>#{menu_name}</h2>"
 
       unless rota.nil?
-        container << "<em class=\"right\">ir para: #{link_to texto,rota,:title => "ir para sua area de trabalho"}</em>"
+        container << "<em class='right'>ir para: #{link_to texto,rota}</em>"
       end
 
       container << "</div>"
@@ -80,7 +80,9 @@ module ApplicationHelper
       container << "<ul>"
       container << "<li>#{link_to('sair do sistema',destroy_user_session_path,:method => :delete,:title => 'efetuar logout')}</li>"
       container << "<li>.</li>"
-      container << "<li>#{link_to('meus dados',admin_user_path(current_user.id),:title => 'ver meus dados')}</li>"
+      container << "<li>"
+      container << link_to('meus dados',"javascript:createSearchPopup('/admin/users/#{current_user.id}',740,500);",:title => 'ver meus dados')
+      container << "</li>"
       container << "</ul>"
       container << "</div>"
       container << "</div>" #tools
@@ -261,6 +263,8 @@ module ApplicationHelper
         container << form.password_field(campo,:name => input_name,:class => input_class)
       when 'checkbox'
         container << form.check_box(campo,{:name => input_name,:class => input_class})
+      when 'radio'
+        container << form.radio_button(campo,objeto.id,{:name => input_name,:class => input_class})
     end
 
     container << "</label>"
@@ -312,6 +316,10 @@ module ApplicationHelper
         container << form.file_field(campo,:name => input_name,:class => input_class)
       when 'password'
         container << form.password_field(campo,:name => input_name,:class => input_class)
+      when 'checkbox'
+        container << form.check_box(campo,{:name => input_name,:class => input_class})
+      when 'radio'
+        container << form.radio_button(campo,objeto.id,{:name => input_name,:class => input_class})
     end
 
     container << "</label>"
@@ -513,13 +521,8 @@ module ApplicationHelper
     lista.each do |l|
       container << "<option value='#{l.id}'>#{l.name}</option>"
     end
-    container << "</select></label></span><div class=\"clear\">&nbsp;</div>"
+    container << "</select></label></span>"
     container.html_safe
-  end
-
-  #metodo que gera um checkbox simples
-  def simple_check_box_for_form(form,objeto,campo,container_options = {},campo_options = {})
-
   end
 
 
@@ -743,7 +746,7 @@ module ApplicationHelper
 
    #metodo que vai criar o select box para exibir escolha de ordem e itens por página
   def select_order(modelo)
-    not_columns = ["id", "created_at", "updated_at", "status","position","adm","crypted_password","remember_token","salt","remember_toke","image_file_size","image_content_type","image_file_name"]
+    not_columns = ["id", "created_at", "updated_at", "status","position","adm","encrypted_password","reset_password_token","failed_attempts", "unlock_token", "current_sign_in_ip", "last_sign_in_ip","current_sign_in_at", "reset_password_sent_at","image_file_size","image_content_type","image_file_name"]
     colunas = modelo.column_names - not_columns
     modelo  = modelo.to_s.underscore.downcase
     container = %()

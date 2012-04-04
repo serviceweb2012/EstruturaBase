@@ -1,0 +1,7 @@
+$(document).ready(function(){
+  $('#actions_by_model').show();
+  $('#actions_by_model span fieldset').html(
+    "<%= escape_javascript(render 'actions_for_model',:collection => @actions)%>"
+  )
+})
+

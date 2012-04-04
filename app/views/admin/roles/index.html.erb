@@ -1,28 +1,10 @@
-<h1>Listing roles</h1>
-
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Value</th>
-    <th>Situation</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @roles.each do |role| %>
-  <tr>
-    <td><%= role.name %></td>
-    <td><%= role.value %></td>
-    <td><%= role.situation %></td>
-    <td><%= link_to 'Show', admin_role_path(role) %></td>
-    <td><%= link_to 'Edit', edit_admin_role_path(role) %></td>
-    <td><%= link_to 'Destroy', [:admin,role], :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<% content_for :sidebar do %>
+  Side Bar
 <% end %>
-</table>
 
-<br />
-
-<%= link_to 'New Role', new_admin_role_path %>
+<% content_for :main do %>
+  <%= onde_estou "Listagem de #{@roles.first.class.to_s.underscore.humanize}",admin_root_path,"Dashboard"%>
+  <%= search_tools(new_admin_role_path,@count) %>
+  <%= list_model(Role,@roles) %>
+<% end %>
 

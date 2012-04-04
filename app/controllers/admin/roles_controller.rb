@@ -13,7 +13,9 @@ class Admin::RolesController < ApplicationController
 
   def show
     @role = Role.find(params[:id])
-    respond_with @role,:location => admin_role_path
+    respond_with @role,:location => admin_role_path do |format|
+      format.html {render :layout => 'show'}
+    end
   end
 
   def new

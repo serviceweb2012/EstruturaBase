@@ -164,6 +164,10 @@ ptbr:
             password: "Senha"
             password_confirmation: "Confirmação de Senha"
             role_id: "Permissão"
+            sign_in_count: "Acessos"
+            last_sign_in_at: "Último acesso"
+            locked_at: "Bloqueado em"
+            situation: "Situação"
         permission:
             role_id: "Tipo de Acesso"
             model_name: "Nome do Modelo"

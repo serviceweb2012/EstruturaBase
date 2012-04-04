@@ -34,27 +34,27 @@ class GerarMenusAdmin < ActiveRecord::Migration
 
     Menu.transaction do
       #create acess_type
-      m.sub_menus.create!(:menu_id => m.id, :name => "Cadastrar Tipos de Acesso", :url => "/admin/tipos_acesso/new",
+      m.sub_menus.create!(:menu_id => m.id, :name => "Cadastrar Tipos de Acesso", :url => "/admin/roles/new",
           :title =>  "Clique aqui para cadastrar um novo tipo de acesso", :position => 0, :adm => true) rescue nil
-      m.sub_menus.create!(:menu_id => m.id, :name => "Listar Tipos de Acesso", :url => "/admin/tipos_acesso",
+      m.sub_menus.create!(:menu_id => m.id, :name => "Listar Tipos de Acesso", :url => "/admin/roles",
           :title => "Clique aqui para listar os tipos de acesso", :position => 1, :separator => true, :adm => true) rescue nil
 
       #create permission
-      m.sub_menus.create!(:menu_id => m.id, :name => "Cadastrar Permissão", :url => "/admin/permissoes/new",
+      m.sub_menus.create!(:menu_id => m.id, :name => "Cadastrar Permissão", :url => "/admin/permissions/new",
           :title => "Clique aqui para cadastrar uma nova permissão", :position => 2, :adm => true) rescue nil
-      m.sub_menus.create!(:menu_id => m.id, :name => "Listar Permissões", :url => "/admin/permissoes",
+      m.sub_menus.create!(:menu_id => m.id, :name => "Listar Permissões", :url => "/admin/permissions",
           :title => "Clique aqui para listar as permissões", :position => 3, :adm => true, :separator => true) rescue nil
 
       #create menu_permissions
-      m.sub_menus.create!(:menu_id => m.id, :name => "Cadastrar Menu/Permissão", :url => "/admin/menu_permissoes/new",
+      m.sub_menus.create!(:menu_id => m.id, :name => "Cadastrar Menu/Permissão", :url => "/admin/menus_roles/new",
           :title => "Clique aqui para cadastrar um novo menu/permissão", :position => 4, :adm => true) rescue nil
-      m.sub_menus.create!(:menu_id => m.id, :name => "Listar Menu/Permissões", :url => "/admin/menu_permissoes",
+      m.sub_menus.create!(:menu_id => m.id, :name => "Listar Menu/Permissões", :url => "/admin/menus_roles",
           :title => "Clique aqui para listar menus/permissões", :position => 5, :adm => true, :separator => true) rescue nil
 
       #create sub_permissions
-      m.sub_menus.create!(:menu_id => m.id, :name => "Cadastrar Sub-Menu/Permissão", :url => "/admin/sub_menu_permissoes/new",
+      m.sub_menus.create!(:menu_id => m.id, :name => "Cadastrar Sub-Menu/Permissão", :url => "/admin/roles_sub_menus/new",
           :title => "Clique aqui para cadastrar um novo sub-menus/permissão", :position => 6, :adm => true) rescue nil
-      m.sub_menus.create!(:menu_id => m.id, :name => "Listar Sub-Menus/Permissões", :url => "/admin/sub_menu_permissoes",
+      m.sub_menus.create!(:menu_id => m.id, :name => "Listar Sub-Menus/Permissões", :url => "/admin/roles_sub_menus",
           :title => "Clique aqui para listar sub-menus/permissões", :position => 7, :adm => true) rescue nil
     end
 
@@ -90,8 +90,6 @@ class GerarMenusAdmin < ActiveRecord::Migration
           :title =>  "Clique aqui para cadastrar um novo usuário", :position => 0) rescue nil
       m.sub_menus.create!(:menu_id => m.id, :name => "Listar Usuários", :url => "/admin/users",
           :title => "Clique aqui para listar os usuários", :position => 1) rescue nil
-      m.sub_menus.create!(:menu_id => m.id, :name => "Alterar Meus Dados", :url => "/admin/users/alterar_meus_dados",
-          :title => "Clique aqui para alterar seus dados", :position => 2) rescue nil
     end
 
     User.create!(:name => "Administrador", :username => "admin", :email => "admin@admin.com",

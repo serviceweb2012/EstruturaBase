@@ -1,7 +1,13 @@
-<h1>Editing permission</h1>
+<% content_for :sidebar do %>
+  <%= error_message_for(@permission) %>
+<% end %>
 
-<%= render 'form' %>
-
-<%= link_to 'Show', admin_permission_path(@permission) %> |
-<%= link_to 'Back', admin_permissions_path %>
+<% content_for :main do  %>
+  <%= onde_estou "Edição de #{@permission.class.to_s}",admin_root_path,"Dashboard" %>
+  <div class="box fields">
+    <%= form_for(@permission,:url => admin_permission_path(@permission),:html => {:method => :put}) do |f| %>
+      <%= render :partial => 'form',:locals =>{:button_label => "Editar",:f => f} %>
+    <% end %>
+  </div>
+<% end %>
 

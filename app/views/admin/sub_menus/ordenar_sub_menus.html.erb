@@ -4,11 +4,18 @@
 
 <% content_for :main do %>
   <%= onde_estou "Ordenação de SubMenus",admin_root_path,"Dashboard"%>
-  <label for='txtMenu'>Selecione o Menu
-    <%= collection_select(:menu,:menu_id,@menus,:id,:name,:prompt => "Selecione um sub menu") %>
-  </label>
+  <form>
+    <div class="field double">
+      <span class="">
+        <label for='txtMenu'>Selecione o Menu
+          <%= collection_select(:menu,:menu_id,@menus,:id,:name,:prompt => "Selecione um sub menu") %>
+        </label>
+      </span>
+    </div>
+  </form>
+  <span class='clear'>&nbsp;</span>
   <div id='sub_menus_for_menu'>
-    <%#= reorder_itens([],:sub_menu) %>
+      <%#= reorder_itens([],:sub_menu) %>
   </div>
 <% end %>
 

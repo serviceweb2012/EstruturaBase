@@ -1,0 +1,26 @@
+<legend>Selecione as ações</legend>
+<%= check_box_tag(:select_all,1,false,:class => 'markAllActions') %>Selecionar todas as ações
+<span class='clear'>&nbsp;</span>
+<% unless @actions.empty? %>
+  <% @actions.each do |action| %>
+    <span class='item'>
+     <%= check_box_tag "permission[actions_model][]", action, (@permission.action_include?(action) rescue false) %>
+  		<%= action %>
+    </span>
+  <% end %>
+<% end %>
+<script type='text/javascript'>
+$(document).ready(function(){
+  $('.markAllActions').click( function() {
+		if($(this).attr('checked') == 'checked') {
+			$("#actions_by_model span fieldset input:checkbox").attr('checked', 'checked');
+		} else {
+			$("#actions_by_model span fieldset input:checkbox").removeAttr('checked');
+		}
+
+		$('input:checked').parent().css('background-position','center center');
+		$('input:not(:checked)').parent().css('background-position','top center');
+	});
+})
+</script>
+

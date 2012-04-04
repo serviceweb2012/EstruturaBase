@@ -61,7 +61,6 @@ class Admin::SubMenusController < ApplicationController
 
   def find_sub_menus_by_menu
     @sub_menus = SubMenu.where(:menu_id => params[:menu_id]).order('position ASC') if params[:menu_id]
-    logger.info("size => #{@sub_menus.size}")
     respond_to do |format|
       #format.html # index.html.erb
       format.js

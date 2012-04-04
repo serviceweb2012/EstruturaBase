@@ -1,24 +1,17 @@
-<%= form_for [:admin,@permission] do |f| %>
-  <%= error_message_for(@permission) %>
-
-  <div class="field">
-    <%= f.label :role %><br />
-    <%= f.text_field :role %>
-  </div>
-  <div class="field">
-    <%= f.label :model_name %><br />
-    <%= f.text_field :model_name %>
-  </div>
-  <div class="field">
-    <%= f.label :actions %><br />
-    <%= f.text_field :actions %>
-  </div>
-  <div class="field">
-    <%= f.label :situation %><br />
-    <%= f.text_field :situation %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<% create_container('field double') do %>
+  <%= combo_box_for_block(@permission,:role,@roles) %>
+  <span>
+    <label for='options'>Selecione um Modelo
+      <%= f.select('model_name',@models,:prompt => 'Selecione...')%>
+    </label>
+  </span>
 <% end %>
+  <div class='field' id='actions_by_model'>
+    <span>
+      <fieldset>
+      </fieldset>
+    </span>
+  </div>
+  <%= input_text_for_form(f,@permission,:situation,{},{:input_type => 'checkbox'}) %>
+<%= create_actions_buttons(button_label) %>
 

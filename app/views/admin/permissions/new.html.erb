@@ -1,6 +1,13 @@
-<h1>New permission</h1>
+<% content_for :sidebar do %>
+  <%= error_message_for(@permission) %>
+<% end %>
 
-<%= render 'form' %>
-
-<%= link_to 'Back', admin_permissions_path %>
+<% content_for :main do  %>
+  <%= onde_estou "Cadastro de #{@permission.class.human_name}",admin_root_path,'Dashboard' %>
+  <div class="box fields">
+    <%= form_for [:admin,@permission] do |f| %>
+      <%= render :partial => 'form',:locals =>{:button_label => "Cadastrar",:f => f} %>
+    <% end %>
+  </div>
+<% end %>
 

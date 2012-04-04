@@ -28,6 +28,7 @@ $(document).ready(function(){
     setTimeout(function() { $('.information').fadeOut('slow'); }, 10000);
     $("a[rel^='prettyPhoto']").prettyPhoto({animationSpeed:'fast',slideshow:10000});
     $('span.ordem').hide();
+    $('#actions_by_model').hide();
 
     //ativar/desativar
     $('#enable_disable').click(function(){
@@ -375,6 +376,24 @@ $(document).ready(function(){
         $.get('/admin/sub_menus/find_sub_menus_by_menu',{menu_id:id});//get
     });//function
 
+
+    //actions for model
+    $('#permission_model_name').change(function(){
+        var model_name = $('#permission_model_name :selected').val();
+        $.get('/admin/permissions/find_actions_by_model',{model_name:model_name})
+    })
+
+    $('.markAllActions').click( function() {
+        alert('lol')
+		if($(this).attr('checked') == 'checked') {
+			$("#actions_by_model span fieldset input:checkbox").attr('checked', 'checked');
+		} else {
+			$("#actions_by_model span fieldset input:checkbox").removeAttr('checked');
+		}
+
+		$('input:checked').parent().css('background-position','center center');
+		$('input:not(:checked)').parent().css('background-position','top center');
+	});
 
     $('.markAll').click(function(){
         checados = $(".box.results input[type='checkbox']:checked");

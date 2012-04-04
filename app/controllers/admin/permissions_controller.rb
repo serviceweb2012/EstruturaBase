@@ -13,7 +13,9 @@ class Admin::PermissionsController < ApplicationController
 
   def show
     @permission = Permission.find(params[:id])
-    respond_with @permission,:location => admin_permission_path
+    respond_with @permission,:location => admin_permission_path do |format|
+      format.html {render :layout => 'show'}
+    end
   end
 
   def new
@@ -23,6 +25,7 @@ class Admin::PermissionsController < ApplicationController
 
   def edit
     @permission = Permission.find(params[:id])
+    @actions = Permission.list_actions_by_model(@permission.model_name)
   end
 
   def create
@@ -47,18 +50,15 @@ class Admin::PermissionsController < ApplicationController
 
   def find_actions_by_model
     @actions = Permission.list_actions_by_model(params[:model_name])
-
     respond_to do |format|
-      format.html { redirect_to :action => 'index' }
-      format.js { render :update do |page|
-        page.replace_html 'permission_actions', :partial => "actions", :object => @actions
-      end}
+      format.js
     end
-   end
+  end
 
   protected
   def load_resources
-    @roles = Role.order(:name => "asc")
+    @roles = Role.order('name ASC')
+    @models = Permission.list_models
   end
 end
 
