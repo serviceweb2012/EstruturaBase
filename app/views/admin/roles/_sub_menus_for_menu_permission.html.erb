@@ -1,0 +1,4 @@
+<%= check_box_for_form(@sub_menus,@role,SubMenu,@role.sub_menus,
+            :container_id => "sub_menus_for_menu_permission_role_id_#{@menu.id}",
+            :legend => "Selecione os sub-menus do menu : <b>#{@menu.name}</b> para dar as permissões") %>
+

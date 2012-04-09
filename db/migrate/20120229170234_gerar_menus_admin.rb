@@ -44,22 +44,8 @@ class GerarMenusAdmin < ActiveRecord::Migration
           :title => "Clique aqui para cadastrar uma nova permissão", :position => 2, :adm => true) rescue nil
       m.sub_menus.create!(:menu_id => m.id, :name => "Listar Permissões", :url => "/admin/permissions",
           :title => "Clique aqui para listar as permissões", :position => 3, :adm => true, :separator => true) rescue nil
-
-      #create menu_permissions
-      m.sub_menus.create!(:menu_id => m.id, :name => "Cadastrar Menu/Permissão", :url => "/admin/menus_roles/new",
-          :title => "Clique aqui para cadastrar um novo menu/permissão", :position => 4, :adm => true) rescue nil
-      m.sub_menus.create!(:menu_id => m.id, :name => "Listar Menu/Permissões", :url => "/admin/menus_roles",
-          :title => "Clique aqui para listar menus/permissões", :position => 5, :adm => true, :separator => true) rescue nil
-
-      #create sub_permissions
-      m.sub_menus.create!(:menu_id => m.id, :name => "Cadastrar Sub-Menu/Permissão", :url => "/admin/roles_sub_menus/new",
-          :title => "Clique aqui para cadastrar um novo sub-menus/permissão", :position => 6, :adm => true) rescue nil
-      m.sub_menus.create!(:menu_id => m.id, :name => "Listar Sub-Menus/Permissões", :url => "/admin/roles_sub_menus",
-          :title => "Clique aqui para listar sub-menus/permissões", :position => 7, :adm => true) rescue nil
     end
-
     Role.create!(:name => "Administrador", :value => 5)
-    Role.create!(:name => "Moderador", :value => 3)
 
     #create four_oh_four
     m = Menu.create!(:name => "Rotas/Erros", :position => 2, :adm => true)

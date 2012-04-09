@@ -1,0 +1,7 @@
+$(document).ready(function(){
+  $('#sub_menus_for_menu_permission').append(
+    "<%= escape_javascript(render 'sub_menus_for_menu_permission',
+    :collection => @sub_menus,:role => @role,:menu => @menu)%>"
+  )
+})
+

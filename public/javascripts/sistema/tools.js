@@ -383,6 +383,20 @@ $(document).ready(function(){
         $.get('/admin/permissions/find_actions_by_model',{model_name:model_name})
     })
 
+    //ao clicar em um menu p/ permissão traz sub menus
+    $("input[name='role[menu_ids][]']").click(function(){
+        if($(this).attr('checked') == 'checked'){
+            var id = $(this).val();
+            var role_id = $('#role_id_').val();
+            $.get('/admin/roles/find_sub_menus_by_menu',{menu_id:id,role_id:role_id})
+        }else{
+            var id = $(this).val();
+            var elemento = '#sub_menus_for_menu_permission_role_id_' + id
+            $(elemento).remove();
+        }
+    })
+
+    //selecionar todas ações para controller
     $('.markAllActions').click( function() {
         alert('lol')
 		if($(this).attr('checked') == 'checked') {

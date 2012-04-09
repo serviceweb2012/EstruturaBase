@@ -2,6 +2,11 @@
   <%= input_text_for_block(f,@role,:name)%>
   <%= input_text_for_block(f,@role,:value)%>
 <% end %>
+<%= check_box_for_form(@menus,@role,Menu,@role.menus) %>
+<div id='sub_menus_for_menu_permission'></div>
 <%= input_text_for_form(f,@role,:situation,{},{:input_type => 'checkbox'}) %>
 <%= create_actions_buttons(button_label) %>
+<% unless @role.id.nil? %>
+  <%= hidden_field_tag('role_id',@role.id,:id => 'role_id_')%>
+<% end %>
 

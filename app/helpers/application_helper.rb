@@ -530,18 +530,19 @@ module ApplicationHelper
   #argumento 'lista' é a lista de objetos que vai ser exibido para seleção
   #argumento 'objeto' é o modelo da tela atual ex : se está no cadastro de User o modelo_atual é User
   #argumento 'modelo_referenciado' é o modelo que se associa o modelo_atual ex : está em user é vai associar a vários Permission, o modelo referenciado é Permission
-  #argumento é a 'associação' entre os objeto.modelo_referenciado ex : se é associação entre Post x Category -> associacao = @post.category ou
+  #argumento é a 'associação' entre os objeto.modelo_referenciado ex : se é associação entre Post x Category -> associacao = @post.categories ou
   def check_box_for_form(lista,objeto,modelo_referenciado,associacao,container_options = {},campo_options = {})
     #container options
     legend          = container_options[:legend].nil? ? "Selecione suas opções" : container_options[:legend]
     container_class = container_options[:class].nil? ? "field" : container_options[:class]
+    container_id    = container_options[:container_id].nil? ? "" : container_options[:container_id]
     #item options
     class_for_item  = campo_options[:class].nil? ? "item" : campo_options[:class]
 
     input_name = "#{objeto.class.to_s.underscore.downcase}[#{modelo_referenciado.to_s.underscore.downcase}_ids][]"
 
     container = %()
-    container << "<div class='#{container_class}'>"
+    container << "<div class='#{container_class}' id='#{container_id}'>"
     container << "<span>"
     container << "<fieldset>"
     container << "<legend>#{legend}</legend>"

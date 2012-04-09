@@ -42,7 +42,9 @@ EstruturaBase::Application.routes.draw do
     end
 
     resources :report_erros, :as => "erros"
-    resources :roles
+    resources :roles do
+      get 'find_sub_menus_by_menu',:on => :collection
+    end
 
     resources :sub_menus do
       collection do
