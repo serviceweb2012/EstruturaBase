@@ -1,4 +1,9 @@
 $(document).ready(function(){
+    setTimeout(function() { $('.information').fadeOut('slow'); }, 10000);
+    $("a[rel^='prettyPhoto']").prettyPhoto({animationSpeed:'fast',slideshow:10000});
+    $('span.ordem').hide();
+    $('#actions_by_model').hide();
+    $('#sub_menus_for_menu_permission div').hide();
 
    $(document).mouseup(function(e) {
 		if($(e.target).parent(".navBar li").length==0) {
@@ -22,13 +27,6 @@ $(document).ready(function(){
 			$(this).toggleClass('active');
 		}
 	});
-
-
-
-    setTimeout(function() { $('.information').fadeOut('slow'); }, 10000);
-    $("a[rel^='prettyPhoto']").prettyPhoto({animationSpeed:'fast',slideshow:10000});
-    $('span.ordem').hide();
-    $('#actions_by_model').hide();
 
     //ativar/desativar
     $('#enable_disable').click(function(){
@@ -376,29 +374,36 @@ $(document).ready(function(){
         $.get('/admin/sub_menus/find_sub_menus_by_menu',{menu_id:id});//get
     });//function
 
-
     //actions for model
     $('#permission_model_name').change(function(){
         var model_name = $('#permission_model_name :selected').val();
         $.get('/admin/permissions/find_actions_by_model',{model_name:model_name})
     })
 
-    //ao clicar em um menu p/ permissão traz sub menus
     $("input[name='role[menu_ids][]']").click(function(){
+        var id = $(this).val();
+        var elemento = '#sub_menus_for_menu_permission_role_id_' + id
         if($(this).attr('checked') == 'checked'){
-            var id = $(this).val();
-            var role_id = $('#role_id_').val();
-            $.get('/admin/roles/find_sub_menus_by_menu',{menu_id:id,role_id:role_id})
+            $(elemento).show('fast');
         }else{
-            var id = $(this).val();
-            var elemento = '#sub_menus_for_menu_permission_role_id_' + id
-            $(elemento).remove();
+            $(elemento).hide('fast');
         }
-    })
+    });
+
+    //trazer menus selecionados
+    $("#menus_for_permission span fieldset span.item input[type='checkbox']").each(function(i){
+        if($(this).is(':checked')){
+            var id = $(this).val();
+            var elemento = '#sub_menus_for_menu_permission_role_id_' + id;
+            $('#sub_menus_for_menu_permission').find(elemento).show();
+        }
+    });
+
+
+
 
     //selecionar todas ações para controller
     $('.markAllActions').click( function() {
-        alert('lol')
 		if($(this).attr('checked') == 'checked') {
 			$("#actions_by_model span fieldset input:checkbox").attr('checked', 'checked');
 		} else {

@@ -184,13 +184,16 @@ ptbr:
             error_name: "Erro"
             description: "Descrição"
         location:
-            street: "Rua"
+            name: "Rua"
             number: "Número"
             district: "Bairro"
             city: "Cidade"
-            url: "URL Google Maps"
+            url_map: "URL Google Maps"
+            url_site: "URL site"
             image: "Mapa Google Maps"
             cep: "CEP"
             phone: "Telefone"
             email: "Email"
+            state: "Estado"
+            uf: "UF"
 

@@ -8,6 +8,7 @@ class Admin::UsersController < ApplicationController
                   .order("#{$order} #{$ordem}")
                   .paginate(:per_page => params[:per_page],:page => params[:page])#find_all_with_permission(params[:search],current_user)
     @count = @users.size
+    @model_name = t("activerecord.models.user.other")
     respond_with @users,:location => admin_users_path
   end
 

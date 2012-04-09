@@ -27,8 +27,10 @@ EstruturaBase::Application.routes.draw do
       post 'enabled_disabled',:on => :member
     end
 
-    resources :four_oh_fours, :as => "rotas_erradas"
-    resources :locations
+    resources :four_oh_fours
+    resources :locations do
+      get 'delete_image',:on => :member
+    end
 
     resources :menus do
       collection do
@@ -41,17 +43,13 @@ EstruturaBase::Application.routes.draw do
       get 'find_actions_by_model',:on => :collection
     end
 
-    resources :report_erros, :as => "erros"
-    resources :roles do
-      get 'find_sub_menus_by_menu',:on => :collection
-    end
+    resources :roles
 
     resources :sub_menus do
       collection do
         get 'ordenar_sub_menus'
         get 'sort'
         get 'find_sub_menus_by_menu'
-        #get 'search'
       end
     end
 

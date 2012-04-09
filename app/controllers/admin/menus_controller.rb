@@ -8,6 +8,7 @@ class Admin::MenusController < ApplicationController
                   .order("#{$order} #{$ordem}")
                   .paginate(:per_page => params[:per_page],:page => params[:page])
     @count = @menus.size
+    @model_name = t("activerecord.models.menu.other")
     respond_with @menus,:location => admin_menus_path
   end
 

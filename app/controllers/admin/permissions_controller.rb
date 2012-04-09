@@ -8,11 +8,13 @@ class Admin::PermissionsController < ApplicationController
                   .order("#{$order} #{$ordem}")
                   .paginate(:per_page => params[:per_page],:page => params[:page])
     @count = @permissions.size
+    @model_name = t("activerecord.models.permission.other")
     respond_with @permissions,:location => admin_permissions_path
   end
 
   def show
     @permission = Permission.find(params[:id])
+    @actions = Permission.list_actions_by_model(@permission.model_name)
     respond_with @permission,:location => admin_permission_path do |format|
       format.html {render :layout => 'show'}
     end

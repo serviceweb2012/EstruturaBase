@@ -1,76 +1,15 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Street:</b>
-  <%= @location.street %>
-</p>
-
-<p>
-  <b>Number:</b>
-  <%= @location.number %>
-</p>
-
-<p>
-  <b>District:</b>
-  <%= @location.district %>
-</p>
-
-<p>
-  <b>City:</b>
-  <%= @location.city %>
-</p>
-
-<p>
-  <b>State:</b>
-  <%= @location.state %>
-</p>
-
-<p>
-  <b>Uf:</b>
-  <%= @location.uf %>
-</p>
-
-<p>
-  <b>Url site:</b>
-  <%= @location.url_site %>
-</p>
-
-<p>
-  <b>Cep:</b>
-  <%= @location.cep %>
-</p>
-
-<p>
-  <b>Phone:</b>
-  <%= @location.phone %>
-</p>
-
-<p>
-  <b>Email:</b>
-  <%= @location.email %>
-</p>
-
-<p>
-  <b>Url map:</b>
-  <%= @location.url_map %>
-</p>
-
-<p>
-  <b>Image file name:</b>
-  <%= @location.image_file_name %>
-</p>
-
-<p>
-  <b>Image content type:</b>
-  <%= @location.image_content_type %>
-</p>
-
-<p>
-  <b>Image file size:</b>
-  <%= @location.image_file_size %>
-</p>
-
-
-<%= link_to 'Edit', edit_admin_location_path(@location) %> |
-<%= link_to 'Back', admin_locations_path %>
+<div class="info">
+<h2><%= @location.name %></h2>
+<%= show_field(@location,:name) %>
+<%= show_field(@location,:number) %>
+<%= show_field(@location,:district) %>
+<%= show_field(@location,:city) %>
+<%= show_field(@location,:uf) %>
+<%= show_field(@location,:cep) %>
+<%= show_field(@location,:phone) %>
+<%= show_field(@location,:email) %>
+<%= show_field(@location,:url_site) %>
+<%= show_field(@location,:url_map) %>
+<%= show_field(@location,:image,:content => image_tag(@location.image.url(:small)))%>
+</div>
 

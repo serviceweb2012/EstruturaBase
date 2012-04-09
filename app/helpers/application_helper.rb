@@ -195,20 +195,18 @@ module ApplicationHelper
   #argumento 'objeto' é o objeto a qual se deseja exibir a imagem
   def show_image(objeto)
     controller = objeto.class.to_s.downcase.pluralize
+    container = %()
     if objeto.image?
-      container = %()
-      container << "<tr>"
-      container << "<td>"
       container << "<div class='field'>"
       container << "<span>"
+      container << "<label for='img'>"
       container << image_tag(objeto.image.url(:small))
+      container << "</label>"
       container << "</span>"
-      container << "<span>"
+      container << "<span><label>"
       container << link_to('Excluir Imagem',"/admin/#{controller}/#{objeto.id}/delete_image")
-      container << "</span>"
+      container << "</label></span>"
       container << "</div>"
-      container << "</td>"
-      container << "</tr>"
     end
     container.html_safe
   end

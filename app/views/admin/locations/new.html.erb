@@ -1,8 +1,13 @@
-<% content_for :main do %>
-<h1>New location</h1>
+<% content_for :sidebar do %>
+  <%= error_message_for(@location) %>
+<% end %>
 
-<%= render 'form' %>
-
-<%= link_to 'Back', admin_locations_path %>
+<% content_for :main do  %>
+  <%= onde_estou "Cadastro de #{@location.class.human_name}",admin_root_path,'Dashboard' %>
+  <div class="box fields">
+    <%= form_for [:admin,@location],:html => {:multipart => true} do |f| %>
+      <%= render :partial => 'form',:locals =>{:button_label => "Cadastrar",:f => f} %>
+    <% end %>
+  </div>
 <% end %>
 

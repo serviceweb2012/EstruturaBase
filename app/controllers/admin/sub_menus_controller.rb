@@ -8,6 +8,7 @@ class Admin::SubMenusController < ApplicationController
                   .order("#{$order} #{$ordem}")
                   .paginate(:per_page => params[:per_page],:page => params[:page])
     @count = @sub_menus.size
+    @model_name = t("activerecord.models.sub_menu.other")
     respond_with @sub_menus,:location => admin_sub_menus_path
   end
 
@@ -43,20 +44,6 @@ class Admin::SubMenusController < ApplicationController
     @sub_menu = SubMenu.find(params[:id])
     flash[:notice] = 'SubMenu deletado com sucesso' if @sub_menu.destroy
     respond_with @sub_menu,:location => admin_sub_menus_path
-  end
-
-  ########
-  #teste
-  def search
-    @count = Menu.count
-    if params[:search]
-      @menus = Menu.where("name LIKE ?",params[:search]).order(:position => :asc).paginate(:per_page => session[:per_page],:page => params[:page])
-    else
-      @menus = Menu.order(:position => :asc).paginate(:per_page => params[:per_page],:page => params[:page])
-    end
-    @search_model_name = Menu.human_name.camelize
-    logger.info("TO AQUI !!! #{@menus.size}")
-    render :layout => "search"
   end
 
   def find_sub_menus_by_menu

@@ -2,7 +2,11 @@ class FourOhFour < ActiveRecord::Base
 
   def self.add_request(host, path, referer)
     request = find_by_host_and_path_and_referer(host, path, referer)
-    request.count += 1
+    if request.count == 0
+      request.count = 1
+    else
+      request.count += 1
+    end
     request.save
   end
 

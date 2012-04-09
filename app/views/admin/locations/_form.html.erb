@@ -1,57 +1,27 @@
-<%= form_for [:admin,@location],:html => { :multipart => true } do |f| %>
-  <%= error_message_for(@location) %>
-
-  <div class="field">
-    <%= f.label "Rua" %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :number %><br />
-    <%= f.text_field :number %>
-  </div>
-  <div class="field">
-    <%= f.label :district %><br />
-    <%= f.text_field :district %>
-  </div>
-  <div class="field">
-    <%= f.label :city %><br />
-    <%= f.text_field :city %>
-  </div>
-  <div class="field">
-    <%= f.label :state %><br />
-    <%= f.text_field :state %>
-  </div>
-  <div class="field">
-    <%= f.label :uf %><br />
-    <%= f.text_field :uf %>
-  </div>
-  <div class="field">
-    <%= f.label :url_site %><br />
-    <%= f.text_field :url_site %>
-  </div>
-  <div class="field">
-    <%= f.label :cep %><br />
-    <%= f.text_field :cep %>
-  </div>
-  <div class="field">
-    <%= f.label :phone %><br />
-    <%= f.text_field :phone %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :url_map %><br />
-    <%= f.text_field :url_map %>
-  </div>
-  <div class="field">
-    <%= f.label :image %><br />
-    <%= f.file_field :image %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<% create_container('field triple') do %>
+  <%= input_text_for_block(f,@location,:name) %>
+  <%= input_text_for_block(f,@location,:number) %>
+  <%= input_text_for_block(f,@location,:district) %>
 <% end %>
+<span class='clear'>&nbsp;</span>
+<% create_container('field four') do %>
+  <%= input_text_for_block(f,@location,:city) %>
+  <%= input_text_for_block(f,@location,:state) %>
+  <%= input_text_for_block(f,@location,:uf) %>
+  <%= input_text_for_block(f,@location,:cep,{},{:information => "Informe somente os números, exemplo : 85875000"}) %>
+<% end %>
+<span class='clear'>&nbsp;</span>
+<% create_container('field double') do %>
+  <%= input_text_for_block(f,@location,:phone,{},{:information => "Informe somente os numeros, exemplo : 4599998787"}) %>
+  <%= input_text_for_block(f,@location,:email) %>
+<% end %>
+<span class='clear'>&nbsp;</span>
+<% create_container('field double') do %>
+  <%= input_text_for_block(f,@location,:url_site,{},{:information => "Informe a URL completa, exemplo : http://www.meusite.com.br"}) %>
+  <%= input_text_for_block(f,@location,:url_map,{},{:information => "Informe a URL completa, exemplo : http://www.meusite.com.br"}) %>
+<% end %>
+<span class='clear'>&nbsp;</span>
+ <%= input_text_for_form(f,@location,:image,{},{:input_type => 'file'}) %>
+ <%= show_image(@location)%>
+<%= create_actions_buttons(button_label) %>
 

@@ -8,12 +8,15 @@ class Admin::LocationsController < ApplicationController
                   .order("#{$order} #{$ordem}")
                   .paginate(:per_page => params[:per_page],:page => params[:page])
     @count = @locations.size
+    @model_name = t("activerecord.models.location.other")
     respond_with @locations,:location => admin_locations_path
   end
 
   def show
     @location = Location.find(params[:id])
-    respond_with @location,:location => admin_location_path
+    respond_with @location,:location => admin_location_path do |format|
+      format.html{ render :layout => 'show'}
+    end
   end
 
   def new
@@ -42,5 +45,20 @@ class Admin::LocationsController < ApplicationController
     flash[:notice] = 'Localização deletado com sucesso' if @location.destroy
     respond_with @location,:location => admin_locations_path
   end
+
+
+  def delete_image
+    url = request.referer
+    modelo = Location.find(params[:id])
+    nomeImagem = modelo.image_file_name
+
+    modelo.delete_image("#{Rails.root.to_s}/public/images/#{modelo.class.to_s.downcase.pluralize}",nomeImagem)
+    modelo.update_attributes(:image_file_name => nil,
+                           :image_content_type => nil,
+                           :image_file_size => nil)
+
+    redirect_to url
+   end
+
 end
 

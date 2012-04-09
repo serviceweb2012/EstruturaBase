@@ -1,9 +1,9 @@
 class Location < ActiveRecord::Base
   has_attached_file :image,
-                     #:styles => { :small => "250x250>" },
-                     #:default_style => :small,
-                     :url => "/images/locations/:basename.:extension",
-                     :path => ":rails_root/public/images/locations/:basename.:extension"
+                     :styles => { :small => "250x250!" },
+                     :default_style => :small,
+                     :url => "/images/locations/:style/:basename.:extension",
+                     :path => ":rails_root/public/images/locations/:style/:basename.:extension"
                      #, :default_url => "/images/sem_imagem.png"
 
    #validates_attachment_presence :image, :message => "deve ser setada"
@@ -21,5 +21,14 @@ class Location < ActiveRecord::Base
   def formated_cep
     "#{self.cep[0..4]} - #{self.cep[5..7]}" unless self.cep.blank?
   end
+
+  def delete_image(caminho,arquivo)
+		Dir.foreach(caminho) do |nome_diretorio|
+			if File.exist?("#{caminho}/#{nome_diretorio}/#{arquivo}")
+				File.delete("#{caminho}/#{nome_diretorio}/#{arquivo}")
+			end
+		end
+   end
+
 end
 

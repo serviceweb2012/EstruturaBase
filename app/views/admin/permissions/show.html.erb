@@ -1,26 +1,13 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Role:</b>
-  <%= @permission.role %>
-</p>
-
-<p>
-  <b>Model name:</b>
-  <%= @permission.model_name %>
-</p>
-
-<p>
-  <b>Actions:</b>
-  <%= @permission.actions %>
-</p>
-
-<p>
-  <b>Situation:</b>
-  <%= @permission.situation %>
-</p>
-
-
-<%= link_to 'Edit', edit_admin_permission_path(@permission) %> |
-<%= link_to 'Back', admin_permissions_path %>
+<div class="info">
+<h2><%= @permission.role %></h2>
+<%= show_field(@permission,:model_name) %>
+<% unless @actions.nil? %>
+  <ul class="skills">
+    <% @actions.each do |a| %>
+      <li><%= a.name %></li>
+    <% end %>
+  </ul>
+<% end %>
+<%= show_field(@permission,:situation) %>
+</div>
 

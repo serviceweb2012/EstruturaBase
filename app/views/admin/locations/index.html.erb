@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for :main do %>
-  <%= onde_estou "Listagem de #{@locations.first.class.to_s.underscore.humanize}",admin_root_path,"Dashboard"%>
+  <%= onde_estou "Listagem de #{@model_name}",admin_root_path,"Dashboard"%>
   <%= search_tools(new_admin_location_path,@count) %>
   <%= list_model(Location,@locations) %>
 <% end %>
