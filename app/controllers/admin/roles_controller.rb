@@ -47,6 +47,18 @@ class Admin::RolesController < ApplicationController
     respond_with @role,:location => admin_roles_path
   end
 
+  def menus
+    @menus = Role.find(current_user.role.id).menus.paginate(:per_page => params[:per_page],:page => params[:page])
+    @model_name = 'Menus/Permissões'
+    respond_with @menus,:location => menus_admin_roles_path
+  end
+
+  def sub_menus
+    @sub_menus = Role.find(current_user.role.id).sub_menus.paginate(:per_page => params[:per_page],:page => params[:page])
+    @model_name = 'SubMenus/Permissões'
+    respond_with @sub_menus,:location => sub_menus_admin_roles_path
+  end
+
   protected
   def load_resources
     @menus = Menu.order('position ASC')

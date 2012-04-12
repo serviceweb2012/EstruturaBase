@@ -45,7 +45,12 @@ EstruturaBase::Application.routes.draw do
       get 'find_actions_by_model',:on => :collection
     end
 
-    resources :roles
+    resources :roles do
+      collection do
+        get 'menus'
+        get 'sub_menus'
+      end
+    end
 
     resources :sub_menus do
       collection do

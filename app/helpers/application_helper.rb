@@ -651,6 +651,7 @@ module ApplicationHelper
     show_details  = campo_options[:show_details].nil? ? true : campo_options[:show_details]
 
     #container options
+    show_mark_all           = container_options[:show_mark_all].nil? ? true : campo_options[:show_mark_all]
     show_em_massa           = container_options[:show_em_massa].nil? ? true : campo_options[:show_em_massa]
     show_order              = container_options[:show_order].nil? ? true : campo_options[:show_order]
     show_per_page           = container_options[:show_per_page].nil? ? true : campo_options[:show_per_page]
@@ -661,7 +662,7 @@ module ApplicationHelper
     container = %()
     container << "<div class='box tools'>"
     container << "<span>"
-    container << "<input type='checkbox' name='' value='' class='markAll' /><em>marcar todos</em>"
+    container << "<input type='checkbox' name='' value='' class='markAll' /><em>marcar todos</em>" if show_mark_all
     container << select_acoes_massa if show_em_massa
     container << "</span>"
     container << "<span>"
