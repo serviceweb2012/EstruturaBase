@@ -1,16 +1,4 @@
-<%= onde_estou "Busca de #{@search_model_name}",new_admin_menu_path,"Cadastro de Menu" %>
-<%= search_form_on_search(@search_model_name,@count) %>
+<%= onde_estou " Busca de #{@search_model_name}",new_admin_menu_path,"Cadastro de Menu" %>
+<%= search_form_on_search(@count) %>
 <%= list_table_for_search(@menus)%>
-<!-- exemplo de como passar argumento
-
-,Menu,:columns => ["situation"]
-
-,Menu,:columns => {:situation => "Situação"}
-
-list_table_for_search(@menus,{:columns => {:situation => "Situacao",:menu => "Menu"}})
-o Segundo argumento é um Hash que recebe outro Hash, as chaves do hash columns devem ser os nomes das colunas EM BANCO
-e o valores são os nomes para serem exibidos na tela
-
-
--->
 

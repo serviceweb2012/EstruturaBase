@@ -22,12 +22,14 @@ EstruturaBase::Application.routes.draw do
     root :to => "home#index"
 
     resources :users
+
     resources :home do
       post 'set_session',:on => :collection
       post 'enabled_disabled',:on => :member
     end
 
-    resources :four_oh_fours
+    resources :four_oh_fours,:only => [:index,:show,:destroy]
+
     resources :locations do
       get 'delete_image',:on => :member
     end

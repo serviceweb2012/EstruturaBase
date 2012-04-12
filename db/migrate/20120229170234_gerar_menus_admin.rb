@@ -37,24 +37,22 @@ class GerarMenusAdmin < ActiveRecord::Migration
       m.sub_menus.create!(:menu_id => m.id, :name => "Cadastrar Tipos de Acesso", :url => "/admin/roles/new",
           :title =>  "Clique aqui para cadastrar um novo tipo de acesso", :position => 0, :adm => true) rescue nil
       m.sub_menus.create!(:menu_id => m.id, :name => "Listar Tipos de Acesso", :url => "/admin/roles",
-          :title => "Clique aqui para listar os tipos de acesso", :position => 1, :separator => true, :adm => true) rescue nil
+          :title => "Clique aqui para listar os tipos de acesso", :position => 2, :separator => true, :adm => true) rescue nil
 
       #create permission
       m.sub_menus.create!(:menu_id => m.id, :name => "Cadastrar Permissão", :url => "/admin/permissions/new",
-          :title => "Clique aqui para cadastrar uma nova permissão", :position => 2, :adm => true) rescue nil
+          :title => "Clique aqui para cadastrar uma nova permissão", :position => 1, :adm => true) rescue nil
       m.sub_menus.create!(:menu_id => m.id, :name => "Listar Permissões", :url => "/admin/permissions",
-          :title => "Clique aqui para listar as permissões", :position => 3, :adm => true, :separator => true) rescue nil
+          :title => "Clique aqui para listar as permissões", :position => 2, :separator => true, :adm => true) rescue nil
+
     end
     Role.create!(:name => "Administrador", :value => 5)
 
     #create four_oh_four
     m = Menu.create!(:name => "Rotas/Erros", :position => 2, :adm => true)
     Menu.transaction do
-      m.sub_menus.create!(:menu_id => m.id, :name => "Listagem de rotas erradas", :url => "/admin/rotas_erradas",
+      m.sub_menus.create!(:menu_id => m.id, :name => "Listagem de rotas erradas", :url => "/admin/four_oh_fours",
           :title =>  "Clique aqui para visualizar as rotas erradas", :position => 0, :adm => true) rescue nil
-
-      m.sub_menus.create!(:menu_id => m.id, :name => "Listar Erros", :url => "/admin/erros",
-          :title => "Clique aqui para listar os erros", :position => 1, :adm => true) rescue nil
     end
 
 
@@ -66,8 +64,6 @@ class GerarMenusAdmin < ActiveRecord::Migration
       m.sub_menus.create!(:menu_id => m.id, :name => "Listar localização", :url => "/admin/locations",
           :title => "Clique aqui para listar os(as) localização", :position => 1) rescue nil
     end
-
-
 
     #create user
     m = Menu.create!(:name => "Usuários", :position => 3, :adm => true)

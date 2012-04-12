@@ -1,8 +1,25 @@
 # coding: utf-8
 module ApplicationHelper
 
-  def imprime_data()
-    Time.current.to_s
+  #metodo para mostrar as ações para cada modelo dada a permissão
+  def show_actions_by_permission(permission)
+    container = %(<ul class='skills'>)
+    actionz = permission.actions.split(';')
+    actionz.each do |action|
+      container << %(<li>#{action}</li>)
+    end
+    container << '</ul>'
+    container.html_safe
+  end
+
+  def show_sub_menus_by_permission(menu,role)
+    container = %(<ul class='skills'>)
+    sub_menus = menu.sub_menus.joins(:roles).where('role_id = ?',role.id)
+    sub_menus.each do |sm|
+      container << "<li>#{sm.name}</li>"
+    end
+    container << '</ul>'
+    container.html_safe
   end
 
   #metodo para mostrar o 'onde estou? na area admin'
@@ -32,15 +49,15 @@ module ApplicationHelper
     if user.role.value == 5
       menu = Menu.order("position ASC")
     else
-      menu = Menu.actived?.where("menu_permissions.role_id = ?",user.role.id).order("menu.position ASC").joins(:menu_permissions)
+      menu = Menu.actived?.joins(:roles).where("menus_roles.role_id = ?",user.role.id).order("menus.position ASC")
     end
     list_menu = %()
 
     menu.each do |m|
       if user.role.value == 5
-        sub = m.sub_menus.order("sub_menus.position asc") #SubMenu.all(::conditions => ["menu_id = ? AND menus.situation = ?", m.id, true], :order => "sub_menus.position")
+        sub = m.sub_menus.actived?.order("sub_menus.position asc") #SubMenu.all(::conditions => ["menu_id = ? AND menus.situation = ?", m.id, true], :order => "sub_menus.position")
       else
-        sub = m.sub_menus.actived?.where("sub_menu_permissions.role_id = ?",user.role.id).order("sub_menus.position asc").joins(:sub_menu_permissions)
+        sub = m.sub_menus.actived?.joins(:roles).where("roles_sub_menus.role_id = ?",user.role.id).order("sub_menus.position asc")
       end
 
       list_menu << "<li>"
@@ -414,13 +431,11 @@ module ApplicationHelper
     container.html_safe
   end
 
-  #NÃO TA PRONTO !!!!
+
   #metodo que gera a listagem em tabela do popup search
   #argumento 'lista' é a lista de objetos
   #argumento 'table_options' é um hash que poderá conter um HASH de outras colunas para serem exibidas
   #arguemtno 'modelo' é o modelo que vai ser buscado
-  #OBRIGATORIAMENTE SE FOR PASSAR NOVAS COLUNAS TEM QUE PASSAR A CLASSE
-  #SÓ PASSAR COLUNAS QUE EXITEM PARA O MODELO NO BANCO
   def list_table_for_search(lista)
     container = %(<table name="list" summary="" cellpadding="0" cellspacing="0" width="740">)
         container << %(<thead><tr>)
@@ -432,7 +447,6 @@ module ApplicationHelper
             container << %(<tr>)
             container << %(<td>#{l.id}</td>)
             container << %(<td>)
-            #onclick => "javascript:closeSearchPopup('txtName',#{l.name},#{l.id})"
             container << link_to('selecionar','javascript:void(0)',:onclick => "javascript:closeSearchPopup('txtName','#{l.name}','#{l.id}')",:class => 'select')
             container << %(<h3>#{l.name}</h3>)
             container << %(</td>)
@@ -440,22 +454,23 @@ module ApplicationHelper
           end
         container << %(</tbody>)
         container << %(</table>)
+        container << "#{will_paginate(lista)}"
     container.html_safe
   end
 
   #metodo que cria o cabeçalho de busca na tela de search
   #argumento 'modelo' é o nome do modelo que vai ser buscado
   #argumento 'total_registros' é gerado pelo SIZE no controler, e mostra a quantidade total de registros
-  def search_form_on_search(modelo,total_registros)
+  def search_form_on_search(total_registros)
     container = %(<div class='box search'>)
     container << %(<form action='' method=''>)
-    container << %(<label for='txtSearch'>Busca de #{modelo})
+    container << %(<label for='txtSearch'>Busca)
     container << %(<span><input type='text' name='search' />)
     container << %(</span>)
     container << %(</label>)
     container << %(<input type='submit' name='btnSearch' class='btn' value='buscar' />)
     container << %(</form>)
-    container << select_per_page
+    container << select_per_page('show')
     container << "<p><em>#{total_registros}</em> registro(s) encontrados"
     container << "<span class=\"clear\">&nbsp;</span>"
     container << "</div>"
@@ -478,18 +493,19 @@ module ApplicationHelper
     #opções de container
     container_class = container_options[:class].nil? ? "field" : container_options[:class]
     description     = container_options[:description].nil? ? "Selecione um #{campo.to_s.camelize}" : container_options[:description]
-
     #opcoes do select
     select_name = campo_options[:select_name].nil? ? "#{objeto.class.to_s.underscore.downcase}[#{campo}_id]" : campo_options[:select_name]
 
     container = %(<div class='#{container_class}'>)
     container << "<span><label for='options'>#{description}"
-    container << "<select name='#{select_name}' >"
-    container << "<option value=''>Selecione...</option>"
-    lista.each do |l|
-      container << "<option value='#{l.id}'>#{l.name}</option>"
-    end
-    container << "</select></label></span></div><div class=\"clear\">&nbsp;</div>"
+    #container << "<select name='#{select_name}' >"
+    #container << "<option value=''>Selecione...</option>"
+
+    #lista.each do |l|
+    #    container << "<option value='#{l.id}'>#{l.name}</option>"
+    #end
+    container << collection_select(objeto.class.to_s.underscore.downcase,"#{campo}_id",lista,:id,:name,:prompt => 'Selecione...')
+    container << "</select></label></span></div><div class='clear'>&nbsp;</div>"
     container.html_safe
   end
 
@@ -514,12 +530,8 @@ module ApplicationHelper
 
     container = %()
     container << "<span><label for='options'>#{description}"
-    container << "<select name='#{select_name}' >"
-    container << "<option value=''>Selecione...</option>"
-    lista.each do |l|
-      container << "<option value='#{l.id}'>#{l.name}</option>"
-    end
-    container << "</select></label></span>"
+    container << collection_select(objeto.class.to_s.underscore.downcase,"#{campo}_id",lista,:id,:name,:prompt => 'Selecione...')
+    container << "</label></span>"
     container.html_safe
   end
 
@@ -633,7 +645,10 @@ module ApplicationHelper
   ### show_actions => true/false -> exibir links de ações para o item
   def list_model(modelo,lista,container_options = {},campo_options = {})
     #campo_options
-    show_actions = campo_options[:show_actions].nil? ? true : campo_options[:show_actions]
+    show_actions  = campo_options[:show_actions].nil? ? true : campo_options[:show_actions]
+    show_edit     = campo_options[:show_edit].nil? ? true : campo_options[:show_edit]
+    show_destroy  = campo_options[:show_destroy].nil? ? true : campo_options[:show_destroy]
+    show_details  = campo_options[:show_details].nil? ? true : campo_options[:show_details]
 
     #container options
     show_em_massa           = container_options[:show_em_massa].nil? ? true : campo_options[:show_em_massa]
@@ -680,7 +695,13 @@ module ApplicationHelper
         container << "<input type='checkbox' name='cb_#{l.id}' value='#{l.id}' />"
         container << "<div class='info'>"
         #container << "<span>###</span>"
-        container << "<h2>#{l.name}</h2>"
+          if l.respond_to? :name
+            container << "<h2>#{l.name}</h2>"
+          elsif l.respond_to? :path
+            container << "<h2>#{l.path}</h2>"
+          elsif l.respond_to? :model_name
+            container << "<h2>#{l.role.name} - #{l.model_name}</h2>"
+          end
         #container << "<em class='address'></em>"
         #container << "<p></p>"
         container << "</div>" #class info
@@ -688,13 +709,21 @@ module ApplicationHelper
         if show_actions == true
           container << "<ul class='options'>"
           container << "<li>"
-          container << link_to('editar',"#{base_route}#{l.id}/edit")
+          container << link_to('editar',"#{base_route}#{l.id}/edit") if show_edit
           container << "</li>"
           container << "<li>"
-          container << link_to('visualizar',"javascript:createSearchPopup('#{base_route}#{l.id}',740,500);",:title => "cliquei para ver todos os dados do item")
+          container << link_to('visualizar',"javascript:createSearchPopup('#{base_route}#{l.id}',740,500);",:title => "cliquei para ver todos os dados do item") if show_details
           container << "</li>"
           container << "<li>"
-          container << link_to('excluir',"#{base_route}#{l.id}",:method => :delete,:confirm => "Uma vez excluido o registro não poderá ser recupeado!Tem certeza que deseja excluir o registro : #{l.name}")
+
+          if l.respond_to? :name
+            container << link_to('excluir',"#{base_route}#{l.id}",:method => :delete,:confirm => "Uma vez excluido o registro não poderá ser recupeado!Tem certeza que deseja excluir o registro : #{l.name}") if show_destroy
+          elsif l.respond_to? :path
+            container << link_to('excluir',"#{base_route}#{l.id}",:method => :delete,:confirm => "Uma vez excluido o registro não poderá ser recupeado!Tem certeza que deseja excluir o registro : #{l.path}") if show_destroy
+          elsif l.respond_to? :model_name
+            container << link_to('excluir',"#{base_route}#{l.id}",:method => :delete,:confirm => "Uma vez excluido o registro não poderá ser recupeado!Tem certeza que deseja excluir o registro : #{l.model_name}") if show_destroy
+          end
+          #container << link_to('excluir',"#{base_route}#{l.id}",:method => :delete,:confirm => "Uma vez excluido o registro não poderá ser recupeado!Tem certeza que deseja excluir o registro : #{l.name}") if show_destroy
           #container << link_to('excluir','javascript:void(0)',:rel => l.id,:class => 'deletar')
           container << "</li>"
 
@@ -764,9 +793,9 @@ module ApplicationHelper
   end
 
   #metodo que cria o per_page
-  def select_per_page
+  def select_per_page(classe = 'perpage')
     container = %()
-    container << "<ul class='perpage'>"
+    container << "<ul class='#{classe}'>"
     container << "<li>#{link_to 'itens por página','javascript:void(0);',:title => 'selecione a quantidade de itens por página'}"
     container << "<ul>"
     container << "<li>#{link_to 'exibir 15 itens','javascript:void(0);',:title => 'exibir 15 itens',:rel => 15}</li>"
@@ -847,14 +876,11 @@ module ApplicationHelper
 		container.html_safe
   end
 
-
-
   #######################################
 
   # => METODOS DE LISTAGEM  - FIM
 
   #######################################
-
 
   #metodos que lista itens para ordenação com arrastar e soltar
   def reorder_itens(lista,modelo)
@@ -875,7 +901,6 @@ module ApplicationHelper
      container << "</ul>"
      container.html_safe
   end
-
 
   # ===== ===== ===== helpers de formulários - fim  ===== ===== ===== #
 end

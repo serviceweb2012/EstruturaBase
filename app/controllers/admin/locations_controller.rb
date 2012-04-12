@@ -26,6 +26,7 @@ class Admin::LocationsController < ApplicationController
 
   def edit
     @location = Location.find(params[:id])
+    @model_name = t("activerecord.models.location.one")
   end
 
   def create

@@ -15,6 +15,11 @@ $(document).ready(function(){
 		}
 	});
 
+    var model_name = $('#permission_model_name :selected').val();
+    if(model_name != "" && model_name != null){
+        $.get('/admin/permissions/find_actions_by_model',{model_name:model_name})
+    }
+
 	$('.navBar li ul').hide();
 	$('.navBar li').click( function() {
 		if ( $(this).find('ul').css('display') == 'block') {
@@ -288,8 +293,7 @@ $(document).ready(function(){
                     "html");//get
                 return false;
         }//else
-    })//funciont
-
+    })//function
 
     //deletar
     $('a.deletar').click(function(){
@@ -380,6 +384,7 @@ $(document).ready(function(){
         $.get('/admin/permissions/find_actions_by_model',{model_name:model_name})
     })
 
+
     $("input[name='role[menu_ids][]']").click(function(){
         var id = $(this).val();
         var elemento = '#sub_menus_for_menu_permission_role_id_' + id
@@ -398,9 +403,6 @@ $(document).ready(function(){
             $('#sub_menus_for_menu_permission').find(elemento).show();
         }
     });
-
-
-
 
     //selecionar todas ações para controller
     $('.markAllActions').click( function() {

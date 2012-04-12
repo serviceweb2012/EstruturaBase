@@ -28,6 +28,7 @@ class Admin::PermissionsController < ApplicationController
   def edit
     @permission = Permission.find(params[:id])
     @actions = Permission.list_actions_by_model(@permission.model_name)
+    @model_name = t("activerecord.models.permission.one")
   end
 
   def create

@@ -26,6 +26,7 @@ class Admin::MenusController < ApplicationController
 
   def edit
     @menu = Menu.find(params[:id])
+    @model_name = t("activerecord.models.menu.one")
   end
 
   def create

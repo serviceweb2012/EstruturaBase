@@ -26,6 +26,7 @@ class Admin::RolesController < ApplicationController
 
   def edit
     @role = Role.find(params[:id])
+    @model_name = t("activerecord.models.role.one")
   end
 
   def create
@@ -46,6 +47,7 @@ class Admin::RolesController < ApplicationController
     respond_with @role,:location => admin_roles_path
   end
 
+  protected
   def load_resources
     @menus = Menu.order('position ASC')
   end

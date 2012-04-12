@@ -71,6 +71,32 @@ $(document).ready(function(){
         }
     })
 
+    $('ul.show li ul').hide();
+    $('ul.show li').click(function(){
+        if($('ul.show li ul').css('display') == 'none'){
+            $(this).find('ul').show();
+        }else if($('ul.show li ul').css('display') == 'block') {
+            $(this).find('ul').css('display','none')
+        }
+    })
+
+    $('ul.show li ul li a').click(function(){
+        var per_page = $(this).attr('rel');
+        var url = window.location.href;
+        $.get(url,
+              {per_page:per_page},
+              function(dados){
+                  var nova_tabela = $(dados).find("table[name='list'] tbody").html();
+                  var nova_paginate = $(dados).find('div.pagination')
+
+                  $("table[name='list'] tbody").html('');
+                  $("table[name='list'] tbody").html(nova_tabela);
+                  $('div.pagination').html(nova_paginate)
+              }
+        )//get
+    })
+
+
 
 	$('.box.tools').hide();
 	$('.triggerAction').click(function() {

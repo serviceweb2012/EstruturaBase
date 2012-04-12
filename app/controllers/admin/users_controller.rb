@@ -26,6 +26,7 @@ class Admin::UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    @model_name = t("activerecord.models.user.one")
   end
 
   def create

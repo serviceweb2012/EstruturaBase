@@ -3,6 +3,7 @@ class Admin::SubMenusController < ApplicationController
   layout 'admin'
   before_filter :authenticate_user!,:load_resources
 
+
   def index
     @sub_menus = SubMenu.where("name LIKE ?","%#{params[:search]}%")
                   .order("#{$order} #{$ordem}")
@@ -26,6 +27,7 @@ class Admin::SubMenusController < ApplicationController
 
   def edit
     @sub_menu = SubMenu.find(params[:id])
+    @model_name = t("activerecord.models.sub_menu.one")
   end
 
   def create

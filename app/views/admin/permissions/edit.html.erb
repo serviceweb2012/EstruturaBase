@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for :main do  %>
-  <%= onde_estou "Edição de #{@permission.class.to_s}",admin_root_path,"Dashboard" %>
+  <%= onde_estou "Edição de #{@model_name}",admin_root_path,"Dashboard" %>
   <div class="box fields">
     <%= form_for(@permission,:url => admin_permission_path(@permission),:html => {:method => :put}) do |f| %>
       <%= render :partial => 'form',:locals =>{:button_label => "Editar",:f => f} %>

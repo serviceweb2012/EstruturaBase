@@ -3,5 +3,23 @@
 <%= show_field(@role,:name) %>
 <%= show_field(@role,:value) %>
 <%= show_field(@role,:situation) %>
+  <span class='clear'>&nbsp;</span>
+  <h2>Menus para a permissão</h2>
+  <ul class='skills'>
+    <% @role.menus.each do |m| %>
+      <li><%= m.name %></li>
+      <%= show_sub_menus_by_permission(m,@role)%>
+    <% end %>
+  </ul>
+
+  <span class='clear'>&nbsp;</span>
+  <h3>Modelos para a permissão</h3>
+  <ul class='skills'>
+    <% @role.permissions.each do |p| %>
+      <li><%= p.model_name %></li>
+      <%= show_actions_by_permission(p) %>
+    <% end %>
+  </ul>
+
 </div>
 

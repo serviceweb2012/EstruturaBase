@@ -1,25 +1,7 @@
-<p id="notice"><%= notice %></p>
+<div class="info">
+<h2><%= @four_oh_four.path %></h2>
+<%= show_field(@four_oh_four,:host) %>
+<%= show_field(@four_oh_four,:referer) %>
+<%= show_field(@four_oh_four,:count) %>
+</div>
 
-<p>
-  <b>Host:</b>
-  <%= @four_oh_four.host %>
-</p>
-
-<p>
-  <b>Path:</b>
-  <%= @four_oh_four.path %>
-</p>
-
-<p>
-  <b>Referer:</b>
-  <%= @four_oh_four.referer %>
-</p>
-
-<p>
-  <b>Count:</b>
-  <%= @four_oh_four.count %>
-</p>
-
-
-<%= link_to 'Edit', edit_four_oh_four_path(@four_oh_four) %> |
-<%= link_to 'Back', four_oh_fours_path %>
