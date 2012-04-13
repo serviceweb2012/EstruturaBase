@@ -10,5 +10,3 @@ rails g scaffold Role name:string value:integer situation:booelan
 
 rails g scaffold Permission role:references model_name:string actions:string situation:booelan
 
-rails g scaffold ReportError user:references name:string content:string
-

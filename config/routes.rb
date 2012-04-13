@@ -55,6 +55,8 @@ EstruturaBase::Application.routes.draw do
       end
     end
 
+    match '*path' => 'four_oh_fours#add_request'
+
   end
 
 
