@@ -15,11 +15,17 @@ $(document).ready(function(){
 		}
 	});
 
+    /*
+        quando entrar na pagina de selecionar permissão para role-model
+        se já tiver algo selecionado no combo de model ele executa essa ação
+        trazendo as ações já selecinadas para o modelo
+    */
     var model_name = $('#permission_model_name :selected').val();
     if(model_name != "" && model_name != null){
         $.get('/admin/permissions/find_actions_by_model',{model_name:model_name})
     }
 
+    //clica no menu e aparecer os sub-menus
 	$('.navBar li ul').hide();
 	$('.navBar li').click( function() {
 		if ( $(this).find('ul').css('display') == 'block') {
@@ -33,7 +39,11 @@ $(document).ready(function(){
 		}
 	});
 
-    //ativar/desativar
+    /*
+        clicou no ativar/desativar todos ele chama a ação
+        verifica o modelo enviado por hidden e quais os selecioandos
+        envia para a url fazer a atualização no banco de dados
+    */
     $('#enable_disable').click(function(){
         var selecionados = "";
         var modelo = $("#modelo").val();
@@ -50,7 +60,11 @@ $(document).ready(function(){
         window.location.href = "/admin/home/disabled_all/" + modelo + "/"+ selecionados
     });
 
-    //deletar todos
+    /*
+        clicou no destroy_all ele chama a ação
+        verifica o modelo enviado por hidden e quais os selecioandos
+        envia para a url fazer a atualização no banco de dados
+    */
     $('#destroy_all').click(function(){
         var selecionados = "";
         var modelo = $("#modelo").val();
@@ -70,8 +84,12 @@ $(document).ready(function(){
         }
     });
 
-    //////////////////
-    //order by
+    /*
+        clicou no order_by ele pega o valor do campo selecionado
+        e envia para fazer a nova consulta
+        $.get() -> retorna os dados da pagina toda então é preciso fazer
+            os 'ajustes' para rendenizar os campos certos novamente
+    */
      $('#ordenar ul li').click(function(){
             $('span.ordem').show('fast');
             var order = $(this).attr('rel');
@@ -127,7 +145,12 @@ $(document).ready(function(){
             return false;
         });
 
-    //ordenar de A..Z / Z..A
+    /*
+        clicou no ordenar de A..Z Z..A ele pega o valor do campo selecionado
+        e envia para fazer a nova consulta
+        $.get() -> retorna os dados da pagina toda então é preciso fazer
+            os 'ajustes' para rendenizar os campos certos novamente
+    */
     $('ul.show li ul li a').click(function(){
         var ordem = $(this).attr('rel');
         $("#ordem").val(ordem)
@@ -182,7 +205,12 @@ $(document).ready(function(){
             return false;
     })
 
-    //itens por página
+    /*
+        clicou no itens por pagina ele pega o valor do campo selecionado
+        e envia para fazer a nova consulta
+        $.get() -> retorna os dados da pagina toda então é preciso fazer
+            os 'ajustes' para rendenizar os campos certos novamente
+    */
     $('ul.perpage ul li a').click(function(){
         var order = $("#orderby").val();
         var ordem = $("#ordem").val();
@@ -355,7 +383,10 @@ $(document).ready(function(){
     });//function
 
 
-    //ordenar menus
+    /*
+        sortable para fazer a ordenação de menus
+        ao trocar o menu de lugar ele manda para a url informada com os parametros da nova lista
+    */
      $('#order_menus_list').sortable({
         axis:'y',
         dropOnEmpty: false,
@@ -368,23 +399,30 @@ $(document).ready(function(){
             )
         }
     });
-
     $('#order_menus_list').disableSelection();
 
 
-    //sub_menus_for_menu
+    /*
+        selecionando um menu na hora de ordenar os sub_menus ele trás todos os sub-menus do menu
+        captura o valor no menu selecionado e envia para a consulta
+    */
     $('#menu_menu_id').change(function(){
         var id = $('#menu_menu_id :selected').val();
         $.get('/admin/sub_menus/find_sub_menus_by_menu',{menu_id:id});//get
     });//function
 
-    //actions for model
+    /*
+        selecionando o modelo no cadastro de permissões ele envia o parametro do nome do modelo_atual
+        e busca todas a suas ações
+    */
     $('#permission_model_name').change(function(){
         var model_name = $('#permission_model_name :selected').val();
         $.get('/admin/permissions/find_actions_by_model',{model_name:model_name})
     })
 
-
+    /*
+        seleciondo um menu no cadsatro de roles ele trás todos seus sub-menus
+    */
     $("input[name='role[menu_ids][]']").click(function(){
         var id = $(this).val();
         var elemento = '#sub_menus_for_menu_permission_role_id_' + id
@@ -395,7 +433,10 @@ $(document).ready(function(){
         }
     });
 
-    //trazer menus selecionados
+    /*
+        na hora de editar ele verifica quais os menus selecionados e exibe
+        seus sub-menus
+    */
     $("#menus_for_permission span fieldset span.item input[type='checkbox']").each(function(i){
         if($(this).is(':checked')){
             var id = $(this).val();
@@ -404,7 +445,9 @@ $(document).ready(function(){
         }
     });
 
-    //selecionar todas ações para controller
+    /*
+        marcar todos dentro das ações do controller
+    */
     $('.markAllActions').click( function() {
 		if($(this).attr('checked') == 'checked') {
 			$("#actions_by_model span fieldset input:checkbox").attr('checked', 'checked');

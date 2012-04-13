@@ -470,7 +470,7 @@ module ApplicationHelper
     container << %(</label>)
     container << %(<input type='submit' name='btnSearch' class='btn' value='buscar' />)
     container << %(</form>)
-    container << select_per_page('show')
+    container << select_per_page
     container << "<p><em>#{total_registros}</em> registro(s) encontrados"
     container << "<span class=\"clear\">&nbsp;</span>"
     container << "</div>"

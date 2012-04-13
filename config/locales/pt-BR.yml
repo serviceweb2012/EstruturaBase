@@ -184,6 +184,7 @@ ptbr:
             path: "Path"
             referer: "Referencia"
             count: "Acessos"
+            updated_at: "Último acesso"
         location:
             name: "Rua"
             number: "Número"

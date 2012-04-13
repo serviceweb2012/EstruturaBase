@@ -268,6 +268,13 @@ input[type="reset"]:hover,
 .options .box.search ul.show li a:hover {color: #000!important;text-decoration: none;}
 .options .box.search ul.show li ul {width: 88px;height: auto;top: 24px;left: 0;overflow: hidden;background-image: none;background-color: #FFF;border: 1px solid #A8A8A8;border-top: none;position: absolute;float: none;}
 
+.options .box.search ul.perpage {width: 120px;height: 26px;line-height: 26px;padding: 0;border: none;float: right;background: #F7F7F7 url(../images/options-list.png) no-repeat top center;position: relative;}
+.options .box.search ul.perpage li a {padding: 0;background: none!important;}
+.options .box.search ul.perpage li a:hover {color: #000!important;text-decoration: none;}
+.options .box.search ul.perpage li ul {width: 120px;height: auto;top: 24px;left: 0;overflow: hidden;background-image: none;background-color: #FFF;border: 1px solid #A8A8A8;border-top: none;position: absolute;float: none;}
+
+
+
 .options ul {width: 200px;padding-top: 5px;border-right: 1px solid #CCC;float: left;}
 .options ul li h2,
 .options .info h2 {padding: 5px 0;text-indent: 1em;color: #069;}

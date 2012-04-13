@@ -3,6 +3,7 @@ $(document).ready(function(){
 	$('.results ul li .options').hide();
     $("#acoes_em_massa").hide();
 
+    //ação de ocultar opções de 'editar-visualizar-ativar-destruir quando mouse estive fora do item, e mstrar quando mouse estiver sobre'
 	$('.results ul li').hover( function() {
 		$(this).find('.options').fadeIn('fast');
 	}, function() {
@@ -11,6 +12,7 @@ $(document).ready(function(){
 
 	$('input:checked').parent().css('background-position','bottom center');
 
+    //marcar todos ao clicar em marcar todos
 	$('.markAll').click( function() {
 		if($(this).attr('checked') == 'checked') {
 			$(".results ul li input:checkbox").attr('checked', 'checked');
@@ -21,37 +23,6 @@ $(document).ready(function(){
 		$('input:checked').parent().css('background-position','center center');
 		$('input:not(:checked)').parent().css('background-position','top center');
 	});
-
-	/*$('.tools .filter input:checkbox').click( function() {
-		if($(this).attr('checked') == true) {
-			$('.filters ul').append("<li><a href='javascript: void(0);' title=''>" + $(this).val() + "</a></li>");
-			$('.filters ul li a').hover( function(){
-			$(this).css('background-position','bottom left');
-				$(this).parent().css('background-position','bottom right')
-			}, function() {
-				$(this).css('background-position','top left');
-				$(this).parent().css('background-position','top right')
-			});
-
-			$('.filters ul li').click( function() {
-				var text = $(this).find('a').text();
-				$(this).remove();
-				$('.tools .filter input:checkbox').each(function() {
-					if ($(this).val() == text) {
-						$(this).attr('checked', false);
-					}
-				})
-
-			});
-		} else {
-			var text = $(this).val();
-			$('.filters ul li a').each(function() {
-				if ($(this).text() == text) {
-					$(this).parent().remove();
-				}
-			})
-		}
-	});*/
 
 
 	$('.results ul li input:checkbox').click( function() {
@@ -71,16 +42,25 @@ $(document).ready(function(){
         }
     })
 
-    $('ul.show li ul').hide();
-    $('ul.show li').click(function(){
-        if($('ul.show li ul').css('display') == 'none'){
+    $('ul.show li ul, .box.search ul.perpage li ul').hide();
+    $('ul.show li ul li').click(function(){
+        if($('ul.show li ul li').css('display') == 'none'){
             $(this).find('ul').show();
-        }else if($('ul.show li ul').css('display') == 'block') {
+        }else if($('ul.show li ul li').css('display') == 'block') {
             $(this).find('ul').css('display','none')
         }
     })
 
-    $('ul.show li ul li a').click(function(){
+    $('.box.search ul.perpage li').click(function(){
+        if($('.box.search ul.perpage li ul').css('display') == 'none'){
+            $(this).find('ul').show();
+        }else if($('.box.search ul.perpage li ul').css('display') == 'block') {
+            $(this).find('ul').css('display','none')
+        }
+    })
+
+    //clicar no itens por pagina do search ele faz a busca
+    $('ul.perpage li ul li a').click(function(){
         var per_page = $(this).attr('rel');
         var url = window.location.href;
         $.get(url,

@@ -13,11 +13,8 @@ class Admin::FourOhFoursController < ApplicationController
 
   def add_request
     FourOhFour.add_request(request.host, request.path, request.env['HTTP_REFERER'] || '')
-
-    respond_to do |format|
-      format.html { render :file => "#{Rails.root.to_s}/public/404.html" }
-      format.all { render :nothing => true, :status => "404 Not Found" }
-    end
+    logger.info("URL ERRADA : #{params[:path]}")
+    redirect_to '/404.html'
   end
 
   def show

@@ -1,11 +1,6 @@
 EstruturaBase::Application.routes.draw do
   root :to => "home#index"
 
-  #rotas erradas
-  #match '*path' => 'admin/four_oh_fours#add_request'
-
-  #rotas publicas
-
   #rotas fixas
   match '/admin/home/:id/enabled_disabled' => "admin/home#enabled_disabled"
   match '/admin/home/disabled_all/:modelo/:ids' => "admin/home#disabled_all"
@@ -61,6 +56,8 @@ EstruturaBase::Application.routes.draw do
     end
 
   end
+
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

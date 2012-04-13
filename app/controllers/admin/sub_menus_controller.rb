@@ -3,7 +3,6 @@ class Admin::SubMenusController < ApplicationController
   layout 'admin'
   before_filter :authenticate_user!,:load_resources
 
-
   def index
     @sub_menus = SubMenu.where("name LIKE ?","%#{params[:search]}%")
                   .order("#{$order} #{$ordem}")
