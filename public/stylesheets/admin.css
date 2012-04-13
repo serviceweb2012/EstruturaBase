@@ -249,10 +249,10 @@ input[type="reset"]:hover,
 #footer p {float: left;}
 
 .pagination{text-align: center;display: block}
-.pagination .current {width: 25px;height: 25px;line-height: 25px;background-color: #CCC;border: 1px solid #999;display: inline-block;}
-.pagination a {width: 25px;height: 25px;line-height: 25px;cursor: pointer;text-decoration: none;background-color: #E6E6E6;display: inline-block;}
+.pagination .current {padding:5px 10px;line-height: 25px;background-color: #CCC;border: 1px solid #999;display: inline-block;}
+.pagination a {padding:5px 10px;line-height: 25px;cursor: pointer;text-decoration: none;background-color: #E6E6E6;display: inline-block;}
 .pagination a:hover {background-color: #CCC;}
-.pagination a.next_page, .pagination a.prev_page, .pagination span.disabled.prev_page, .pagination span.disabled.next_page {width: auto;padding: 0 10px;line-height: 25px;background-color: #E6E6E6;display: inline-block;}
+.pagination a.next_page, .pagination a.prev_page, .pagination span.disabled.prev_page, .pagination span.disabled.next_page {padding:5px 10px;line-height: 25px;background-color: #E6E6E6;display: inline-block;}
 .pagination a.next_page:hover, .pagination a.prev_page:hover {background-color: #CCC;}
 
 .options .localization {padding: 10px;margin-bottom: 5px;border-bottom: 1px solid #CCC;}

@@ -498,12 +498,6 @@ module ApplicationHelper
 
     container = %(<div class='#{container_class}'>)
     container << "<span><label for='options'>#{description}"
-    #container << "<select name='#{select_name}' >"
-    #container << "<option value=''>Selecione...</option>"
-
-    #lista.each do |l|
-    #    container << "<option value='#{l.id}'>#{l.name}</option>"
-    #end
     container << collection_select(objeto.class.to_s.underscore.downcase,"#{campo}_id",lista,:id,:name,:prompt => 'Selecione...')
     container << "</select></label></span></div><div class='clear'>&nbsp;</div>"
     container.html_safe
