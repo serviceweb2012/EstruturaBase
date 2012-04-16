@@ -50,7 +50,7 @@ class Admin::MenusController < ApplicationController
   end
 
   def ordenar_menus
-     @menus = Menu.order("position ASC")
+     @menus = Menu.joins(:roles).where('roles.id = ?',current_user.role.id).order("menus.position ASC")
   end
 
 

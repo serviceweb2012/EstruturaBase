@@ -49,7 +49,7 @@ class Admin::SubMenusController < ApplicationController
   end
 
   def find_sub_menus_by_menu
-    @sub_menus = SubMenu.where(:menu_id => params[:menu_id]).order('position ASC') if params[:menu_id]
+    @sub_menus = SubMenu.joins(:roles).where('sub_menus.menu_id = ? AND roles.id = ?',params[:menu_id],current_user.role.id).order('position ASC') if params[:menu_id]
     respond_to do |format|
       #format.html # index.html.erb
       format.js
@@ -57,7 +57,7 @@ class Admin::SubMenusController < ApplicationController
   end
 
   def ordenar_sub_menus
-     @menus = Menu.order('name ASC')
+     @menus = Menu.joins(:roles).where('roles.id = ?',current_user.role.id).order("menus.position ASC")
      respond_with @menus,:location => ordenar_sub_menus_admin_sub_menus_path
   end
 
