@@ -10,7 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120229170234) do
+ActiveRecord::Schema.define(:version => 20120416144201) do
+
+  create_table "dashboards", :force => true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.string   "icon"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "four_oh_fours", :force => true do |t|
     t.string   "host",       :limit => 100
@@ -52,6 +60,19 @@ ActiveRecord::Schema.define(:version => 20120229170234) do
   create_table "menus_roles", :id => false, :force => true do |t|
     t.integer "menu_id"
     t.integer "role_id"
+  end
+
+  create_table "owners", :force => true do |t|
+    t.string   "name"
+    t.string   "cnpj"
+    t.string   "representative"
+    t.string   "phone"
+    t.string   "email"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "permissions", :force => true do |t|

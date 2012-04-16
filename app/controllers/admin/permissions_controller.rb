@@ -22,6 +22,7 @@ class Admin::PermissionsController < ApplicationController
 
   def new
     @permission = Permission.new
+    @model_name = t("activerecord.models.permission.one")
     respond_with @permission,:location => new_admin_permission_path
   end
 

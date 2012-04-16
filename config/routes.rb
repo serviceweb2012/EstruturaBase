@@ -1,4 +1,6 @@
 EstruturaBase::Application.routes.draw do
+  resources :dashboards
+
   root :to => "home#index"
 
   #rotas fixas
@@ -17,6 +19,9 @@ EstruturaBase::Application.routes.draw do
     root :to => "home#index"
 
     resources :users
+    resources :owners do
+      get 'delete_image',:on => :member
+    end
 
     resources :home do
       post 'set_session',:on => :collection
@@ -54,6 +59,8 @@ EstruturaBase::Application.routes.draw do
         get 'find_sub_menus_by_menu'
       end
     end
+
+    resources :dashboards
 
     match '*path' => 'four_oh_fours#add_request'
 

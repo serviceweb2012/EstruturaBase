@@ -21,6 +21,7 @@ class Admin::RolesController < ApplicationController
 
   def new
     @role = Role.new
+    @model_name = t("activerecord.models.role.one")
     respond_with @role,:location => new_admin_role_path
   end
 

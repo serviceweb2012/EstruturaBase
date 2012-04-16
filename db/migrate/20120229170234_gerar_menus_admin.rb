@@ -71,6 +71,25 @@ class GerarMenusAdmin < ActiveRecord::Migration
           :title => "Clique aqui para listar os(as) localização", :position => 1) rescue nil
     end
 
+    #create menu owner
+    m = Menu.create!(:name => "Sistema",:position => 5,:adm => true)
+    Menu.transaction do
+      m.sub_menus.create!(:menu_id => m.id, :name => "Cadastrar Inf. Sistema", :url => "/admin/owners/new",
+          :title => "Clique aqui para cadastrar um(a) novo(a) informação do sistema", :position => 0) rescue nil
+      m.sub_menus.create!(:menu_id => m.id, :name => "Listar Inf. Sistema", :url => "/admin/owners",
+          :title => "Clique aqui para listar os(as) informações do sistema", :position => 1) rescue nil
+    end
+
+
+    #create menu dashboards
+    m = Menu.create!(:name => "Atalhos",:position => 6,:adm => true)
+    Menu.transaction do
+      m.sub_menus.create!(:menu_id => m.id, :name => "Cadastrar Atalho", :url => "/admin/dashboards/new",
+          :title => "Clique aqui para cadastrar um(a) novo(a) atalho", :position => 0) rescue nil
+      m.sub_menus.create!(:menu_id => m.id, :name => "Listar Atalhos", :url => "/admin/dashboards",
+          :title => "Clique aqui para listar os(as) atalhos", :position => 1) rescue nil
+    end
+
     #create user
     m = Menu.create!(:name => "Usuários", :position => 3, :adm => true)
     Menu.transaction do

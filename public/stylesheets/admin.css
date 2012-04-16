@@ -5,7 +5,7 @@ input[type="reset"]:hover,
 .options table tbody tr td a:hover {background-position: bottom center!important;cursor: pointer;color: #FFF!important;}
 
 #top {display: block;height: 54px;background: Transparent url(../images/backTop.jpg) repeat-x bottom center;position: relative;}
-#top h1 {height: 40px;width: 160px;top: 14px;left: 50px;background-color: #EEE;overflow: hidden;position: absolute;}
+#top h1 {width: 160px;top: 14px;left: 50px;background-color: #EEE;overflow: hidden;position: absolute;}
 #top h1 a {height: 54px;text-indent: -9999em;display: block;}
 
 #top .navBar {margin: 19px 0 0 250px;float: left;}

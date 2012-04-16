@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for :main do  %>
-  <%= onde_estou "Cadastro de #{@location.class.human_name}",admin_root_path,'Dashboard' %>
+  <%= onde_estou "Cadastro de #{@model_name}",admin_root_path,'Dashboard' %>
   <div class="box fields">
     <%= form_for [:admin,@location],:html => {:multipart => true} do |f| %>
       <%= render :partial => 'form',:locals =>{:button_label => "Cadastrar",:f => f} %>

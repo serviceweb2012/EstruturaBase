@@ -21,6 +21,7 @@ class Admin::MenusController < ApplicationController
 
   def new
     @menu = Menu.new
+    @model_name = t("activerecord.models.menu.one")
     respond_with @menu,:location => new_admin_menu_path
   end
 

@@ -60,7 +60,7 @@ $(document).ready(function(){
     })
 
     //clicar no itens por pagina do search ele faz a busca
-    $('ul.perpage li ul li a').click(function(){
+    $('.box.search ul.perpage li ul li a').click(function(){
         var per_page = $(this).attr('rel');
         var url = window.location.href;
         $.get(url,

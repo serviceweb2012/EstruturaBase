@@ -4,6 +4,7 @@ class Admin::HomeController < ApplicationController
 
   def index
     flash[:notice] = 'Ola bem vindo ao sistema'
+    @dashboards = Dashboard.order('name ASC')
   end
 
    def enabled_disabled

@@ -11,7 +11,7 @@ class Location < ActiveRecord::Base
    validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png', 'image/gif'], :message => "deve estar no formato (JPG, PNG ou GIF)"
 
    validates_presence_of :name,:number
-   validates_numericality_of :number
+   validates_numericality_of :number,:only_integer => true
    validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
 	def formated_phone
@@ -28,7 +28,7 @@ class Location < ActiveRecord::Base
 				File.delete("#{caminho}/#{nome_diretorio}/#{arquivo}")
 			end
 		end
-   end
+  end
 
 end
 

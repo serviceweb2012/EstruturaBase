@@ -12,6 +12,7 @@ module ApplicationHelper
     container.html_safe
   end
 
+  #metodo para mostrar os sub_menus de cada permissão
   def show_sub_menus_by_permission(menu,role)
     container = %(<ul class='skills'>)
     sub_menus = menu.sub_menus.joins(:roles).where('role_id = ?',role.id)
@@ -19,6 +20,16 @@ module ApplicationHelper
       container << "<li>#{sm.name}</li>"
     end
     container << '</ul>'
+    container.html_safe
+  end
+
+  def owner_has_logo(owner)
+    container = %()
+    unless owner.nil?
+      container << "<h1>#{link_to image_tag(owner.image.url(:small)),admin_root_path,:title => 'Link para: página inicial do sistema - dashboard '}</h1>"
+    else
+      container << "<h1>#{link_to '#',admin_root_path,:title => 'Link para: página inicial do sistema - dashboard '}</h1>"
+    end
     container.html_safe
   end
 
@@ -496,9 +507,19 @@ module ApplicationHelper
     #opcoes do select
     select_name = campo_options[:select_name].nil? ? "#{objeto.class.to_s.underscore.downcase}[#{campo}_id]" : campo_options[:select_name]
 
+    #opcoes do campo
+    option_value = campo_options[:option_value].nil? ? :id : campo_options[:option_value].to_sym
+    option_text  = campo_options[:option_text].nil? ? :name : campo_options[:option_text].to_sym
+
+    if option_value.eql?(:id)
+      campo_to_save = "#{campo}_id"
+    else
+      campo_to_save = campo
+    end
+
     container = %(<div class='#{container_class}'>)
     container << "<span><label for='options'>#{description}"
-    container << collection_select(objeto.class.to_s.underscore.downcase,"#{campo}_id",lista,:id,:name,:prompt => 'Selecione...')
+    container << collection_select(objeto.class.to_s.underscore.downcase,campo_to_save,lista,option_value,option_text,:prompt => 'Selecione...')
     container << "</select></label></span></div><div class='clear'>&nbsp;</div>"
     container.html_safe
   end
@@ -522,9 +543,19 @@ module ApplicationHelper
     #opcoes do container
     description = container_options[:description].nil? ? "Selecione um #{campo.to_s.camelize}" : container_options[:description]
 
+    #opcoes do campo
+    option_value = campo_options[:option_value].nil? ? :id : campo_options[:option_value].to_sym
+    option_text  = campo_options[:option_text].nil? ? :name : campo_options[:option_text].to_sym
+
+    if option_value.eql?(:id)
+      campo_to_save = "#{campo}_id"
+    else
+      campo_to_save = option_value
+    end
+
     container = %()
     container << "<span><label for='options'>#{description}"
-    container << collection_select(objeto.class.to_s.underscore.downcase,"#{campo}_id",lista,:id,:name,:prompt => 'Selecione...')
+    container << collection_select(objeto.class.to_s.underscore.downcase,campo_to_save,lista,option_value,option_text,:prompt => 'Selecione...')
     container << "</label></span>"
     container.html_safe
   end
@@ -567,7 +598,7 @@ module ApplicationHelper
   def radio_button_for_form(form,objeto,campo,lista,container_options = {},campo_options = {})
     #opções de container
     container_class = container_options[:class].nil? ? "field" : container_options[:class]
-    legend          = container_options[:legend].nil? ? "Selecione uma opção" : container_options[:legend]
+    legend = container_options[:legend].nil? ? "Selecione uma opção" : container_options[:legend]
     #opções de item
     input_class = campo_options[:class].nil? ? "item" : campo_options[:class]
 
@@ -833,15 +864,20 @@ module ApplicationHelper
   #arguemento 'campo_options' é um HASH de opções
   def show_field(objeto,campo,campo_options = {})
     field_name = campo_options[:field_name].nil? ? objeto.class.human_attribute_name(campo.to_s) : campo_options[:field_name]
-    content = objeto.send(campo)
-    #content = campo_options[:content].nil? ?
+    conteudo   = campo_options[:content] unless campo_options[:content].nil?
+    content    = objeto.send(campo)
+
     container = %()
     if content.is_a?(TrueClass)
       content = "Ativo no sistema"
     elsif content.is_a?(FalseClass) || content.is_a?(NilClass)
       content = "Desativado no sistema"
     end
-    content = campo_options[:content] unless campo_options[:content].nil?
+
+    if campo.eql?(:image) || campo.eql?(:icon)
+      content = image_tag(conteudo,:alt => "Imagem campo : #{campo}")
+    end
+
     container << "<p><em>#{field_name}: </em>#{content}</p>"
     container.html_safe
   end
@@ -869,6 +905,25 @@ module ApplicationHelper
     container << "</span>"
 		container << "<span class='separator'>&nbsp;</span></div>"
 		container.html_safe
+  end
+
+  #metodo para listar as dashboards na index de admin
+  def list_dashboards(lista)
+    container = "<div class='box dashboard'>"
+      unless lista.empty?
+        container << '<ul>'
+        lista.each do |l|
+          container << '<li>'
+           container << "<a href='#{l.url}' alt='#{l.name}' title='clique para ir para o atalho : #{l.name}'>"
+           container << image_tag(l.icon,:alt => l.name)
+           container << "<em>#{l.name}</em>"
+           container << "</a>"
+          container << '</li>'
+        end
+        container << '</ul>'
+      end
+    container << '</div>'
+    container.html_safe
   end
 
   #######################################

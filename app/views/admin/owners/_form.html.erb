@@ -1,0 +1,12 @@
+<% create_container('field double') do %>
+  <%= input_text_for_block(f,@owner,:name)%>
+  <%= input_text_for_block(f,@owner,:image,{},{:input_type => 'file'}) %>
+<% end %>
+<% create_container('field triple') do %>
+  <%= input_text_for_block(f,@owner,:cnpj,{},{:class => 'cnpj'})%>
+  <%= input_text_for_block(f,@owner,:representative)%>
+  <%= input_text_for_block(f,@owner,:phone,{},{:class => 'phone'})%>
+<% end %>
+<%= show_image(@owner)%>
+<%= create_actions_buttons(button_label) %>
+

@@ -10,3 +10,7 @@ rails g scaffold Role name:string value:integer situation:booelan
 
 rails g scaffold Permission role:references model_name:string actions:string situation:booelan
 
+rails g scaffold Owner name:string cnpj:string representative:string phone:string email:string image_file_name:string image_content_type:string image_file_size:integer
+
+rails g scaffold Dashboard name:string url:string icon:string
+

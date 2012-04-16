@@ -138,6 +138,12 @@ ptbr:
         location:
             one: "Localização"
             other: "Localizações"
+        owner:
+            one: "Dono empresa"
+            other: "Donos empresa"
+        dashboard:
+            one: "Atalho"
+            other: "Atalhos"
     attributes:
         menu:
             name: "Menu"
@@ -198,4 +204,15 @@ ptbr:
             email: "Email"
             state: "Estado"
             uf: "UF"
+        owner:
+            name: "Nome empresa"
+            cnpj: "CNPJ"
+            phone: "Telefone"
+            representative: "Representante"
+            image: "Logo da empresa"
+            email: "Email"
+        dashboard:
+            name: "Descrição"
+            url: "Atalho para"
+            icon: "Selecione o Icone"
 

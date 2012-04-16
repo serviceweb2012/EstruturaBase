@@ -21,6 +21,7 @@ class Admin::SubMenusController < ApplicationController
 
   def new
     @sub_menu = SubMenu.new
+    @model_name = t("activerecord.models.sub_menu.one")
     respond_with @sub_menu,:location => new_admin_sub_menu_path
   end
 

@@ -31,7 +31,7 @@
   <body>
 
     <div id="top">
-	    <h1><%= link_to "#",admin_root_path,:title => "Link para: página inicial do sistema - dashboard "%></h1>
+	    <%= owner_has_logo(@owner)%>
 	    <ul class="navBar">
 		    <%= create_menu %>
 	    </ul>

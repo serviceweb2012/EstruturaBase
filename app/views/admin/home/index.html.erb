@@ -16,15 +16,6 @@
 
 <% content_for :main do %>
     <%= onde_estou "Dashboard",admin_root_path,'Dashboard' %>
-		<div class="box dashboard">
-			<ul>
-				<li>
-					<a href="options.html?iframe=true&width=740" title="ao clicar, abre-se menu de acesso rápido as funções, com possibilidade de relatórios e pesquisa" rel="prettyPhoto[iframe]">
-						<img src="/images/icons/customer.png" alt="" title="" />
-						<em>clientes</em>
-					</a>
-				</li>
-			</ul>
-		</div>
+		<%= list_dashboards(@dashboards) %>
 <% end %>
 

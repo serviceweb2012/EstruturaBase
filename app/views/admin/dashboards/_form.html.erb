@@ -1,0 +1,21 @@
+<% create_container('field double') do %>
+  <%= input_text_for_block(f,@dashboard,:name) %>
+  <%= combo_box_for_block(@dashboard,:url,@sub_menus_list,{},{:option_value => :url,:option_text => :name}) %>
+<% end %>
+<% unless @icones.empty? %>
+<div class='field'>
+  <span>
+    <fieldset>
+      <legend>Selecione o Icone para o atalho</legend>
+      <% @icones.each do |i| %>
+        <span class='item'>
+          <%= f.radio_button(:icon,"/images/icons/#{i}") %>
+          <%= image_tag("/images/icons/#{i}",:alt => i)%>
+        </span>
+      <% end %>
+    </fieldset>
+  </span>
+</div>
+<% end %>
+<%= create_actions_buttons(button_label) %>
+

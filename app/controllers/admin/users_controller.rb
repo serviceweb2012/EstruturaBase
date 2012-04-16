@@ -21,6 +21,7 @@ class Admin::UsersController < ApplicationController
 
   def new
     @user = User.new
+    @model_name = t("activerecord.models.user.one")
     respond_with @user,:location => new_admin_user_path
   end
 

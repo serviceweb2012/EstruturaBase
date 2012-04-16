@@ -10,6 +10,6 @@
 <%= show_field(@location,:email) %>
 <%= show_field(@location,:url_site) %>
 <%= show_field(@location,:url_map) %>
-<%= show_field(@location,:image,:content => image_tag(@location.image.url(:small)))%>
+<%= show_field(@location,:image,:content => @location.image.url) %>
 </div>
 

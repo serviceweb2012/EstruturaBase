@@ -21,6 +21,7 @@ class Admin::LocationsController < ApplicationController
 
   def new
     @location = Location.new
+    @model_name = t("activerecord.models.location.one")
     respond_with @location,:location => new_admin_location_path
   end
 
@@ -57,7 +58,7 @@ class Admin::LocationsController < ApplicationController
     modelo.update_attributes(:image_file_name => nil,
                            :image_content_type => nil,
                            :image_file_size => nil)
-
+    flash[:notice] = 'Imagem deletada com sucesso!'
     redirect_to url
    end
 
