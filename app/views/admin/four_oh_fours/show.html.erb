@@ -1,5 +1,6 @@
 <div class="info">
-<h2><%= @four_oh_four.path %></h2>
+<h2>Detalhes <%= @model_name %> : <%= @four_oh_four.id %></h2>
+<%= show_field(@four_oh_four,:path) %>
 <%= show_field(@four_oh_four,:host) %>
 <%= show_field(@four_oh_four,:referer) %>
 <%= show_field(@four_oh_four,:count) %>

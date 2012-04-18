@@ -2,6 +2,7 @@
 class Admin::OwnersController < ApplicationController
   layout 'admin'
   before_filter :authenticate_user!
+  before_filter :load_model_name,:only => [:show,:new,:edit]
 
   def index
     @menus = Menu.all
@@ -22,13 +23,11 @@ class Admin::OwnersController < ApplicationController
 
   def new
     @owner = Owner.new
-    @model_name = t("activerecord.models.owner.one")
     respond_with @owner,:location => new_admin_owner_path
   end
 
   def edit
     @owner = Owner.find(params[:id])
-    @model_name = t("activerecord.models.owner.one")
   end
 
   def create
@@ -62,6 +61,9 @@ class Admin::OwnersController < ApplicationController
     flash[:notice] = 'Imagem deletada com sucesso!'
     redirect_to url
    end
-
+  protected
+  def load_model_name
+    @model_name = t("activerecord.models.owner.one")
+  end
 end
 

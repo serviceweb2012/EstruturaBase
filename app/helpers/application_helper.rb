@@ -63,6 +63,7 @@ module ApplicationHelper
       menu = Menu.actived?.joins(:roles).where("menus_roles.role_id = ?",user.role.id).order("menus.position ASC")
     end
     list_menu = %()
+    list_menu << "<li>#{link_to('início',admin_root_path,:alt => 'página inicial',:title => 'clique para ir para dashboard')}</li>"
 
     menu.each do |m|
       if user.role.value == 5
@@ -70,6 +71,7 @@ module ApplicationHelper
       else
         sub = m.sub_menus.actived?.joins(:roles).where("roles_sub_menus.role_id = ?",user.role.id).order("sub_menus.position asc")
       end
+
 
       list_menu << "<li>"
       list_menu << link_to(m.name,'javascript:void(0);')
@@ -874,11 +876,14 @@ module ApplicationHelper
       content = "Desativado no sistema"
     end
 
+    content = conteudo unless conteudo.nil?
+
     if campo.eql?(:image) || campo.eql?(:icon)
       content = image_tag(conteudo,:alt => "Imagem campo : #{campo}")
+      container << "<p><em>#{field_name}: </em><br/>#{content}</p>"
+    else
+      container << "<p><em>#{field_name}: </em>#{content}</p>"
     end
-
-    container << "<p><em>#{field_name}: </em>#{content}</p>"
     container.html_safe
   end
 

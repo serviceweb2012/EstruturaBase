@@ -1,5 +1,6 @@
 <div class="info">
-<h2><%= @owner.name %></h2>
+<h2>Detalhes <%= @model_name %> : <%= @owner.id %></h2>
+<%= show_field(@owner,:name)%>
 <%= show_field(@owner,:representative) %>
 <%= show_field(@owner,:cnpj) %>
 <%= show_field(@owner,:phone) %>

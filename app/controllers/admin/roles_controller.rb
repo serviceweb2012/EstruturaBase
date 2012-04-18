@@ -2,6 +2,7 @@
 class Admin::RolesController < ApplicationController
   layout 'admin'
   before_filter :authenticate_user!,:load_resources
+  before_filter :load_model_name,:only => [:show,:new,:edit]
 
   def index
     @roles = Role.where("name LIKE ?","%#{params[:search]}%")
@@ -21,13 +22,11 @@ class Admin::RolesController < ApplicationController
 
   def new
     @role = Role.new
-    @model_name = t("activerecord.models.role.one")
     respond_with @role,:location => new_admin_role_path
   end
 
   def edit
     @role = Role.find(params[:id])
-    @model_name = t("activerecord.models.role.one")
   end
 
   def create
@@ -64,5 +63,10 @@ class Admin::RolesController < ApplicationController
   def load_resources
     @menus = Menu.order('position ASC')
   end
+
+  def load_model_name
+    @model_name = t("activerecord.models.role.one")
+  end
+
 end
 

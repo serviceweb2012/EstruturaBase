@@ -3,6 +3,7 @@ class Admin::DashboardsController < ApplicationController
   layout 'admin'
   before_filter :authenticate_user!
   before_filter :load_resourcez,:only => [:new,:edit]
+  before_filter :load_model_name,:only => [:show,:new,:edit]
 
   def index
     @dashboards = Dashboard.where("name LIKE ?","%#{params[:search]}%")
@@ -22,13 +23,11 @@ class Admin::DashboardsController < ApplicationController
 
   def new
     @dashboard = Dashboard.new
-    @model_name = t("activerecord.models.dashboard.one")
     respond_with @dashboard,:location => new_admin_dashboard_path
   end
 
   def edit
     @dashboard = Dashboard.find(params[:id])
-    @model_name = t("activerecord.models.dashboard.one")
   end
 
   def create
@@ -39,7 +38,7 @@ class Admin::DashboardsController < ApplicationController
 
   def update
     @dashboard = Dashboard.find(params[:id])
-    flash[:notice] = 'Atalho atualizado com sucesso!' if @dashboard.update_attributes(params[:location])
+    flash[:notice] = 'Atalho atualizado com sucesso!' if @dashboard.update_attributes(params[:dashboard])
     respond_with @dashboard,:location => admin_dashboards_path
   end
 
@@ -49,10 +48,14 @@ class Admin::DashboardsController < ApplicationController
     respond_with @dashboard,:location => admin_dashboards_path
   end
 
-  private
+  protected
   def load_resourcez
     @sub_menus_list = SubMenu.list_sub_menu_by_permission(current_user)
     @icones = Dashboard.list_icons
+  end
+
+  def load_model_name
+    @model_name = t("activerecord.models.dashboard.one")
   end
 
 end

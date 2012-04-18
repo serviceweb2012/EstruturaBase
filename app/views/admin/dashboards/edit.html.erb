@@ -5,7 +5,7 @@
 <% content_for :main do  %>
   <%= onde_estou "Edição de #{@model_name}",admin_root_path,"Dashboard" %>
   <div class="box fields">
-    <%= form_for(@dashboard,:url => admin_menu_path(@menu),:html => {:method => :put}) do |f| %>
+    <%= form_for(@dashboard,:url => admin_dashboard_path(@dashboard),:html => {:method => :put}) do |f| %>
       <%= render :partial => 'form',:locals =>{:button_label => "Editar",:f => f} %>
     <% end %>
   </div>

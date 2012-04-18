@@ -2,6 +2,7 @@
 class Admin::UsersController < ApplicationController
   layout 'admin'
   before_filter :authenticate_user!,:load_resources
+  before_filter :load_model_name,:only => [:show,:new,:edit]
 
   def index
     @users = User.where("name LIKE ?","%#{params[:search]}%")
@@ -21,13 +22,11 @@ class Admin::UsersController < ApplicationController
 
   def new
     @user = User.new
-    @model_name = t("activerecord.models.user.one")
     respond_with @user,:location => new_admin_user_path
   end
 
   def edit
     @user = User.find(params[:id])
-    @model_name = t("activerecord.models.user.one")
   end
 
   def create
@@ -51,6 +50,10 @@ class Admin::UsersController < ApplicationController
   protected
   def load_resources
     @roles = Role.order('value DESC')
+  end
+
+  def load_model_name
+    @model_name = t("activerecord.models.user.one")
   end
 end
 

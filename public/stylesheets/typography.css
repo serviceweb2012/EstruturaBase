@@ -6,8 +6,8 @@ body {font: normal 62.5% "Trebuchet Ms", Helvetica, Arial, Tahoma, Sans-serif;}
 .logged ul li {line-height: 2em;}
 .logged ul li a{font-size: 1.3em;}
 
-#top .navBar li a {line-height: 1.9em;font-size: 1.5em;font-weight: bold;text-transform: uppercase;}
-#top .navBar li ul li a,	
+#top .navBar li a {line-height: 2.4em;font-size: 1.4em;font-weight: bold;text-transform: uppercase;}
+#top .navBar li ul li a,
 .options ul li a {line-height: 2em;font-size: 1.3em;font-weight: normal;text-transform: none;}
 .options .info ul li {line-height: 1.6em;font-size: 1.3em;font-weight: normal;text-transform: none;}
 
@@ -86,3 +86,4 @@ span.help {font-size: 1.1em;font-style: normal;}
 span#notice h1 {font-size: 1.5em;}
 
 .pagination {font-size: 1.2em;}
+

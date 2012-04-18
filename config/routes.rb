@@ -1,7 +1,8 @@
 EstruturaBase::Application.routes.draw do
-  resources :dashboards
-
   root :to => "home#index"
+
+  get '/contatos' => 'contatos#index',:as => 'contato'
+  post '/contatos/enviar' => 'contatos#enviar'
 
   #rotas fixas
   match '/admin/home/:id/enabled_disabled' => "admin/home#enabled_disabled"

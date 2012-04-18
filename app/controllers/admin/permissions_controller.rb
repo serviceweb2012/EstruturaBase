@@ -2,6 +2,7 @@
 class Admin::PermissionsController < ApplicationController
   layout 'admin'
   before_filter :authenticate_user!,:load_resources
+  before_filter :load_model_name,:only => [:show,:new,:edit]
 
   def index
     @permissions = Permission.where("model_name LIKE ?","%#{params[:search]}%")
@@ -22,14 +23,12 @@ class Admin::PermissionsController < ApplicationController
 
   def new
     @permission = Permission.new
-    @model_name = t("activerecord.models.permission.one")
     respond_with @permission,:location => new_admin_permission_path
   end
 
   def edit
     @permission = Permission.find(params[:id])
     @actions = Permission.list_actions_by_model(@permission.model_name)
-    @model_name = t("activerecord.models.permission.one")
   end
 
   def create
@@ -63,6 +62,10 @@ class Admin::PermissionsController < ApplicationController
   def load_resources
     @roles = Role.order('name ASC')
     @models = Permission.list_models
+  end
+
+  def load_model_name
+    @model_name = t("activerecord.models.permission.one")
   end
 end
 

@@ -1,5 +1,5 @@
 <% create_container('field triple') do %>
-  <%= combo_box_for_block(@sub_menu,:menu,@menus,{})%>
+  <%= combo_box_for_block(@sub_menu,:menu,@menus)%>
   <%= input_text_for_block(f,@sub_menu,:name) %>
   <%= input_text_for_block(f,@sub_menu,:title,{:show_help => true},{:information => 'Texto exibido quando mouse é colocado sobre a URL'}) %>
 <% end %>

@@ -2,6 +2,7 @@
 class Admin::SubMenusController < ApplicationController
   layout 'admin'
   before_filter :authenticate_user!,:load_resources
+  before_filter :load_model_name,:only => [:show,:new,:edit]
 
   def index
     @sub_menus = SubMenu.where("name LIKE ?","%#{params[:search]}%")
@@ -21,13 +22,11 @@ class Admin::SubMenusController < ApplicationController
 
   def new
     @sub_menu = SubMenu.new
-    @model_name = t("activerecord.models.sub_menu.one")
     respond_with @sub_menu,:location => new_admin_sub_menu_path
   end
 
   def edit
     @sub_menu = SubMenu.find(params[:id])
-    @model_name = t("activerecord.models.sub_menu.one")
   end
 
   def create
@@ -49,7 +48,7 @@ class Admin::SubMenusController < ApplicationController
   end
 
   def find_sub_menus_by_menu
-    @sub_menus = SubMenu.joins(:roles).where('sub_menus.menu_id = ? AND roles.id = ?',params[:menu_id],current_user.role.id).order('position ASC') if params[:menu_id]
+    @sub_menus = SubMenu.list_sub_menu_by_menu_and_permission(params[:menu_id],current_user) if params[:menu_id]
     respond_to do |format|
       #format.html # index.html.erb
       format.js
@@ -57,7 +56,7 @@ class Admin::SubMenusController < ApplicationController
   end
 
   def ordenar_sub_menus
-     @menus = Menu.joins(:roles).where('roles.id = ?',current_user.role.id).order("menus.position ASC")
+     @menus = Menu.menus_by_permission(current_user)
      respond_with @menus,:location => ordenar_sub_menus_admin_sub_menus_path
   end
 
@@ -77,5 +76,10 @@ class Admin::SubMenusController < ApplicationController
   def load_resources
     @menus = Menu.order("name ASC")
   end
+
+  def load_model_name
+    @model_name = t("activerecord.models.sub_menu.one")
+  end
+
 end
 

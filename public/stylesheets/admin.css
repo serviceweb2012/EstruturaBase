@@ -5,12 +5,12 @@ input[type="reset"]:hover,
 .options table tbody tr td a:hover {background-position: bottom center!important;cursor: pointer;color: #FFF!important;}
 
 #top {display: block;height: 54px;background: Transparent url(../images/backTop.jpg) repeat-x bottom center;position: relative;}
-#top h1 {width: 160px;top: 14px;left: 50px;background-color: #EEE;overflow: hidden;position: absolute;}
+/*#top h1 {width: 160px;top: 14px;left: 50px;background-color: #EEE;overflow: hidden;position: absolute;}
 #top h1 a {height: 54px;text-indent: -9999em;display: block;}
-
-#top .navBar {margin: 19px 0 0 250px;float: left;}
-#top .navBar li {margin: 0 0 0 10px;float: left;position: relative;}
-#top .navBar li a {height: 30px;padding: 0 15px;color: #FFF;float: left;}
+*/
+#top .navBar {margin: 20px 0 0 10px;float: left;}
+#top .navBar li {float: left;position: relative;}
+#top .navBar li a {height: 30px;padding: 0 10px;color: #FFF;float: left;}
 #top .navBar .active a {color: #069;background: Transparent url(../images/navBarLeft2.gif) no-repeat top left;}
 #top .navBar .active {background: #FFF url(../images/navBarRight2.gif) no-repeat top right;}
 

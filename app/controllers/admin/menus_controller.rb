@@ -2,6 +2,7 @@
 class Admin::MenusController < ApplicationController
   layout 'admin'
   before_filter :authenticate_user!
+  before_filter :load_model_name,:only => [:show,:new,:edit]
 
   def index
     @menus = Menu.where("name LIKE ?","%#{params[:search]}%")
@@ -21,13 +22,11 @@ class Admin::MenusController < ApplicationController
 
   def new
     @menu = Menu.new
-    @model_name = t("activerecord.models.menu.one")
     respond_with @menu,:location => new_admin_menu_path
   end
 
   def edit
     @menu = Menu.find(params[:id])
-    @model_name = t("activerecord.models.menu.one")
   end
 
   def create
@@ -50,7 +49,8 @@ class Admin::MenusController < ApplicationController
   end
 
   def ordenar_menus
-     @menus = Menu.joins(:roles).where('roles.id = ?',current_user.role.id).order("menus.position ASC")
+    @menus = Menu.menus_by_permission(current_user)
+    @model_name = t("activerecord.models.menu.other")
   end
 
 
@@ -64,6 +64,11 @@ class Admin::MenusController < ApplicationController
      respond_to do |format|
        format.js { render :nothing => true }
      end
+  end
+
+  protected
+  def load_model_name
+    @model_name = t("activerecord.models.menu.one")
   end
 end
 

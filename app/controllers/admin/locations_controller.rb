@@ -2,7 +2,7 @@
 class Admin::LocationsController < ApplicationController
   layout 'admin'
   before_filter :authenticate_user!
-
+  before_filter :load_model_name,:only => [:show,:new,:edit]
   def index
     @locations = Location.where("name LIKE ?","%#{params[:search]}%")
                   .order("#{$order} #{$ordem}")
@@ -21,13 +21,12 @@ class Admin::LocationsController < ApplicationController
 
   def new
     @location = Location.new
-    @model_name = t("activerecord.models.location.one")
+
     respond_with @location,:location => new_admin_location_path
   end
 
   def edit
     @location = Location.find(params[:id])
-    @model_name = t("activerecord.models.location.one")
   end
 
   def create
@@ -62,5 +61,9 @@ class Admin::LocationsController < ApplicationController
     redirect_to url
    end
 
+  protected
+  def load_model_name
+    @model_name = t("activerecord.models.location.one")
+  end
 end
 

@@ -1,5 +1,6 @@
 <div class="info">
-<h2><%= @permission.role.name %></h2>
+<h2>Detalhes <%= @model_name %> : <%= @permission.id %></h2>
+<%= show_field(@permission,:role_id,:content => @permission.role.name)%>
 <%= show_field(@permission,:model_name) %>
 <%= show_field(@permission,:situation) %>
 <h3>Ações para o modelo</h3>
