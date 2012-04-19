@@ -1,4 +1,4 @@
-<h1>Reenvie instruções de destravamento de senha</h1>
+<h1><%= image_tag(@owner.image.url(:small),:alt => "logo #{@owner.name}") %></h1>
 
 <%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post }) do |f| %>
   <%= devise_error_messages! %>

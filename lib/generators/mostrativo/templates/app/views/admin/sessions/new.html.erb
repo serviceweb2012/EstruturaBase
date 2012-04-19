@@ -1,4 +1,4 @@
-<h1>Área de Login</h1>
+<h1><%= image_tag(@owner.image.url(:small),:alt => "logo #{@owner.name}") %></h1>
 
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 

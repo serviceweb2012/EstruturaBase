@@ -89,7 +89,7 @@ PLATFORMS
 
 DEPENDENCIES
   devise (= 1.5.3)
-  jquery-rails
+  jquery-rails (= 1.0.19)
   mysql2 (= 0.2.7)
   paperclip (= 2.6.0)
   rails (= 3.0.4)

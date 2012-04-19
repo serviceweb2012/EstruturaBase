@@ -9,7 +9,7 @@ gem 'mysql2','0.2.7'
 gem 'devise','1.5.3'
 gem 'will_paginate','3.0.3'
 gem 'paperclip','2.6.0'
-gem 'jquery-rails'
+gem 'jquery-rails','1.0.19'
 
 # Use unicorn as the web server
 # gem 'unicorn'
