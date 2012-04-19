@@ -1,0 +1,19 @@
+<h1>Mude sua Senha</h1>
+
+<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
+  <%= devise_error_messages! %>
+  <%= f.hidden_field :reset_password_token %>
+
+  <label>Nova Senha
+    <%= f.password_field :password,:class => "txt" %>
+  </label>
+
+  <label>Confirme a nova senha
+    <%= f.password_field :password_confirmation,:class => "txt" %></div>
+  </label>
+
+  <%= f.submit "Confirmar mudança de senha",:class => "btn" %>
+  <%= render :partial => "/admin/shared/links" %>
+  <span class="clear">&nbsp;</span>
+<% end %>
+

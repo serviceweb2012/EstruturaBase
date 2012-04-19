@@ -1,0 +1,21 @@
+<% content_for :sidebar do %>
+<div class="box stats">
+  <h2>Estatísticas</h2>
+  <p>Dados encontrados até o presente momento no sistema.</p>
+  <!--<ul>
+			<li><span></span>menus</li>
+	</ul>-->
+</div>
+<div class="box message">
+		<h2>Aviso importante</h2>
+		<p>Aqui vão mensagens de aviso por exemplo:</p>
+		<p>Você possui N recados pendetes para aprovação</p>
+		<a href="javascript:void(0);" title="Link para: página de listagem de comentários">comentários</a>
+</div>
+<% end %>
+
+<% content_for :main do %>
+    <%= onde_estou "Dashboard",admin_root_path,'Dashboard' %>
+		<%= list_dashboards(@dashboards) %>
+<% end %>
+

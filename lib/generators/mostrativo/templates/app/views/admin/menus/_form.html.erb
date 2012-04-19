@@ -1,0 +1,8 @@
+<% create_container('field double') do %>
+  <%= input_text_for_block(f,@menu,:name) %>
+  <%= input_text_for_block(f,@menu,:position,{:show_help => true},{:information => 'Informe a posição para ordenar o menu'}) %>
+<% end %>
+<%= input_text_for_form(f,@menu,:adm,{},{:input_type => 'checkbox'}) %>
+<%= input_text_for_form(f,@menu,:situation,{},{:input_type => 'checkbox'}) %>
+<%= create_actions_buttons(button_label) %>
+

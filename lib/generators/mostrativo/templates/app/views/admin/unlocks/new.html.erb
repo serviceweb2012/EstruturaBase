@@ -1,0 +1,13 @@
+<h1>Reenvie instruções de destravamento de senha</h1>
+
+<%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <label>Email
+  <%= f.email_field :email,:class => "txt" %></label>
+
+  <%= f.submit "Reenviar",:class => "btn" %>
+  <%= render :partial => "/admin/shared/links" %>
+  <span class="clear">&nbsp;</span>
+<% end %>
+

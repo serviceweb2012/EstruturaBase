@@ -1,0 +1,15 @@
+<div class="info">
+<h2>Detalhes <%= @model_name %> : <%= @location.id %></h2>
+<%= show_field(@location,:name) %>
+<%= show_field(@location,:number) %>
+<%= show_field(@location,:district) %>
+<%= show_field(@location,:city) %>
+<%= show_field(@location,:uf) %>
+<%= show_field(@location,:cep) %>
+<%= show_field(@location,:phone) %>
+<%= show_field(@location,:email) %>
+<%= show_field(@location,:url_site) %>
+<%= show_field(@location,:url_map) %>
+<%= show_field(@location,:image,:content => @location.image.url) %>
+</div>
+

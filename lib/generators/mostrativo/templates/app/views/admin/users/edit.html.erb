@@ -1,0 +1,13 @@
+<% content_for :sidebar do %>
+  <%= error_message_for(@user) %>
+<% end %>
+
+<% content_for :main do  %>
+  <%= onde_estou "Edição de #{@model_name}",admin_root_path,"Dashboard" %>
+  <div class="box fields">
+    <%= form_for(@user,:url => admin_user_path(@user),:html => {:method => :put}) do |f| %>
+      <%= render :partial => 'form',:locals =>{:button_label => "Editar",:f => f} %>
+    <% end %>
+  </div>
+<% end %>
+

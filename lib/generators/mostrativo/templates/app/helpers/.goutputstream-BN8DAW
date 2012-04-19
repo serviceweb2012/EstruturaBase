@@ -1,0 +1,796 @@
+# coding: utf-8
+module ApplicationHelper
+
+  def use_tinymce(*ids)
+    content_for :tinymce do
+      javascript_include_tag "tiny_mce/tiny_mce", "mce_editor"
+    end
+
+    js = %(<script language="javascript" type="text/javascript">\n)
+    ids.each do |id|
+      js << %(tinyMCE.execCommand("mceAddControl", true, "#{id}");\n)
+    end
+    js << "</script>"
+    content_for :tinymce_init do
+      js
+    end
+  end
+
+  def imprime_data()
+    Time.current.to_s(:mostrativo)
+  end
+
+  def reportar_erro
+    link_to("reportar problema", new_admin_report_error_path,
+      :onclick => "javascript:createPopup('#{new_admin_report_error_path}', 'Reportar Erro', '745', '290', 'yes');return false;",
+      :title => "clique aqui para reportar um erro", :class => "error")
+  end
+
+  def create_menu()
+    if current_user.role.value == 5
+      menu = Menu.all(:order => "menus.position")
+    else
+      menu = Menu.actived?.all(:joins => :menu_permissions, :conditions => ["menu_permissions.role_id = ?", current_user.role_id], :order => "menus.position")
+    end
+    list_menu = ""
+
+    menu.each do |m|
+      if current_user.role.value == 5
+        sub = m.sub_menus.all(:order => "sub_menus.position") #SubMenu.all(::conditions => ["menu_id = ? AND menus.situation = ?", m.id, true], :order => "sub_menus.position")
+      else
+        sub = m.sub_menus.actived?.all(:joins => :sub_menu_permissions, :conditions => ["sub_menu_permissions.role_id = ?", current_user.role_id], :order => "sub_menus.position")
+      end
+      list_menu << %(<li>\n)
+      list_menu << link_to(m.name, 'javascript:void(0);')
+      list_menu << "\n\t<ul>"
+      sub.each do |s|
+        if s.separator
+          list_menu << "\n\t<li class=\"hr\">"
+        else
+          list_menu << "\n\t<li>"
+        end
+        list_menu << %(#{link_to(s.name, s.url, :title => s.title)})
+        list_menu << "\n\t</li>"
+      end
+      list_menu << "\n\t</ul>"
+      list_menu << "</li>\n"
+    end
+    list_menu
+  end
+
+  def mapa(model, options = {})
+    classe = model.to_s.camelize.constantize
+    object = classe.new
+    content_for :map do
+      list = ""
+        list << "<li>&rarr;</li>"
+        ult = 0
+      action = options[:action].nil? ? action_name : options[:action].to_s
+      map = options[:map]
+      if map.nil?
+        name = options[:name].nil? ? t("activerecord.models.#{model.to_s.downcase}", :count => 2).downcase : options[:name]
+        name_singular = t("activerecord.models.#{model.to_s.downcase}", :count => 1).downcase
+
+        if action.eql?("index")
+          list << "<li>#{name}</li>"
+        elsif action.eql?("edit") || action.eql?("new")
+          list << %(<li>#{link_to(name, polymorphic_url([:admin, object]), :title => "ir para a página #{name}")}</li>)
+        end
+
+        if action.eql?("new")
+          list << "<li>&rarr;</li>"
+          list << "<li>cadastrar #{name_singular}</li>"
+        elsif action.eql?("edit")
+          list << "<li>&rarr;</li>"
+          list << "<li>editar #{name_singular}</li>"
+        end
+      else
+        map.each_key do |key|
+          ult +=1
+          unless map[key].has_key? :href
+              list << "<li>#{map[key][:nome]}</li>"
+              list << "<li>&rarr;</li>" if (ult <= (map.length - 1))
+            else
+              list << "<li>"
+              list << link_to("#{map[key][:nome]}", map[key][:href], :title => map[key][:title])
+              list << "</li>"
+              list << "<li>&rarr;</li>" if (ult <= (map.length - 1))
+            end
+          end
+      end
+        list
+    end
+  end
+
+  def imprimeSearchTools(model, config = {})
+    classe = model.to_s.camelize.constantize
+    name = classe.human_name
+    columns = {:id => "Código" }
+    list = config[:list].nil? ? "" : config[:list]
+    not_columns = ["id", "created_at", "updated_at", "status","position","adm","crypted_password","remember_token","salt","remember_token_expire_at","activation_code","image_file_name","image_content_type","image_file_size"]
+    if !config[:not_columns].nil?
+        config[:not_columns].each do |s|
+            not_columns << s
+        end
+    end
+    add_columns = classe.column_names - not_columns
+    add_columns = config[:add_columns].nil? ? add_columns : add_columns + config[:add_columns]
+    show_columns = add_columns.join(",")
+    show_columns = show_columns.gsub(/\w(\w{1,}_id\b)/, "")
+    show_columns = show_columns.gsub(/(^,)/, "")
+    show_columns = show_columns.split(",")
+    show_columns.reject! { |i| i.empty? }
+    show_campos = []
+    show_columns.each do |c|
+        new_classe = c.split(".")
+        if new_classe.length > 1
+            rename_classe = new_classe[0].singularize.to_s.camelize.constantize
+            translate = rename_classe.human_attribute_name(new_classe[1].to_s) rescue ""
+            translate += " - #{rename_classe.human_name}"
+        else
+            translate = classe.human_attribute_name(c.to_s) rescue ""
+        end
+        show_campos << [[translate], c.to_s]
+    end
+    show_campos = show_campos.sort {|a,b| a <=> b}
+    object = classe.new
+    _erbout = ''
+    show_actions = config[:show_actions].nil? ? true : config[:show_actions]
+    show_order = config[:show_order].nil? ? true : config[:show_order]
+    show_new_button = config[:show_new_button].nil? ? true : config[:show_new_button]
+    unless config[:route].nil?
+      action_search = config[:route]
+      action_new = "#{action_search}/novo"
+    else
+      search =  polymorphic_url([:admin, object])
+      search = search.split('/', 4)
+      action_search = '/'+search[3]
+      action_new = new_polymorphic_url([:admin, object])
+    end
+    options = {:action_search => action_search, :action_new => action_new, :show_new_button => show_new_button, :show_actions => show_actions, :show_order => show_order, :model_name => name, :show_campos => show_campos, :model => list}.merge! config
+    _erbout.concat(render(:partial => "/admin/homes/search", :locals => options))
+  end
+
+  def imprime_span_fixo(model)
+    content_for :headers do
+      javascript_include_tag "tables"
+    end
+
+    classe = model.to_s.camelize.constantize
+    object = classe.new
+    route_actions = polymorphic_url([:admin, object])
+    table = %(<form action="" method="get">\n
+        <span id="model_name" style="visibility: hidden;">#{model.to_s}</span>\n
+        <span id="model_url" style="visibility: hidden;">#{route_actions.gsub("/", "_")}</span>\n)
+    table
+  end
+
+  def table_list_model(model, list, options = {})
+    classe = model.to_s.camelize.constantize
+    object = classe.new
+    name = options[:name].nil? ? classe.human_name : options[:name]
+    columns = {:id => "Código" }
+    columns.merge! options[:columns] unless options[:columns].nil?
+    field_id = options[:field_id].nil? ? :id : options[:field_id]
+    show_select = options[:show_select].nil? ? true : options[:show_select]
+    show_id = options[:show_id].nil? ? true : options[:show_id]
+    show_buttons = options[:show_buttons].nil? ? true : options[:show_buttons]
+    id = options[:id].nil? ? field_id : options[:id]
+    field_association = options[:field_association]
+    block = options[:block]
+    modal_height = options[:modal_height].nil? ? 400 : options[:modal_height]
+    show_columns = classe.column_names - ["id", "created_at", "updated_at", "situation", "status"]
+    show_columns = show_columns.join(",")
+    show_columns = show_columns.gsub(/\w(\w{1,}_id\b)/, "")
+    show_columns = show_columns.gsub(/(^,)/, "")
+    show_columns = show_columns.split(",")
+    show_columns.reject! { |i| i.empty? }
+    field_name = classe.human_attribute_name(show_columns[0].to_s) rescue ""
+    field_name = columns[:name] unless columns[:name].nil?
+    column_name = show_columns[0].to_s
+    list_field = options[:field].nil? ? column_name : options[:field]
+    show_button = options[:show_button].nil? ? true : options[:show_button]
+    edit_button = options[:edit_button].nil? ? true : options[:edit_button]
+    delete_button = options[:delete_button].nil? ? true : options[:delete_button]
+    disabled_button = options[:disabled_button].nil? ? true : options[:disabled_button]
+    #route = polymorphic_url([:admin, object]).split("/")[4]
+    route_actions = options[:route].nil? ? polymorphic_url([:admin, object]) : "/admin/"+options[:route] #options[:route_actions].nil? ? route : options[:route_actions]
+
+    content_for :headers do
+      javascript_include_tag "tables"
+    end
+
+    table = %(<form action="" method="get">\n
+        <span id="model_name" style="visibility: hidden;">#{model.to_s}</span>\n
+        <span id="model_url" style="visibility: hidden;">#{route_actions.gsub("/", "_")}</span>\n
+        <table cellspacing="0" cellpadding="0" border="0" class="listing">\n
+          <thead>\n
+          <tr>\n)
+        if show_select
+      table << %(<th width="30">#{check_box_tag :select_all}</th>\n)
+        end
+        if show_id
+      table << %(<th width="50">#{columns[:id]}</th>\n)
+        end
+    table << %(<th>#{field_name}</th>\n)
+    if show_buttons
+      table << %(<th width="105">Administrar</th>\n)
+    end
+    table << %(</tr>\n</thead>\n<tbody>\n)
+
+    for item in list
+      situation = item.respond_to?(:situation) ? item.situation : true
+      id = item.send(field_id)
+      url = (params[:search].nil? || params[:search].blank?) ? "" : "?search=#{params[:search]}"
+      show_route = options[:route].nil? ? polymorphic_url([:admin, item]) : "/admin/"+options[:route]+"/"+id.to_s
+      edit_route = options[:route].nil? ? edit_polymorphic_url([:admin, item])+url : "/admin/"+options[:route]+"/"+id.to_s+"/editar"+url
+      if item.respond_to? "situation"
+        table << "<tr#{situation == false ? " class='disabled'" : "" }>\n"
+      else
+        table << "<tr>\n"
+      end
+      if show_select
+            table << %(<td align="center">#{check_box_tag("cb_#{id}", "#{id}")}</td>\n)
+          end
+      if show_id
+        table << "<td>#{id}</td>\n"
+          end
+      table << "<td>"
+      if !field_association.nil?
+        table << item.send(field_association[:name]).send(field_association[:field])
+      elsif !block.nil?
+        table << block.call(item)
+      else
+        table << item.send(list_field) unless item.send(list_field).nil?
+      end
+      table << "</td>\n"
+      if show_buttons
+        table << %(<td>)
+        if show_button
+          if disabled_button
+            unless situation
+              table << %(#{link_to_remote("#{image_tag('/images/mostrativo/active.png', :alt => 'ação: ativar registro', :title => 'ação: ativar registro')}",
+              :url => {:controller => "admin/homes", :action => "enabled_disabled", :id => "#{id}", :name => "#{model.to_s}" })})
+            else
+              table << %(#{link_to_remote("#{image_tag('/images/mostrativo/desactive.png', :alt => 'ação: desativar registro', :title => 'ação: desativar registro')}",
+              :url => {:controller => "admin/homes", :action => "enabled_disabled", :id => "#{id}", :name => "#{model.to_s}" })})
+            end
+          end
+          table << %(#{link_to("#{image_tag('/images/mostrativo/preview.png', :alt => 'ação: visualizar o registro', :title => 'ação: visualizar o registro')}",
+          "javascript:createPopup('#{show_route}', 775, 550)")})
+        end
+        if edit_button
+          table << %(#{link_to("#{image_tag('/images/mostrativo/settings.png', :alt => 'ação: editar registro', :title => 'ação: editar registro')}",
+          edit_route)})
+        end
+        if delete_button
+          table << %(#{link_to("#{image_tag('/images/mostrativo/delete.gif', :alt => 'ação: excluir registro', :title => 'ação: excluir registro')}",
+          show_route, :confirm => "Uma vez excluído este registro, não estará mais disponível no sistema.\nDeseja realmente excluir este(a) #{name.downcase}?", :method => :delete)})
+        end
+      end
+      table << %(</td>\n</tr>\n)
+    end
+    table << %(</tbody>\n</table>\n</form>\n
+          #{will_paginate(list)}\n
+          <div style="clear:both">&nbsp;</div>\n)
+    table
+  end
+
+  def table_list_reference(model, list, reference, options = {})
+    classe = model.to_s.camelize.constantize
+    object = classe.new
+    reference_classe = reference.to_s.camelize.constantize
+    object_reference = reference_classe.new
+    name_ref = reference_classe.class.human_name rescue t("activerecord.models.#{reference.to_s.downcase}", :count => 2)
+    reference_name = options[:reference_name].nil? ? name_ref : options[:reference_name]
+    name = options[:name].nil? ? classe.human_name : options[:name]
+    columns = {:id => "Código" }
+    columns.merge! options[:columns] unless options[:columns].nil?
+    field_id = options[:field_id].nil? ? :id : options[:field_id]
+    show_buttons = options[:show_buttons].nil? ? true : options[:show_buttons]
+    id = options[:id].nil? ? field_id : options[:id]
+    field_association = options[:field_association]
+    block = options[:block]
+    block_link = options[:block_link]
+    modal_height = options[:modal_height].nil? ? 400 : options[:modal_height]
+    show_columns = classe.column_names - ["id", "created_at", "updated_at", "situation", "status"]
+    show_columns = show_columns.join(",")
+    show_columns = show_columns.gsub(/\w(\w{1,}_id\b)/, "")
+    show_columns = show_columns.gsub(/(^,)/, "")
+    show_columns = show_columns.split(",")
+    show_columns.reject! { |i| i.empty? }
+    field_name = classe.human_attribute_name(show_columns[0].to_s) rescue ""
+    field_name = columns[:name] unless columns[:name].nil?
+    column_name = show_columns[0].to_s
+    list_field = options[:field].nil? ? column_name : options[:field]
+    name_link_reference = options[:name_link_reference].nil? ? "visualizar #{reference_name.to_s.downcase}" : options[:name_link_reference]
+    show_button = options[:show_button].nil? ? true : options[:show_button]
+    link_t_button = options[:link_t_button].nil? ? false : options[:link_t_button]
+    edit_button = options[:edit_button].nil? ? true : options[:edit_button]
+    delete_button = options[:delete_button].nil? ? true : options[:delete_button]
+    disabled_button = options[:disabled_button].nil? ? true : options[:disabled_button]
+
+    route_actions = options[:route].nil? ? polymorphic_url([:admin, object]) : "/admin/"+options[:route] #options[:route_actions].nil? ? route : options[:route_actions]
+
+    content_for :headers do
+      javascript_include_tag "tables"
+    end
+
+    table = %(<form action="" method="get">\n
+        <span id="model_name" style="visibility: hidden;">#{model.to_s}</span>\n
+        <span id="model_url" style="visibility: hidden;">#{route_actions.gsub("/", "_")}</span>\n
+        <table cellspacing="0" cellpadding="0" border="0" class="listing">\n
+          <thead>\n
+          <tr>\n
+            <th width="30">#{check_box_tag :select_all}</th>\n
+            <th width="50">#{columns[:id]}</th>\n
+            <th>#{field_name}</th>\n
+            <th>#{reference_name}</th>\n
+    )
+    if show_buttons
+      table << %(<th width="125">Administrar</th>\n)
+    end
+    table << %(</tr>\n</thead>\n<tbody>\n)
+
+    for item in list
+      situation = item.respond_to?(:situation) ? item.situation : true
+      id = item.send(field_id)
+      url = (params[:search].nil? || params[:search].blank?) ? "" : "?search=#{params[:search]}"
+      show_route = options[:route].nil? ? polymorphic_url([:admin, item]) : "/admin/"+options[:route]+"/"+id.to_s
+      edit_route = options[:route].nil? ? edit_polymorphic_url([:admin, item])+url : "/admin/"+options[:route]+"/"+id.to_s+"/editar"+url
+      reference_route = options[:route].nil? ? "#{polymorphic_path([:admin, item])}#{polymorphic_path(object_reference)}" : "/admin/"+options[:route]+"/"+id.to_s+"/#{reference.to_s.pluralize}"
+      route_link_reference = options[:route_link_reference].nil? ? reference_route : show_route+options[:route_link_reference]
+      if item.respond_to? "situation"
+        table << "<tr#{situation == false ? "class='disabled'" : "" }>\n"
+      else
+        table << "<tr>\n"
+      end
+      table << %(<td align="center">#{check_box_tag("cb_#{id}", "#{id}")}</td>\n)
+      table << "<td>#{id}</td>\n"
+      table << "<td>"
+      if !field_association.nil?
+        table << item.send(field_association[:name]).send(field_association[:field])
+      elsif !block.nil?
+        table << block.call(item)
+      else
+        table << item.send(list_field) unless item.send(list_field).nil?
+      end
+      table << "</td>\n"
+      if link_t_button
+        table << %(<td>#{link_to(block_link.call(item), "#{route_link_reference}", :title => "clique aqui para visualizar os(as) #{reference_name.to_s.downcase}")}</td>)
+      else
+        table << %(<td>#{link_to("#{name_link_reference}", "#{reference_route}", :title => "clique aqui para visualizar os(as) #{reference_name.to_s.downcase}")}</td>)
+      end
+      if show_buttons
+        table << %(<td>)
+        if show_button
+          if disabled_button
+            unless situation
+              table << %(#{link_to_remote("#{image_tag('/images/mostrativo/active.png', :alt => 'ação: ativar registro', :title => 'ação: ativar registro')}",
+              :url => {:controller => "admin/homes", :action => "enabled_disabled", :id => "#{id}", :name => "#{model.to_s}" })})
+            else
+              table << %(#{link_to_remote("#{image_tag('/images/mostrativo/desactive.png', :alt => 'ação: desativar registro', :title => 'ação: desativar registro')}",
+              :url => {:controller => "admin/homes", :action => "enabled_disabled", :id => "#{id}", :name => "#{model.to_s}" })})
+            end
+          end
+          table << %(#{link_to("#{image_tag('/images/mostrativo/preview.png', :alt => 'ação: visualizar registro', :title => 'ação: visualizar registro')}",
+          "javascript:createPopup('#{show_route}', 'Detalhes sobre o(a) #{name.capitalize}', '740', '#{modal_height}', 'yes')")})
+        end
+        if edit_button
+          table << %(#{link_to("#{image_tag('/images/mostrativo/settings.png', :alt => 'ação: editar registro', :title => 'ação: editar registro')}",
+          edit_route)})
+        end
+        if delete_button
+          table << %(#{link_to("#{image_tag('/images/mostrativo/delete.gif', :alt => 'ação: excluir registro', :title => 'ação: excluir registro')}",
+          show_route, :confirm => "Uma vez excluído este registro, não estará mais disponível no sistema.\nDeseja realmente excluir este(a) #{name.downcase}?", :method => :delete)})
+        end
+      end
+      table << %(</td>\n</tr>\n)
+    end
+    table << %(</tbody>\n</table>\n</form>\n
+          #{will_paginate(list)}\n
+          <div style="clear:both">&nbsp;</div>\n)
+    table
+  end
+
+  def table_list_search(model, list, reference, options = {})
+    classe = model.to_s.camelize.constantize
+    object = classe.new
+    name = options[:name].nil? ? classe.human_name : options[:name]
+    columns = {:id => "Código" }
+    columns.merge! options[:columns] unless options[:columns].nil?
+    field_id = options[:field_id].nil? ? :id : options[:field_id]
+    show_buttons = options[:show_buttons].nil? ? true : options[:show_buttons]
+    id = options[:id].nil? ? field_id : options[:id]
+    field_association = options[:field_association]
+    block = options[:block]
+    show_columns = classe.column_names - ["id", "created_at", "updated_at", "situation", "status"]
+    show_columns = show_columns.join(",")
+    show_columns = show_columns.gsub(/\w(\w{1,}_id\b)/, "")
+    show_columns = show_columns.gsub(/(^,)/, "")
+    show_columns = show_columns.split(",")
+    show_columns.reject! { |i| i.empty? }
+    field_name = classe.human_attribute_name(show_columns[0].to_s) rescue ""
+    field_name = columns[:name] unless columns[:name].nil?
+    column_name = show_columns[0].to_s
+    list_field = options[:field].nil? ? column_name : options[:field]
+    selected_button = options[:selected_button].nil? ? true : options[:selected_button]
+
+    table = %(<form action="" method="get">\n
+        <table cellspacing="0" cellpadding="0" border="0" class="searching">\n
+          <thead>\n
+          <tr>\n
+            <th>#{field_name}</th>\n
+    )
+    if show_buttons
+      table << %(<th width="100">Selecionar</th>\n)
+    end
+    table << %(</tr>\n</thead>\n<tbody>\n)
+
+    for item in list
+      situation = item.respond_to?(:situation) ? item.situation : true
+      id = item.send(field_id)
+
+      table << "<tr onclick=\"javascript:closeSearchPopup('#{id}', '#{item.send(list_field)}', '#{reference.to_s}', '#{model.to_s}');\">\n"
+      table << "<td>"
+      if !field_association.nil?
+        table << item.send(field_association[:name]).send(field_association[:field])
+      elsif !block.nil?
+        table << block.call(item)
+      else
+        table << item.send(list_field) unless item.send(list_field).nil?
+      end
+      table << "</td>\n"
+      if show_buttons
+        table << %(<td align="center">)
+        if selected_button
+          table << %(#{link_to("#{image_tag('/images/mostrativo/adm_open.gif', :alt => 'selecionar', :title => 'selecionar')}",
+          "javascript:closeSearchPopup('#{id}', '#{item.send(list_field)}', '#{reference.to_s}', '#{model.to_s}');")})
+        end
+        table << %(</td>\n)
+      end
+      table << %(</tr>\n)
+    end
+    table << %(</tbody>\n</table>\n</form>\n
+          #{will_paginate(list)}\n
+          <div style="clear:both">&nbsp;</div>\n)
+    table
+  end
+
+  def show_model(model, options = {}, &block)
+    name = options[:model_name].nil? ? model.class.human_name : options[:model_name]
+    concat(%(<table cellspacing="0" height="100%" cellpadding="0" border="0" class="print">
+      ), block.binding)
+    yield(model)
+    concat("</table>", block.binding)
+  end
+
+  def column_title_for_table(name, merge = 2, options ={})
+    information = options[:information].nil? ? "" : "<em>#{options[:information]}</em>"
+    %(<tr><th colspan="#{merge}">#{name}#{information}</th></tr>)
+  end
+
+  def column_with_name_for_table(name, merge = nil, &block)
+    merge = merge.nil? ? "" : "colspan='#{merge}'"
+    concat("<td width=\"120px\">#{name}</td><td #{merge}>", block.binding)
+    yield
+    concat("</td>", block.binding)
+  end
+
+  def column_for_table(merge = nil, options = {},  &block)
+    style = options[:style]
+    header = options[:header].nil? ? "td" : options[:header]
+    merge = merge.nil? ? "" : "colspan='#{merge}'"
+    concat("<#{header} #{merge} #{style}>", block.binding)
+    yield
+    concat("</#{header}>", block.binding)
+  end
+
+  def row_for_table(&block)
+    concat("<tr>", block.binding)
+    yield
+    concat("</tr>", block.binding)
+  end
+
+  def field_for_show(object, field, options = {})
+    field_name = options[:field_name].nil? ? object.class.human_attribute_name(field.to_s) : options[:field_name]
+    content = object.send(field)
+    if content.is_a?(TrueClass) || content.is_a?(FalseClass)
+      content =  content ? "Ativo no sistema" : "Desativado no sistema"
+    end
+    content = options[:content] unless options[:content].nil?
+    %(<tr>
+              <td width="120px">#{field_name}</td>
+              <td><p>#{content}</p></td>
+            </tr>)
+  end
+
+  def table(options = {}, &block)
+    classe = options[:class].nil? ? "administrative" : options[:class]
+    concat(%(<table cellspacing="0" cellpadding="0" border="0" class="#{classe}">), block.binding)
+    yield
+    concat(%(</table>), block.binding)
+  end
+
+  def table_form_model(model, options ={}, &block)
+    model_name = model.class.to_s.downcase
+    human_name = model.class.human_name rescue t("activerecord.models.#{model.class.to_s.downcase}", :count => 1)
+    new_record = model.new_record? rescue true
+    title_model = options[:title_model].nil? ? true : options[:title_model]
+    name = options[:model_name].nil? ? human_name : options[:model_name]
+    style = options[:style].nil? ? "" : options[:style]
+    identification = options[:identification].nil? ? "" :options[:identification]
+    name_singular = name.downcase
+    new_route = options[:route].nil? ? new_polymorphic_url([:admin, model]) : "/admin/"+options[:route]+"/novo"
+    delete_route = options[:route].nil? ? polymorphic_url([:admin, model]) : "/admin/"+options[:route]+"/"+model.id.to_s
+
+    table = %(#{hidden_field_tag(:search, params[:search])})
+    table << %(<table cellspacing="0" cellpadding="0" border="0" class="administrative" #{style} #{identification} >)
+    if title_model
+            table << %(<tr>
+              <th>Dados #{name})
+            unless new_record
+              table << link_to("", new_route, :class => "admNew",
+          :title => "clique aqui para cadastrar um(a) novo(a) #{name_singular}")
+              table << link_to("", delete_route, :confirm => "Uma vez excluído este registro, não estará mais disponível no sistema.\nDeseja realmente excluir este(a) #{name_singular}?",
+          :method => :delete, :title => "clique aqui para excluir este(a) #{name_singular}", :class => "admDelete")
+            end
+            table << %(</th></tr>)
+        end
+      concat(table, block.binding)
+    yield(model)
+      concat("</table>", block.binding)
+  end
+
+  def field_for_form(form, object, field, options ={}, options_field = {})
+    classe = object.class
+    human_attribute = classe.human_attribute_name(field.to_s) rescue field.to_s.capitalize
+    field_name = options[:field_name].nil? ? human_attribute : options[:field_name]
+    model = classe.to_s.downcase
+    object = classe.new
+    controller = field.to_s.gsub("_id", "").pluralize
+    route_search = "/admin/#{model.pluralize}/search"
+    columns = {}
+    no_row = options[:no_row].nil? ? false : options[:no_row]
+    col_ok = classe.columns rescue false
+    merge = options[:merge].nil? ? "" : "colspan='#{options[:merge]}'"
+    information = options[:information].nil? ? "" : "<span class=\"help\"><em>"+options[:information]+"</em></span>"
+    information_check = options[:information_check].nil? ? "" : "<span class=\"information\"><img src=\"/images/mostrativo/important.gif\" />"+options[:information_check]+"</span>"
+    input_class = options[:class].nil? ? "" : options[:class]
+    has_class = input_class.split(" ")
+    has_text = ""
+    has_class.each do |h|
+        if h == "required"
+            has_text = " *"
+        end
+    end
+    limit = options[:limit].nil? ? "" : options[:limit]
+    tabindex = options[:tabindex].nil? ? "" : options[:tabindex]
+    value_radio = options[:value].nil? ? "" : options[:value]
+    checked_radio = options[:checked].nil? ? false : options[:checked]
+    if col_ok
+      classe.columns.each { |c| columns[c.name] = c.type }
+    end
+
+    options_radio = { :checked => checked_radio, :class => input_class, :tabindex => tabindex }
+    options_date = { :start_year => 1960, :order => [:day, :month, :year] }
+    options_area = { :cols => 80, :rows => 5, :class => input_class, :limit => limit }
+    option_text = { :class => input_class, :limit => limit, :tabindex => tabindex }
+    options_select = { :prompt => "Selecione...", :class => input_class, :tabindex => tabindex }
+    options_html = { :class => input_class, :limit => limit, :tabindex => tabindex }
+    options_auto_complete = { :size => 50, :class => input_class, :style => "width: 300px;", :limit => limit }
+    field_type = options[:field_type].nil? ? columns[field.to_s] : options[:field_type]
+    collection = options[:collection]
+    label_width = options[:label_width].nil? ? "120px" : options[:label_width]
+    field_width = options[:field_width].nil? ? "830px" : options[:field_width]
+
+    field_form = case field_type
+    when :radio_button then
+      form.send(:radio_button, field, value_radio, options_radio)
+    when :datetime, :datetime_select,:date then
+      options_date.merge! options_field
+      "<div class='slcDate'>#{form.send(:date_select, field, options_date, :tabindex => tabindex, :class => input_class)}</div>"
+    when :password_field then
+      option_text.merge! options_field
+      form.send(:password_field, field, option_text)
+    when :text, :text_area then
+      options_area.merge! options_field
+      form.send(:text_area, field, options_area)
+    when :select then
+      options_select.merge! options_field[:options_select] unless options_field[:options_select].nil?
+      options_html.merge! options_field[:options_html] unless options_field[:options_html].nil?
+      form.send(:select, field, collection, options_select, options_html)
+    when :boolean, :check_box then
+      form.send(:check_box, field, :tabindex => tabindex)
+    when :file, :file_field
+      form.send(:file_field, field, :class => input_class)
+    when :search
+      search_file = "#{field.to_s.gsub("_id", "")}_name"
+      option_text.merge!({:disabled => true}).merge!(option_text)
+      %(#{form.send(:hidden_field, field)}
+                          #{form.send(:text_field, search_file, option_text)}
+                           <a href="javascript:createSearchPopup('#{route_search}', '#{field_name}');" class="filter">...</a>)
+    when :auto_complete
+      options_auto_complete.merge! options_field
+      with = options[:with].nil? ? "getValue(element, value)" : options[:with]
+      text_field_with_auto_complete(model.to_sym, field, options_auto_complete, { :url => options[:url], :method => :get, :with => with })
+    else
+      option_text.merge! options_field
+      form.send(:text_field, field, option_text)
+    end
+    field_html = ""
+    if no_row
+      case field_type
+        when :boolean, :check_box then
+            field_html << %(<td><div class="field"><span><label for="#{model}_#{field}">#{field_form}&nbsp;&nbsp;#{field_name}</label>#{information_check}</span></div></td>)
+        else
+            field_html << %(<td><div class="field"><span><label for="#{model}_#{field}">#{field_name}#{has_text}#{field_form}</label>#{information}</span></div></td>)
+        end
+    else
+      case field_type
+        when :boolean, :check_box then
+            field_html << %(<tr><td><div class="field"><span><label for="#{model}_#{field}">#{field_form}&nbsp;&nbsp;#{field_name}</label>#{information_check}</span></div></td></tr>)
+        else
+            field_html << %(<tr><td><div class="field"><span><label for="#{model}_#{field}">#{field_name}#{has_text}#{field_form}</label>#{information}</span></div></td></tr>)
+        end
+    end
+    field_html
+  end
+
+  def submit_for_form(form, label, options = {})
+    tabindex = options[:tabindex].nil? ? "" : options[:tabindex]
+    map = options[:map]
+    html = ""
+
+    unless map.nil?
+      map.each do |key, value|
+        html << "&nbsp;&nbsp;|&nbsp;&nbsp;" + link_to("#{value[:nome]}", value[:href], :title => value[:title], :class => value[:class], :tabindex => value[:tabindex])
+      end
+    end
+
+    list_lnks = %(<tr><td class="submit">#{form.submit label, :tabindex => tabindex}
+                &nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:history.back(-1)" tabindex="#{tabindex.to_i + 1}" title="ação: cancelar e retornar para a página anterior">cancelar operação</a>#{html}</td></tr>)
+    list_lnks
+  end
+
+  def select_for_form(form, object, field, list, options ={}, options_field = {})
+    classe = object.class
+    field_name = options[:field_name].nil? ? classe.human_attribute_name(field.to_s.underscore) : options[:field_name]
+    model = classe.to_s.downcase
+    merge = options[:merge].nil? ? "" : "colspan='#{options[:merge]}'"
+    no_row = options[:no_row].nil? ? false : options[:no_row]
+    input_class = options[:class].nil? ? "" : options[:class]
+    tabindex = options[:tabindex].nil? ? "" : options[:tabindex]
+
+    options_select = { :include_blank => "Selecione..." }.merge options_field
+    field_form = form.send(:select, field, list, options_select, :class => input_class, :tabindex => tabindex)
+
+    field =""
+    if no_row
+      field << %(<td><div class="field"><span><label for="#{model}_#{field}">#{field_name}#{field_form}</label></span></div></td>)
+    else
+      field << %(<tr><td><div class="field"><span><label for="#{model}_#{field}">#{field_name}#{field_form}</label></span></div></td></tr>)
+    end
+    field
+  end
+
+  def gallery_view(images, config = {})
+    html = %(<tr>\n
+            <td>\n
+                <ul class="gallery">\n)
+    images.each do |image|
+      route = config[:route].nil? ? polymorphic_url([:admin, image]) : config[:route]+"/#{image.id}"
+      html << %(<li>#{link_to("#{image_tag("#{image.image.url}", :alt => "imagem #{image.id}", :title => "imagem #{image.id}")}", image.image.url(:original), :rel => "prettyPhoto")}
+                #{link_to("excluir imagem", "#{route}", :title => "ação: excluir imagem", :method => :delete, :class => "deleteImage" )}
+                </li>\n)
+    end
+    html << %(</ul>\n</td>\n</tr>)
+    html
+  end
+
+  def entities( str )
+    coder = HTMLEntities.new
+    #str.unpack("U*").collect {|s| (s > 127 ? "&##{s};" : s.chr) }.join("")
+    coder.encode(str, :named)       # => "&lt;&eacute;lan&gt;"
+  end
+
+  def show_submenus(lista,classe)
+    tamanho = lista.size-1
+    li = %()
+    lista.each_with_index do |obj,index|
+      if tamanho == index
+        li << %(<li>#{link_to(obj.title,obj,:title => "#{obj.title}",:class => classe)}</li>)
+      else
+        li << %(<li>#{link_to(obj.title,obj,:title => "#{obj.title}")}</li>)
+      end
+    end
+    li
+  end
+
+  def situation_is_true(obj,model)
+    coluna = %()
+    if obj.situation == true
+      coluna << link_to_remote(image_tag('/images/mostrativo/desactive.png', :alt => 'ação: desativar registro', :title => 'ação: desativar registro'),:url => {:controller => "admin/homes",:action => "enabled_disabled",:id => obj.id, :name => model})
+    else
+      coluna << link_to_remote(image_tag('/images/mostrativo/active.png', :alt => 'ação: ativar registro', :title => 'ação: ativar registro'),:url => {:controller => "admin/homes",:action => "enabled_disabled",:id => obj.id, :name => model})
+    end
+  end
+
+  def h_radios(obj,field)
+    html = %()
+    obj.each do |o|
+      html << "<tr>"
+			html << "<td>"
+      html << "<div class='field other'>"
+      html << "<label>"
+      #faz o checkbox
+      html << radio_button_tag(field,o.id)
+      #traz antecessores
+      unless o.parent.nil?
+        o.ancestors.reverse.each do |a|
+          html << a.name+" > "
+        end
+      end
+      html << o.name
+      html << "</label>"
+      html << "</div>"
+			html << "</td>"
+      html << "</tr>"
+    end
+    html
+  end
+
+  def h_radios_with_box(obj,field)
+    html = %()
+    html << "<tr>"
+    html << "<td>"
+    html << "<div class='box'>"
+    obj.each do |o|
+      html << "<label>"
+      #faz o checkbox
+      html << radio_button_tag(field,o.id)
+      #traz antecessores
+      unless o.parent.nil?
+        o.ancestors.reverse.each do |a|
+          html << a.name+" > "
+        end
+      end
+      html << o.name
+      html << "</label><br/>"
+    end
+    html << "</div>"
+    html << "</td>"
+    html << "</tr>"
+
+    html
+  end
+
+  def formated_value(valor)
+    number_to_currency(valor,:unit => "R$",:separator => ",",:delimiter => ".")
+  end
+
+
+
+  def show_image(objeto)
+    controller = objeto.class.to_s.downcase.pluralize
+    if objeto.image?
+      container = %()
+      container << "<tr>"
+      container << "<td>"
+      container << "<div class='field'>"
+      container << "<span>"
+      container << image_tag(objeto.image.url(:small))
+      container << "</span>"
+      container << "<span>"
+      container << %(link_to 'Excluir Imagem',"/admin/#{controller}/#{objeto.id}/delete_image")
+      container << "</span>"
+      container << "</div>"
+      container << "</td>"
+      container << "</tr>"
+    end
+    container
+  end
+
+  def error_message_for(resource)
+    container = %()
+    

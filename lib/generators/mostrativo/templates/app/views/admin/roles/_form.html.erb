@@ -1,0 +1,15 @@
+<% create_container('field double') do %>
+  <%= input_text_for_block(f,@role,:name)%>
+  <%= input_text_for_block(f,@role,:value)%>
+<% end %>
+<%= check_box_for_form(@menus,@role,Menu,@role.menus,:container_id => 'menus_for_permission') %>
+<div id='sub_menus_for_menu_permission'>
+  <% @menus.each do |m| %>
+      <%= check_box_for_form(m.sub_menus,@role,SubMenu,@role.sub_menus,
+      :container_id => "sub_menus_for_menu_permission_role_id_#{m.id}",
+      :legend => "Selecione os sub-menus do menu : <b>#{m.name}</b> para dar as permissões") %>
+  <% end %>
+</div>
+<%= input_text_for_form(f,@role,:situation,{},{:input_type => 'checkbox'}) %>
+<%= create_actions_buttons(button_label) %>
+

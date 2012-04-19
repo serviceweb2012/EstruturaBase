@@ -1,0 +1,21 @@
+<h1>Área de Login</h1>
+
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+
+  <label for="">Login
+    <%= f.text_field :username,:class => "txt" %>
+  </label>
+
+  <label for="">Senha
+    <%= f.password_field :password,:class => "txt" %>
+  </label>
+
+  <% if devise_mapping.rememberable? -%>
+    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+  <% end -%>
+
+  <%= f.submit "Acessar",:class => "btn" %>
+  <%= render :partial => "/admin/shared/links" %>
+  <span class="clear">&nbsp;</span>
+<% end %>
+

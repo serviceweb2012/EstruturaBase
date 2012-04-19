@@ -1,0 +1,14 @@
+<% create_container('field triple') do %>
+  <%= combo_box_for_block(@sub_menu,:menu,@menus)%>
+  <%= input_text_for_block(f,@sub_menu,:name) %>
+  <%= input_text_for_block(f,@sub_menu,:title,{:show_help => true},{:information => 'Texto exibido quando mouse é colocado sobre a URL'}) %>
+<% end %>
+<% create_container('field double') do %>
+  <%= input_text_for_block(f,@sub_menu,:url,{:show_help => true},{:information => 'URL para onde o sub menu será direcionado'}) %>
+  <%= input_text_for_block(f,@sub_menu,:position,{:show_help => true},{:information => 'Informe a posição para ordenar o menu'}) %>
+<% end %>
+<%= input_text_for_form(f,@sub_menu,:separator,{},{:input_type => 'checkbox'}) %>
+<%= input_text_for_form(f,@sub_menu,:adm,{},{:input_type => 'checkbox'}) %>
+<%= input_text_for_form(f,@sub_menu,:situation,{},{:input_type => 'checkbox'}) %>
+<%= create_actions_buttons(button_label) %>
+

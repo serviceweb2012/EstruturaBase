@@ -1,0 +1,7 @@
+<div class="info">
+<h2>Detalhes <%= @model_name %> : <%= @dashboard.id %></h2>
+<%= show_field(@dashboard,:name)%>
+<%= show_field(@dashboard,:url) %>
+<%= show_field(@dashboard,:icon,:content => @dashboard.icon) %>
+</div>
+

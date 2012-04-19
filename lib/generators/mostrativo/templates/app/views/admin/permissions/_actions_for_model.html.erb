@@ -1,0 +1,43 @@
+<%
+#O objeto permission não chegava no form pq ele é carregado com JS
+#o único jeito de ver as permissões já checadas é com o objeto permission
+#então a 'solução' foi pega a url atráves da linha : url = request.referer
+#assim se pega a url, depois disso é preciso quebrar as barras e transformar a String em Array
+#para pegar o penultimo item é preciso saber o tamanho do array : tamanho = url_quebrada.size
+#agora com o tamanho é possivel pegar a parte da URL que tem o ID da permissão
+#permission_id = url_quebrada[tamanho - 2]
+#assim a variavel permission_id recebe o valor do ID que veio na url
+#e é passado na consulta na linha 26 -> Permission.find(permission_id)
+%>
+<%
+  url = request.referer
+  url_quebrada = url.split('/')
+  tamanho = url_quebrada.size
+  permission_id = url_quebrada[tamanho - 2]
+%>
+<legend>Selecione as ações</legend>
+<%= check_box_tag(:select_all,1,false,:class => 'markAllActions') %>Selecionar todas as ações
+<span class='clear'>&nbsp;</span>
+<% unless @actions.empty? %>
+  <% @actions.each do |action| %>
+    <span class='item'>
+     <%= check_box_tag "permission[actions_model][]", action, (Permission.find(permission_id).action_include?(action) rescue false) %>
+  	 <%= action %>
+    </span>
+  <% end %>
+<% end %>
+<script type='text/javascript'>
+$(document).ready(function(){
+  $('.markAllActions').click( function() {
+		if($(this).attr('checked') == 'checked') {
+			$("#actions_by_model span fieldset input:checkbox").attr('checked', 'checked');
+		} else {
+			$("#actions_by_model span fieldset input:checkbox").removeAttr('checked');
+		}
+
+		$('input:checked').parent().css('background-position','center center');
+		$('input:not(:checked)').parent().css('background-position','top center');
+	});
+})
+</script>
+

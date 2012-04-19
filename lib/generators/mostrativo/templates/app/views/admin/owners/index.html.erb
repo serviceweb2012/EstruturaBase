@@ -1,0 +1,10 @@
+<% content_for :sidebar do %>
+
+<% end %>
+
+<% content_for :main do %>
+  <%= onde_estou "Listagem de #{@model_name}",admin_root_path,"Dashboard"%>
+  <%= search_tools(new_admin_owner_path,@count) %>
+  <%= list_model(Owner,@owners) %>
+<% end %>
+

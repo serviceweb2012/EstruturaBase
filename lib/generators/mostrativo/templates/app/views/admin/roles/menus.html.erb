@@ -1,0 +1,10 @@
+<% content_for :sidebar do %>
+
+<% end %>
+
+<% content_for :main do %>
+  <%= onde_estou "Listagem de #{@model_name}",admin_root_path,"Dashboard"%>
+  <%= search_tools(nil,@count,:show_new_button => false) %>
+  <%= list_model(nil,@menus,{:show_mark_all => false,:show_em_massa => false,:show_order => false},{:show_actions => false}) %>
+<% end %>
+

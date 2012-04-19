@@ -1,0 +1,9 @@
+<% create_container('field triple') do %>
+  <%= input_text_for_block(f,@user,:name) %>
+  <%= input_text_for_block(f,@user,:username) %>
+  <%= input_text_for_block(f,@user,:email) %>
+  <%= create_password_container(f,@user,:password,{},{:input_type => 'password',:class => 'password'}) %>
+  <%= combo_box_for_form(@user,:role,@roles)%>
+  <%= create_actions_buttons(button_label) %>
+<% end %>
+

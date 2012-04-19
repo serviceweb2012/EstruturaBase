@@ -1,0 +1,13 @@
+<div class="info">
+<h2>Detalhes <%= @model_name %> : <%= @sub_menu.id %></h2>
+<%= show_field(@sub_menu,:name) %>
+<%= show_field(@sub_menu,:menu_id,:content => @sub_menu.menu.name) %>
+<%= show_field(@sub_menu,:name) %>
+<%= show_field(@sub_menu,:title) %>
+<%= show_field(@sub_menu,:url) %>
+<%= show_field(@sub_menu,:position) %>
+<%= show_field(@sub_menu,:separator) %>
+<%= show_field(@sub_menu,:adm) %>
+<%= show_field(@sub_menu,:situation) %>
+</div>
+

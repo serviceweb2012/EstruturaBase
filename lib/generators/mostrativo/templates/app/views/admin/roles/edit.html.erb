@@ -1,0 +1,13 @@
+<% content_for :sidebar do %>
+  <%= error_message_for(@role) %>
+<% end %>
+
+<% content_for :main do  %>
+  <%= onde_estou "Edição de #{@model_name}",admin_root_path,"Dashboard" %>
+  <div class="box fields">
+    <%= form_for(@role,:url => admin_role_path(@role),:html => {:method => :put}) do |f| %>
+      <%= render :partial => 'form',:locals =>{:button_label => "Editar",:f => f,:role_id => @role.id} %>
+    <% end %>
+  </div>
+<% end %>
+

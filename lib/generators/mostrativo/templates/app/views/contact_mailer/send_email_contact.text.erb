@@ -1,0 +1,12 @@
+Olá <%= @owner %>, atráves do formulário de contato foi lhe enviada a seguinte mensage :
+
+De : <%= @contato.name %>, <%= @contato.email %>
+<% unless @contato.city.blank? %>
+Cidade : <%= @contato.city %>
+<% end %>
+<% unless @contato.phone.blank? %>
+Telefone : <%= @contato.phone %>
+<% end %>
+Assunto : <%= @contato.subject %>
+Mensagem : <%= @contato.message %>
+

@@ -1,0 +1,9 @@
+<% content_for :sidebar do %>
+<% end %>
+
+<% content_for :main do %>
+  <%= onde_estou "Listagem de #{@sub_menus.first.class.to_s.underscore.humanize}",admin_root_path,"Dashboard"%>
+  <%= search_tools(new_admin_sub_menu_path,@count) %>
+  <%= list_model(SubMenu,@sub_menus) %>
+<% end %>
+

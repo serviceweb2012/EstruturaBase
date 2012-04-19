@@ -1,0 +1,12 @@
+Description:
+    Gerador de Módulo Administrativo - MOSTRATIVO
+
+Example:
+    criar um novo projeto Rails 3.0.4 => rails new MeuProjeto -d mysql
+
+    criar o diretório 'generators' dentro de 'lib', ficando 'lib/generators'
+
+    colocar dentro de 'lib/generators' o gerador do mostrativo => 'mostrativo'
+
+    rodar o comando 'rails g mostrativo'
+

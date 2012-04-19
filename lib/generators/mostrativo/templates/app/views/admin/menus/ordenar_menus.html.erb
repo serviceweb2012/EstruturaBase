@@ -1,0 +1,9 @@
+<% content_for :sidebar do %>
+
+<% end %>
+
+<% content_for :main do %>
+  <%= onde_estou "Ordenação de #{@model_name}",admin_root_path,"Dashboard"%>
+  <%= reorder_itens(@menus,:menu) %>
+<% end %>
+
